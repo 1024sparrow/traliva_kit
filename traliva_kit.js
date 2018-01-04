@@ -53,7 +53,8 @@ Button.prototype.processStateChanges = function(s){
 Button.prototype._onClicked = function(){
     this.active = !this.active;
     this._state.active = this.active;
-    this.processStateChanges();
+    this.e.className = this.active ? 'traliva_kit__bn active' : 'traliva_kit__bn';
+    this._registerStateChanges();
 }
 p_namespace.Button = Button;
 
