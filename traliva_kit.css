@@ -3,7 +3,7 @@
     /*width: 100%;*/
     /*height: 100%;*/
     color: #666;
-    background: #ddd;
+    background: #eee;
     margin: 5px;
     border: 1px solid #666;
     border-radius: 5px;
@@ -11,5 +11,11 @@
     cursor: pointer;
 }
 .traliva_kit__bn:hover{
+    background: #fa8;
+}
+.traliva_kit__bn.active{
+    background: #ffa;
+}
+.traliva_kit__bn.active:hover{
     background: #fa8;
 }
