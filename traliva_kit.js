@@ -15,7 +15,7 @@ else{
 */
 function Button(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
-    console.log('hello from Button');
+    console.log('hello from Button. Options: '+JSON.stringify(p_options));
     if (p_options.hasOwnProperty('title')){
         this.titleVarName = undefined;
         this.title = p_options.title;
