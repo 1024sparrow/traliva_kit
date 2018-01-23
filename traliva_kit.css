@@ -1,9 +1,18 @@
+.traliva_kit__label{
+    /*padding: 4px;*/
+    margin: 5px;
+    padding: 10px;
+}
+.traliva_kit__label div{
+    margin: 5px;
+}
+
 .traliva_kit__bn{
     color: #666;
-    background: #eee;
+    //background: #eee;
     margin: 5px;
     border: 1px solid #666;
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: center;
     font-size: 32px;
     cursor: pointer;
@@ -15,5 +24,17 @@
     background: #ffa;
 }
 .traliva_kit__bn.active:hover{
+    background: #fa8;
+}
+
+.traliva_kit__fileselect{
+    color: #666;
+    border: 1px solid #666;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 4px;
+}
+.traliva_kit__fileselect:hover{
     background: #fa8;
 }

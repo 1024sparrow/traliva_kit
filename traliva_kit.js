@@ -11,6 +11,9 @@ else{
 Принимаемые опции:
     text - если задано, этот текст будет отображаться, а свойство textVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)
     textVarName - имя свойства, в котором записан текст для отображения
+
+    color - цвет текста
+    border - если свойство указано, будет добавлена рамочка, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки
 */
 function Label(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
@@ -22,10 +25,27 @@ function Label(p_wContainer, p_options){
         this.textVarName = p_options.textVarName || 'text';
         this.text = '';
     }
-    this.e = document.createElement('div');
-    this.e.innerHTML = this.text;
-    this.e.className = 'traliva_kit__label';
-    p_wContainer.setContent(this.e);
+    //this.e = document.createElement('div');
+    var e = Traliva.createElement('<div class="traliva_kit__label" traliva="e">'+this.text+'</div>', this);
+    if (p_options.hasOwnProperty('color')){
+        this.e.style.color = p_options.color;
+        if (p_options.hasOwnProperty('border')){
+            this.e.style.border = '1px solid ' + p_options.border.color || p_options.color;
+            if (p_options.border && p_options.border.hasOwnProperty('radius')){
+                this.e.style.borderRadius = p_options.border.radius;
+            }
+        }
+    }
+    //this.e.style.margin = '6px';
+    //this.e.style.padding = '10px';
+    //this.e.className = 'traliva_kit__label';
+    p_wContainer._onResized = (function(e){return function(w,h){
+        e.style.width = (w - 32) + 'px';
+        e.style.height = (h - 32) + 'px';
+    };})(this.e);
+    //this.e.innerHTML = this.text;
+    this.e.style.textAlign = 'center';
+    p_wContainer.setContent(e);
 }
 Label.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 Label.prototype.constructor = Label;
@@ -46,7 +66,11 @@ p_namespace.Label = Label;
 Принимаемые опции:
     title - если задано, этот текст будет отображаться, а свойство titleVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)
     titleVarName - имя свойства, в котором записан текст кнопки (если изменится значение такого свойства у объекта состояния, кнопка изменит свой текст). По умолч. 'title'
-    valueVarName - имя свойства(boolean), значение которого будет меняться при нажатии на кнопку. По умолч. 'active'
+    activeVarName - имя свойства(boolean), значение которого будет меняться при нажатии на кнопку. По умолч. 'active'
+
+    color - цвет текста
+    hover_color - цвет фона при наведении мышью
+    border - если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки
 */
 function Button(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
@@ -56,12 +80,26 @@ function Button(p_wContainer, p_options){
         this.title = p_options.title;
     }
     else{
-        this.titleVarName = p_options.titleVarName || 'title';
+        this.titleVarName = (p_options.hasOwnProperty('titleVarName')) ? p_options.titleVarName : 'title';
         this.title = '';
     }
-    this.activeVarName = p_options.activeVarName || 'active';
+    this.activeVarName = (p_options.hasOwnProperty('activeVarName')) ? p_options.activeVarName : 'active';
     this.active = false;
     var e = Traliva.createElement('<div class="traliva_kit__bn" traliva="e">' + this.title + '</div>', this);
+    if (p_options.hasOwnProperty('color')){
+        this.e.style.color = p_options.color;
+        this.e.style.border = '1px solid '+p_options.color;
+        if (p_options.hasOwnProperty('border')){
+            this.e.style.border = '1px solid ' + p_options.border.color || p_options.color;
+            if (p_options.border && p_options.border.hasOwnProperty('radius')){
+                this.e.style.borderRadius = p_options.border.radius;
+            }
+        }
+    }
+    if (p_options.hasOwnProperty('hover_color')){
+        this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})(p_options.hover_color))
+        this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+    }
     this.e.addEventListener('click', function(self){return function(){
         self._onClicked();
     };}(this));
@@ -71,7 +109,7 @@ Button.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 Button.prototype.constructor = Button;
 Button.prototype.processStateChanges = function(s){
     if (!s)
-        console.log('epic fail');
+        console.error('epic fail');
     if (this.titleVarName !== undefined){
         if (s[this.titleVarName] !== this.title){
             this.title = s[this.titleVarName] || '';
@@ -85,7 +123,7 @@ Button.prototype.processStateChanges = function(s){
 }
 Button.prototype._onClicked = function(){
     this.active = !this.active;
-    this._state.active = this.active;
+    this._state[this.activeVarName] = this.active;
     this.e.className = this.active ? 'traliva_kit__bn active' : 'traliva_kit__bn';
     this._registerStateChanges();
 }
@@ -115,15 +153,31 @@ p_namespace.LineEdit = LineEdit;
 
 /*
 Виджет Поле выбора файла из файловой системы пользователя
+Принимаемые опции:
+    filter - по каким расширениям фильтровать. Пример: ".mp3, .mpeg, .wav, .ogg"
+    color - цвет
+    hover_color - цвет при наведении мыши
 */
 function FileSelect(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
-    p_wContainer.setContent(Traliva.createElement('<input type="file" traliva="e"></input>', this));
-    p_wContainer._onResized = (function(self){
+    p_wContainer.setContent(Traliva.createElement('<input type="file" traliva="e" class="traliva_kit__fileselect"></input>', this));
+//wAddBn.setContent(Traliva.createElement('<input type="file" accept=".mp3, .mpeg, .wav, .ogg" traliva="bn_add" class="bn stage2_bn_add"></input>'));
+    if (p_options.hasOwnProperty('filter')){
+        this.e.accept = p_options.filter;
+    }
+    if (p_options.hasOwnProperty('color')){
+        this.e.style.color = p_options.color;
+        this.e.style.border = '1px solid ' + p_options.color;
+    }
+    if (p_options.hasOwnProperty('hover_color')){
+        this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})(p_options.hover_color))
+        this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+    }
+    /*p_wContainer._onResized = (function(self){
         return function(w,h){
             self.e.style.width = (w - 18) + 'px';
         }
-    })(this);
+    })(this);*/
 }
 FileSelect.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 FileSelect.prototype.constructor = FileSelect;
