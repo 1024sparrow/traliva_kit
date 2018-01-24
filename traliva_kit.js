@@ -134,7 +134,6 @@ p_namespace.Button = Button;
 Принимаемые опции:
     placeholder - строка подсказки вроде "введите ..(что-то)"
 
-    placeholder_color
     color
     hover_color
 */
@@ -156,12 +155,6 @@ function LineEdit(p_wContainer, p_options){
         this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})(p_options.hover_color))
         this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
     }
-    /*this.e.style.color = '#afa';
-    this.e.style.background = '#000';
-    this.e.style.border = '1px solid #afa';
-    this.e.style.borderRadius = '10px';
-    this.e.style.padding = '10px';
-    this.e.margin = '4px';*/
 }
 LineEdit.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 LineEdit.prototype.constructor = LineEdit;

@@ -35,9 +35,9 @@
     margin: 4px;
     background: rgba(0,0,0,0);
 }
-.traliva_kit__lineedit::placeholder{
+/*.traliva_kit__lineedit::placeholder{
     color: red;
-}
+}*/
 
 .traliva_kit__fileselect{
     color: #666;
