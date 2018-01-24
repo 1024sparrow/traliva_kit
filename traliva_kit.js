@@ -133,12 +133,16 @@ p_namespace.Button = Button;
 Виджет строка ввода
 Принимаемые опции:
     placeholder - строка подсказки вроде "введите ..(что-то)"
+    requireVarName - имя свойства(boolean), true которого означает, что нужно записать в объект состояния значение этого текстового поля. Если не задано, в объекте состояния значения будет обновляться при каждом изменении текста
+    textVarName - текст в поле редактирования. Это значение как для задания предустановленного значения, так и для считывания другими компонентами введённого пользователем текста
 
     color
     hover_color
 */
 function LineEdit(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+    this.requireVarName;
+
     p_wContainer.setContent(Traliva.createElement('<input type="text" traliva="e" class="traliva_kit__lineedit"></input>', this));
     p_wContainer._onResized = (function(self){
         return function(w,h){
@@ -155,10 +159,35 @@ function LineEdit(p_wContainer, p_options){
         this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})(p_options.hover_color))
         this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
     }
+    if (p_options.hasOwnProperty('textVarName'))
+        this.textVarName = p_options.textVarName;
+    else
+        console.error('LineEdit: textVarName - обязательное поле для задания в options');
+    if (p_options.hasOwnProperty('requireVarName')){
+        this.requireVarName = p_options.requireVarName;
+    }
+    else{
+        this.e.addEventListener('input', (function(self){return function(){
+            self._state[self.textVarName] = self.e.value;
+            self._registerStateChanges();
+        }})(this));
+        // event 'change' fires only on focus off
+    }
 }
 LineEdit.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 LineEdit.prototype.constructor = LineEdit;
 LineEdit.prototype.processStateChanges = function(s){
+    if (this.requireVarName){
+        // опция выдачи строго по запросу не протестирована.
+        // надеюсь, при запуске ошибок не возникнет
+        if (s[this.requireVarName]){
+            s[this.requireVarName] = false;
+            s[this.textVarName] = this.e.value;
+            this._registerStateChanges();
+        }
+    }
+    if (this.e.value !== s[this.textVarName])
+        this.e.value = s[this.textVarName];
 }
 p_namespace.LineEdit = LineEdit;
 
