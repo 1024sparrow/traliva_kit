@@ -133,17 +133,35 @@ p_namespace.Button = Button;
 Виджет строка ввода
 Принимаемые опции:
     placeholder - строка подсказки вроде "введите ..(что-то)"
+
+    placeholder_color
+    color
+    hover_color
 */
 function LineEdit(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
-    p_wContainer.setContent(Traliva.createElement('<input type="text" traliva="e"></input>', this));
+    p_wContainer.setContent(Traliva.createElement('<input type="text" traliva="e" class="traliva_kit__lineedit"></input>', this));
     p_wContainer._onResized = (function(self){
         return function(w,h){
-            self.e.style.width = (w - 18) + 'px';
+            self.e.style.width = (w - 32) + 'px';
         }
     })(this);
     if (p_options.hasOwnProperty('placeholder'))
         this.e.placeholder = p_options.placeholder;
+    if (p_options.hasOwnProperty('color')){
+        this.e.style.color = p_options.color;
+        this.e.style.border = '1px solid ' + p_options.color;
+    }
+    if (p_options.hasOwnProperty('hover_color')){
+        this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})(p_options.hover_color))
+        this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+    }
+    /*this.e.style.color = '#afa';
+    this.e.style.background = '#000';
+    this.e.style.border = '1px solid #afa';
+    this.e.style.borderRadius = '10px';
+    this.e.style.padding = '10px';
+    this.e.margin = '4px';*/
 }
 LineEdit.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 LineEdit.prototype.constructor = LineEdit;
