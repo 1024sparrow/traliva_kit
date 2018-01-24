@@ -225,6 +225,21 @@ FileSelect.prototype.processStateChanges = function(s){
 }
 p_namespace.FileSelect = FileSelect;
 
+/*
+Класс SimpleList.
+Список элементов, с возможностью выбора какого-то одного элемента(выделюемость настраивается с помощью options)
+Принимаемые опции:
+    //
+*/
+function SimpleList(p_wContainer, p_options){
+    Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+}
+SimpleList.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
+SimpleList.prototype.constructor = SimpleList;
+SimpleList.prototype.processStateChanges = function(s){
+}
+p_namespace.SimpleList = SimpleList;
+
 //
 })(TralivaKit);
 }
