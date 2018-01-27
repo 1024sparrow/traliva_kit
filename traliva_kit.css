@@ -9,7 +9,7 @@
 
 .traliva_kit__bn{
     color: #666;
-    //background: #eee;
+    /*background: #eee;*/
     margin: 5px;
     border: 1px solid #666;
     border-radius: 10px;
@@ -49,4 +49,12 @@
 }
 .traliva_kit__fileselect:hover{
     background: #fa8;
+}
+
+.traliva_kit__simplelist{
+    color: #48f;
+    width: 100%;
+}
+.traliva_kit__simplelist tr:hover{
+    background: #004;
 }

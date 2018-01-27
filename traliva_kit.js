@@ -233,21 +233,55 @@ function FileSelect(p_wContainer, p_options){
 FileSelect.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 FileSelect.prototype.constructor = FileSelect;
 FileSelect.prototype.processStateChanges = function(s){
+    //boris here: применить изменения в выбранном файле
 }
 p_namespace.FileSelect = FileSelect;
 
 /*
 Класс SimpleList.
-Список элементов, с возможностью выбора какого-то одного элемента(выделюемость настраивается с помощью options)
+Список элементов, с возможностью выбора какого-то одного элемента(выделяемость настраивается с помощью options)
 Принимаемые опции:
-    //
+    selectable - по умолчанию false,
+    getText - если у вас список объектов, то вам потребуется функция, которая даёт текст для отображения в элементе списка. По умолчанию, элементы списка трактуются как строки.
+Формат объекта состояния:
+    current - порядковый номер в массиве
+    list - массив строк (заголовкой на вывод)
 */
 function SimpleList(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+    p_wContainer.setContent(Traliva.createElement('<table class="traliva_kit__simplelist" traliva="table"></table>', this));
+    this.options = p_options;
+    this._len = 0;
 }
 SimpleList.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 SimpleList.prototype.constructor = SimpleList;
 SimpleList.prototype.processStateChanges = function(s){
+    if (s.changed){
+        this._update();
+        s.changes = false;
+        this._registerStateChanges();
+    }
+}
+SimpleList.prototype._update = function(){
+    var i, eRow, eCell;
+    console.log('%%%%%%%'+JSON.stringify(this._state));
+
+    for (i = this._state.list.length ; i < this._len ; i++){
+        this.table.deleteRow(-1);
+    }
+    for (i = this._len ; i < this._state.list.length ; i++){
+        eRow = this.table.insertRow();
+        eRow.insertCell();
+    }
+    this._len = this._state.list.length;
+    var rows = this.table.rows;
+    for (i = 0 ; i < rows.length ; i++){
+        //eRow = this._state.list[i];
+        eRow = rows[i];
+        eCell = eRow.cells[0];
+        //eCell.innerHTML = 'adasdasd';
+        eCell.innerHTML = '<div>' + (this.options.getText ? this.options.getText(this._state.list[i]) : this._state.list[i]) + '</div>';
+    }
 }
 p_namespace.SimpleList = SimpleList;
 
