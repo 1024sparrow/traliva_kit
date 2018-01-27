@@ -194,14 +194,25 @@ p_namespace.LineEdit = LineEdit;
 /*
 Виджет Поле выбора файла из файловой системы пользователя
 Принимаемые опции:
+    vaueVarName
     filter - по каким расширениям фильтровать. Пример: ".mp3, .mpeg, .wav, .ogg"
     color - цвет
     hover_color - цвет при наведении мыши
+Traliva.api.get_filepath(p_file) - должна быть, возвращает путь к файлу.
 */
 function FileSelect(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
     p_wContainer.setContent(Traliva.createElement('<input type="file" traliva="e" class="traliva_kit__fileselect"></input>', this));
 //wAddBn.setContent(Traliva.createElement('<input type="file" accept=".mp3, .mpeg, .wav, .ogg" traliva="bn_add" class="bn stage2_bn_add"></input>'));
+    this.valueVarName = p_options.valueVarName;
+    this.e.addEventListener('change', (function(self){return function(){
+        var files = self.e.files;
+        files = files.length ? files[0] : undefined;
+        var tmppath = window.URL.createObjectURL(files);
+        self._state[self.valueVarName] = tmppath;
+        self._registerStateChanges();
+    };})(this));
+    
     if (p_options.hasOwnProperty('filter')){
         this.e.accept = p_options.filter;
     }
