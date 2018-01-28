@@ -258,7 +258,7 @@ SimpleList.prototype.constructor = SimpleList;
 SimpleList.prototype.processStateChanges = function(s){
     if (s.changed){
         this._update();
-        s.changes = false;
+        s.changed = false;
         this._registerStateChanges();
     }
 }
