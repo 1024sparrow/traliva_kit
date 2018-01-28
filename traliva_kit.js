@@ -243,9 +243,13 @@ p_namespace.FileSelect = FileSelect;
 Принимаемые опции:
     selectable - по умолчанию false,
     getText - если у вас список объектов, то вам потребуется функция, которая даёт текст для отображения в элементе списка. По умолчанию, элементы списка трактуются как строки.
+    shared - true, если снятие флага changed в объекте состояния не надо делать(пользователь устанавливает данные и флаг changed, затем снимает флаг changed)
+             false, если хотите, чтобы виджет сам снимал флаг changed после того, как изменения данных были отображены в виджете.
+             по умолчанию, true. Так что сами сбрасывайте флаг changed, или задайте опцию "shared: false"
 Формат объекта состояния:
     current - порядковый номер в массиве
     list - массив строк (заголовкой на вывод)
+    changed - флаг, сигнализирующий виджету, что отображение данных надо обновить
 */
 function SimpleList(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
@@ -258,8 +262,10 @@ SimpleList.prototype.constructor = SimpleList;
 SimpleList.prototype.processStateChanges = function(s){
     if (s.changed){
         this._update();
-        s.changed = false;
-        this._registerStateChanges();
+        if (this.options.shared === false){
+            s.changed = false;
+            this._registerStateChanges();
+        }
     }
 }
 SimpleList.prototype._update = function(){
