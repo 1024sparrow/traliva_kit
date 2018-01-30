@@ -256,10 +256,15 @@ function SimpleList(p_wContainer, p_options){
     p_wContainer.setContent(Traliva.createElement('<table class="traliva_kit__simplelist" traliva="table"></table>', this));
     this.options = p_options;
     this._len = 0;
+    this._initialized = false;
 }
 SimpleList.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 SimpleList.prototype.constructor = SimpleList;
 SimpleList.prototype.processStateChanges = function(s){
+    if (!this._initialized){
+        this._update();
+        this._initialized = true;
+    }
     if (s.changed){
         this._update();
         if (this.options.shared === false){
@@ -270,7 +275,6 @@ SimpleList.prototype.processStateChanges = function(s){
 }
 SimpleList.prototype._update = function(){
     var i, eRow, eCell;
-    console.log('%%%%%%%'+JSON.stringify(this._state));
 
     for (i = this._state.list.length ; i < this._len ; i++){
         this.table.deleteRow(-1);
