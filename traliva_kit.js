@@ -3,18 +3,65 @@ var TralivaKit;
 if (TralivaKit)
     console.log('epic fail: TralivaKit is not empty');
 else{
-    TralivaKit = {};
+    TralivaKit = {__d:{help:{}}};
 (function(p_namespace){
 
 /*
-Виджет Label - тупо отображает текст
-Принимаемые опции:
-    text - если задано, этот текст будет отображаться, а свойство textVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)
-    textVarName - имя свойства, в котором записан текст для отображения
-
-    color - цвет текста
-    border - если свойство указано, будет добавлена рамочка, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки
+Формат объекта справки:
+title(text)
+descr(text)
+options(object) - Принимаемые опции. object: key - option name value - textual description
+stateObj(object) - формат объекта состояния
+children(object) - у справки могут быть дочерние страницы (с более подробным описанием тех или иных аспектов).
 */
+function registerHelp(p_className, p_o){
+    p_namespace.__d.help[p_className] = p_o;
+}
+//
+p_namespace.help = function(o){
+    var i, o;
+    if (arguments.length === 0){
+        console.log('Для справки по контретному классу виджета передайте в help() параметром имя класса. Доступные классы виджетов:');
+        for (i in p_namespace.__d.help){
+            console.log('* ' + i + ' - ' + p_namespace.__d.help[i].title);
+        }
+    }
+    else{
+        for (i = 0 ; i < arguments.length ; i++){
+            o = i ? o.children[arguments[i]] : p_namespace.__d.help[arguments[i]];
+            if (!o){
+                console.log('Некорректный параметр для справки: '+arguments[i]);
+                return;
+            }
+        }
+        console.log('%c' + o.title, 'color: #ffa');
+        if (o.descr)
+            console.log('%c' + o.descr, 'color: #48f');
+        if (o.options){
+            console.log('%cПринимаемые опции:', 'color: #ffa');
+            for (i in o.options){
+                console.log('%c* ' + i + ' - ' + o.options[i], 'color: #48f');
+            }
+        }
+        if (o.stateObj){
+            console.log('%cФормат объекта состояния:', 'color: #ffa');
+            for (i in o.stateObj){
+                console.log('%c* ' + i + ' - ' + o.stateObj[i], 'color: #48f');
+            }
+        }
+    }
+
+}
+
+registerHelp('Label', {
+            title: 'Виджет Label - тупо отображает текст',
+            options:{
+                text: 'если задано, этот текст будет отображаться, а свойство textVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)',
+                textVarName: 'имя свойства, в котором записан текст для отображения',
+                color: 'цвет текста',
+                border: 'если свойство указано, будет добавлена рамочка, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки'
+            }
+        });
 function Label(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
     if (p_options.hasOwnProperty('text')){
@@ -61,17 +108,17 @@ Label.prototype.processStateChanges = function(s){
 }
 p_namespace.Label = Label;
 
-/*
-Виджет Button.
-Принимаемые опции:
-    title - если задано, этот текст будет отображаться, а свойство titleVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)
-    titleVarName - имя свойства, в котором записан текст кнопки (если изменится значение такого свойства у объекта состояния, кнопка изменит свой текст). По умолч. 'title'
-    activeVarName - имя свойства(boolean), значение которого будет меняться при нажатии на кнопку. По умолч. 'active'
-
-    color - цвет текста
-    hover_color - цвет фона при наведении мышью
-    border - если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки
-*/
+registerHelp('Button', {
+            title: 'Виджет Button',
+            options:{
+                title:'если задано, этот текст будет отображаться, а свойство titleVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)',
+                titleVarName:'имя свойства, в котором записан текст кнопки (если изменится значение такого свойства у объекта состояния, кнопка изменит свой текст). По умолч. \'title\'',
+                activeVarName:'имя свойства(boolean), значение которого будет меняться при нажатии на кнопку. По умолч. \'active\'',
+                color: 'цвет текста',
+                hover_color: 'цвет фона при наведении мышью',
+                border: 'если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки'
+            }
+        });
 function Button(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
     console.log('hello from Button. Options: '+JSON.stringify(p_options));
@@ -129,16 +176,16 @@ Button.prototype._onClicked = function(){
 }
 p_namespace.Button = Button;
 
-/*
-Виджет строка ввода
-Принимаемые опции:
-    placeholder - строка подсказки вроде "введите ..(что-то)"
-    requireVarName - имя свойства(boolean), true которого означает, что нужно записать в объект состояния значение этого текстового поля. Если не задано, в объекте состояния значения будет обновляться при каждом изменении текста
-    textVarName - текст в поле редактирования. Это значение как для задания предустановленного значения, так и для считывания другими компонентами введённого пользователем текста
-
-    color
-    hover_color
-*/
+registerHelp('LineEdit', {
+            title: 'Виджет строка ввода',
+            options:{
+                placeholder:'строка подсказки вроде "введите ..(что-то)"',
+                requireVarName: 'имя свойства(boolean), true которого означает, что нужно записать в объект состояния значение этого текстового поля. Если не задано, в объекте состояния значения будет обновляться при каждом изменении текста',
+                textVarName:'текст в поле редактирования. Это значение как для задания предустановленного значения, так и для считывания другими компонентами введённого пользователем текста',
+                color:'цвет текста и рамочки',
+                hover_color:'цвет фона при наведении мышью'
+            }
+        });
 function LineEdit(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
     this.requireVarName;
@@ -191,15 +238,16 @@ LineEdit.prototype.processStateChanges = function(s){
 }
 p_namespace.LineEdit = LineEdit;
 
-/*
-Виджет Поле выбора файла из файловой системы пользователя
-Принимаемые опции:
-    vaueVarName
-    filter - по каким расширениям фильтровать. Пример: ".mp3, .mpeg, .wav, .ogg"
-    color - цвет
-    hover_color - цвет при наведении мыши
-Traliva.api.get_filepath(p_file) - должна быть, возвращает путь к файлу.
-*/
+registerHelp('FileSelect', {
+            title:'Виджет Поле выбора файла из файловой системы пользователя',
+            // Traliva.api.get_filepath(p_file) - должна быть, возвращает путь к файлу.
+            options:{
+                valueVarName:'имя свойства объекта состояния, где хранится значение выбранного файла',
+                filter:'по каким расширениям фильтровать. Пример: ".mp3, .mpeg, .wav, .ogg"',
+                color:'цвет',
+                hover_color:'цвет при наведении мышью'
+            }
+        });
 function FileSelect(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
     p_wContainer.setContent(Traliva.createElement('<input type="file" traliva="e" class="traliva_kit__fileselect"></input>', this));
@@ -237,23 +285,25 @@ FileSelect.prototype.processStateChanges = function(s){
 }
 p_namespace.FileSelect = FileSelect;
 
-/*
-Класс SimpleList.
-Список элементов, с возможностью выбора какого-то одного элемента(выделяемость настраивается с помощью options)
-Принимаемые опции:
-    selectable - по умолчанию false,
-    getText - если у вас список объектов, то вам потребуется функция, которая даёт текст для отображения в элементе списка. По умолчанию, элементы списка трактуются как строки.
-    shared - true, если снятие флага changed в объекте состояния не надо делать(пользователь устанавливает данные и флаг changed, затем снимает флаг changed)
-             false, если хотите, чтобы виджет сам снимал флаг changed после того, как изменения данных были отображены в виджете.
-             по умолчанию, true. Так что сами сбрасывайте флаг changed, или задайте опцию "shared: false"
-    color - цвет элемента списка
-    selected_color - цвет выделенного элемента списка
-    hover_color - цвет фона строки при наведении мышью
-Формат объекта состояния:
-    current - порядковый номер в массиве
-    list - массив строк (заголовкой на вывод)
-    changed - флаг, сигнализирующий виджету, что отображение данных надо обновить
-*/
+registerHelp('SimpleList', {
+            title:'Класс SimpleList',
+            descr:'Список элементов, с возможностью выбора какого-то одного элемента(выделяемость настраивается с помощью options)',
+            options:{
+                selectable: 'по умолчанию false',
+                getText: 'если у вас список объектов, то вам потребуется функция, которая даёт текст для отображения в элементе списка. По умолчанию, элементы списка трактуются как строки',
+                shared: 'true, если снятие флага changed в объекте состояния не надо делать(пользователь устанавливает данные и флаг changed, затем снимает флаг changed)\n\
+     false, если хотите, чтобы виджет сам снимал флаг changed после того, как изменения данных были отображены в виджете.\n\
+     по умолчанию, true. Так что сами сбрасывайте флаг changed, или задайте опцию "shared: false"',
+                color: 'цвет элемента списка',
+                selected_color: 'цвет выделенного элемента списка',
+                hover_color: 'цвет фона строки при наведении мышью'
+            },
+            stateObj:{
+                current: 'порядковый номер в массиве',
+                list: 'массив строк (заголовкой на вывод)',
+                changed: 'флаг, сигнализирующий виджету, что отображение данных надо обновить'
+            }
+        });
 function SimpleList(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer);
     p_wContainer.setContent(Traliva.createElement('<table class="traliva_kit__simplelist" traliva="table"></table>', this));
