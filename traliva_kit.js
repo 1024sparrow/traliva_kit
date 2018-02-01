@@ -28,7 +28,16 @@ p_namespace.help = function(o){
     }
     else{
         for (i = 0 ; i < arguments.length ; i++){
-            o = i ? o.children[arguments[i]] : p_namespace.__d.help[arguments[i]];
+            if (i)
+                o = o.children[arguments[i]];
+            else{
+                o = p_namespace.__d.help[arguments[i]];
+                if (!o.hasOwnProperty('options'))
+                    o.options = {};
+                if (!o.options.hasOwnProperty('bg')){
+                    o.options.bg = '(опция от базового класса) цвет фона (подложки). Если не задано, подложки не будет. Если задана пустая строка, фон подложки будет взят такой же, как у ближайшего родителя, у которого фон подложки задан (или не будет задан, если такой родитель найден не будет).';
+                }
+            }
             if (!o){
                 console.log('Некорректный параметр для справки: '+arguments[i]);
                 return;
@@ -50,7 +59,6 @@ p_namespace.help = function(o){
             }
         }
     }
-
 }
 
 registerHelp('Label', {
@@ -63,7 +71,7 @@ registerHelp('Label', {
             }
         });
 function Label(p_wContainer, p_options){
-    Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+    Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);
     if (p_options.hasOwnProperty('text')){
         this.textVarName = undefined;
         this.text = p_options.text;
@@ -120,7 +128,7 @@ registerHelp('Button', {
             }
         });
 function Button(p_wContainer, p_options){
-    Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+    Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);
     console.log('hello from Button. Options: '+JSON.stringify(p_options));
     if (p_options.hasOwnProperty('title')){
         this.titleVarName = undefined;
@@ -187,7 +195,7 @@ registerHelp('LineEdit', {
             }
         });
 function LineEdit(p_wContainer, p_options){
-    Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+    Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);
     this.requireVarName;
 
     p_wContainer.setContent(Traliva.createElement('<input type="text" traliva="e" class="traliva_kit__lineedit"></input>', this));
@@ -249,7 +257,7 @@ registerHelp('FileSelect', {
             }
         });
 function FileSelect(p_wContainer, p_options){
-    Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+    Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);
     p_wContainer.setContent(Traliva.createElement('<input type="file" traliva="e" class="traliva_kit__fileselect"></input>', this));
 //wAddBn.setContent(Traliva.createElement('<input type="file" accept=".mp3, .mpeg, .wav, .ogg" traliva="bn_add" class="bn stage2_bn_add"></input>'));
     this.valueVarName = p_options.valueVarName;
@@ -305,7 +313,7 @@ registerHelp('SimpleList', {
             }
         });
 function SimpleList(p_wContainer, p_options){
-    Traliva.WidgetStateSubscriber.call(this, p_wContainer);
+    Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);
     p_wContainer.setContent(Traliva.createElement('<table class="traliva_kit__simplelist" traliva="table"></table>', this));
     this.options = p_options;
     this._len = 0;
