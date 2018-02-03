@@ -120,14 +120,16 @@ registerHelp('Button', {
             title: 'Виджет Button',
             descr: 'Везде, где описывается иконка, используется строка, содержащая путь (сетевой!) до картинки, или объект, описывающий картинку в спрайте. Формат описания картинки в спрайте: {path: \'путь/до/описателя/спрайта\', id: \'идентификатор картинки в описателе спрайта\'}. Описатель спрайта представляет собой JSON-файл следующего формата:\n{\n  "image": "путь/до/картинки",\n  "rows": [\n    {"h":\n      высота_строки_спрайта_в_пикселях,\n      "items":[\n        {\n          "id": "идентификатор_первой_картинки",\n          "w": ширина_в_пикселях,\n          "h": высота_в_пикселях(если отличается от высоты строки)\n        },\n        ...\n      ],\n    {...},\n    ...\n  ]\n}',
             options:{
-                icon: 'если задано, будет установлена иконка. Текст кнопки отображаться не будет. Размер картинки - фиксированный по размеру картинки.',
+                icon: 'если задано, будет установлена иконка. Текст кнопки будет отображаться как тултип (опция title). Размер картинки - фиксированный по размеру картинки.',
                 title:'если задано, этот текст будет отображаться, а свойство titleVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)',
                 titleVarName:'имя свойства, в котором записан текст кнопки (если изменится значение такого свойства у объекта состояния, кнопка изменит свой текст). По умолч. \'title\'',
                 activeVarName:'имя свойства(boolean), значение которого будет меняться при нажатии на кнопку. По умолч. \'active\'',
                 color: 'цвет текста',
                 hover_color: 'цвет фона при наведении мышью',
                 hover_icon: 'иконка при наведении мышью. Работает только, если указана опция \'icon\'',
-                border: 'если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки'
+                border: 'если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки',
+                //disabled_color:
+                disabled_icon: 'иконка на случай, когда кнопка "выключена" ("серая")'
             },
             stateObj:{
                 enabled: 'Если false, то кнопка "серая" и не реагирует на наведение и клики мышью. По умолчанию - true.'
@@ -151,15 +153,18 @@ function Button(p_wContainer, p_options){
     }
     this.activeVarName = (p_options.hasOwnProperty('activeVarName')) ? p_options.activeVarName : 'active';
     this.active = false;
-    var e = Traliva.createElement('<div class="traliva_kit__bn" traliva="e">' + this.title + '</div>', this);
+    var e = Traliva.createElement('<div class="traliva_kit__bn" traliva="e"></div>', this);
     if (this.icon){
-        this.e.style.background = 'url("' + p_options.icon + '")';
-        p_wContainer._onResized = (function(elem){return function(w, h){
-            elem.style.width = w + 'px';
-            elem.style.height = h + 'px';
-        };})(this.e);
+        this.e.style.border = 'none';
+        Traliva.background(this.e, p_options.icon);
+        if (typeof p_options.icon === 'string'){
+            p_wContainer._onResized = (function(elem){return function(w, h){
+                elem.style.width = w + 'px';
+                elem.style.height = h + 'px';
+            };})(this.e);
+        }
     }
-    if (p_options.hasOwnProperty('color')){
+    else if (p_options.hasOwnProperty('color')){
         this.e.style.color = p_options.color;
         this.e.style.border = '1px solid '+p_options.color;
         if (p_options.hasOwnProperty('border')){
@@ -169,13 +174,15 @@ function Button(p_wContainer, p_options){
             }
         }
     }
-    if (p_options.hasOwnProperty('icon') && p_options.hasOwnProperty('hover_icon')){
-        this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})('url("' + p_options.icon + '")'))
-        this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = c;};})('url("' + p_options.hover_icon + '")'))
-    }
-    else if (p_options.hasOwnProperty('hover_color')){
-        this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})(p_options.hover_color))
-        this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+    if (p_options.hasOwnProperty('hover_icon')){
+        if (p_options.hasOwnProperty('icon')){
+            this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})('url("' + p_options.icon + '")'))
+            this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = c;};})('url("' + p_options.hover_icon + '")'))
+        }
+        else{
+            this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})(p_options.hover_color))
+            this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+        }
     }
     this.e.addEventListener('click', function(self){return function(){
         self._onClicked();
@@ -190,7 +197,10 @@ Button.prototype.processStateChanges = function(s){
     if (this.titleVarName !== undefined){
         if (s[this.titleVarName] !== this.title){
             this.title = s[this.titleVarName] || '';
-            this.e.innerHTML = this.title;
+            if (this.icon)
+                this.e.tooltiptext = this.title;
+            else
+                this.e.innerHTML = this.title;
         }
     }
     if (s[this.activeVarName] !== this.active){
