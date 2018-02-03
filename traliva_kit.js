@@ -139,15 +139,13 @@ function Button(p_wContainer, p_options){
     if (p_options.hasOwnProperty('icon')){
         this.icon = true;
     }
+    if (p_options.hasOwnProperty('title')){
+        this.titleVarName = undefined;
+        this.title = p_options.title;
+    }
     else{
-        if (p_options.hasOwnProperty('title')){
-            this.titleVarName = undefined;
-            this.title = p_options.title;
-        }
-        else{
-            this.titleVarName = (p_options.hasOwnProperty('titleVarName')) ? p_options.titleVarName : 'title';
-            this.title = '';
-        }
+        this.titleVarName = (p_options.hasOwnProperty('titleVarName')) ? p_options.titleVarName : 'title';
+        this.title = '';
     }
     this.activeVarName = (p_options.hasOwnProperty('activeVarName')) ? p_options.activeVarName : 'active';
     this.active = false;
@@ -155,6 +153,8 @@ function Button(p_wContainer, p_options){
     if (this.icon){
         this.e.style.border = 'none';
         Traliva.background(this.e, p_options.icon);
+        if (this.title)
+            this.e.title = this.title;
         if (typeof p_options.icon === 'string'){
             p_wContainer._onResized = (function(elem){return function(w, h){
                 elem.style.width = w + 'px';
