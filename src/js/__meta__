@@ -1,10 +1,10 @@
 {
-    "files":[
+    "files": [
         {
             "target": "traliva_kit.js",
-            "source":{
+            "source": {
                 "template": "template",
-                "list":[
+                "list": [
                     "label.js",
                     "button.js",
                     "line_edit.js",
