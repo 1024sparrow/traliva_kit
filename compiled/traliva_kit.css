@@ -6,7 +6,6 @@
 .traliva_kit__label div{
     margin: 5px;
 }
-
 .traliva_kit__bn{
     color: #666;
     /*background: #eee;*/
@@ -26,7 +25,6 @@
 .traliva_kit__bn.active:hover{
     background: #fa8;
 }
-
 .traliva_kit__lineedit{
     color: #666;
     border: 1px solid #666;
@@ -38,7 +36,6 @@
 /*.traliva_kit__lineedit::placeholder{
     color: red;
 }*/
-
 .traliva_kit__fileselect{
     color: #666;
     border: 1px solid #666;
@@ -50,7 +47,6 @@
 .traliva_kit__fileselect:hover{
     background: #fa8;
 }
-
 .traliva_kit__simplelist{
     color: #48f;
     width: 100%;

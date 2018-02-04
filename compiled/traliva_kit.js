@@ -114,6 +114,7 @@ Label.prototype.processStateChanges = function(s){
         }
     }
 }
+
 p_namespace.Label = Label;
 
 registerHelp('Button', {
@@ -222,6 +223,7 @@ Button.prototype._onClicked = function(){
     this.e.className = this.active ? 'traliva_kit__bn active' : 'traliva_kit__bn';
     this._registerStateChanges();
 }
+
 p_namespace.Button = Button;
 
 registerHelp('LineEdit', {
@@ -284,6 +286,7 @@ LineEdit.prototype.processStateChanges = function(s){
     if (this.e.value !== s[this.textVarName])
         this.e.value = s[this.textVarName];
 }
+
 p_namespace.LineEdit = LineEdit;
 
 registerHelp('FileSelect', {
@@ -331,6 +334,7 @@ FileSelect.prototype.constructor = FileSelect;
 FileSelect.prototype.processStateChanges = function(s){
     //boris here: применить изменения в выбранном файле
 }
+
 p_namespace.FileSelect = FileSelect;
 
 registerHelp('SimpleList', {
@@ -454,8 +458,8 @@ SimpleList.prototype._onClicked = function(p_e){
         }
     }
 }
+
 p_namespace.SimpleList = SimpleList;
 
-//
 })(TralivaKit);
 }

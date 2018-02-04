@@ -1,0 +1,16 @@
+{
+    "files":[
+        {
+            "target": "traliva_kit.css",
+            "source":{
+                "list":[
+                    "label.css",
+                    "button.css",
+                    "line_edit.css",
+                    "file_select.css",
+                    "simple_list.css"
+                ]
+            }
+        }
+    ]
+}
