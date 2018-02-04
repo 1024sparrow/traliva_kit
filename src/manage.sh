@@ -53,13 +53,17 @@ list(){
 remove(){
     echo not implemented
     PS3="Выберите компонент, который хотите удалить:"
-    list=cat js/template/links | grep "{%%" | sed -s 's/{%% //g' | sed -s 's/.js %%}'//g | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g'
-    echo ${list[@]}
+    declare -a list_a
+    list=`cat js/template/links | grep "{%%" | sed -s 's/{%% //g' | sed -s 's/.js %%}'//g | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g'`
+    
+    counter=0
+    for i in $list;do list_a[$counter]=$i;let "counter = $counter + 1";done
+    #echo ${list[@]}
     select opt in $list "я передумал - ничего удалять не надо"; do
         case "$REPLY" in
             #$(( ${#list[@]}+1 )) ) echo "Goodbye!"; break;;
-            $(( ${#list[@]}+1 )) ) echo "Goodbye!"; break;;
-            *) echo "Некорректная опция. Попробуйте ещё раз." ;;
+            $(( ${#list_a[@]}+1 )) ) echo "Goodbye!"; break;;
+            *) echo not implemented # boris here
         esac
     done
 }
