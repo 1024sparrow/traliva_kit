@@ -51,6 +51,7 @@ list(){
 }
 
 remove(){
+    #https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script#1716
     echo not implemented
     PS3="Выберите компонент, который хотите удалить:"
     declare -a list_a
