@@ -1,9 +1,9 @@
 {
-    "files":[
+    "files": [
         {
             "target": "traliva_kit.css",
-            "source":{
-                "list":[
+            "source": {
+                "list": [
                     "label.css",
                     "button.css",
                     "line_edit.css",

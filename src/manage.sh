@@ -23,7 +23,7 @@ add(){
     echo "p_namespace.$name = $name;" >> js/template/links
 
     node -e "var a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.js');fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4));"
-    node -e "var a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.css');fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4));"
+    node -e "var a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.css');fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4));"
     touch css/$file_name.css
 
     echo "registerHelp('$name', {" > js/$file_name.js
@@ -50,6 +50,20 @@ list(){
     for i in $list;do echo $i | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g';done # camel_case to snake_case used.
 }
 
+remove_class(){
+    if [ -z $1 ];then return 1;fi
+    #echo "Выбран класс на удаление: $1"
+    name=$1
+    file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
+    rm js/${file_name}.js css/${file_name}.css
+    # удаляем из js/template/links
+    cat js/template/links | tr '\n' '\r' | sed "s/\r{%% $file_name.js %%}\rp_namespace.$name = $name;//" | tr '\r' '\n' > js/template/links
+    # удаляем из js/__meta__
+    node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$file_name.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
+    # удаляем из css/__meta__
+    node -e " var i, a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$file_name.css'){ list.splice(i, 1); break; } } fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4)); "
+}
+
 remove(){
     #https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script#1716
     echo not implemented
@@ -63,8 +77,9 @@ remove(){
     select opt in $list "я передумал - ничего удалять не надо"; do
         case "$REPLY" in
             #$(( ${#list[@]}+1 )) ) echo "Goodbye!"; break;;
-            $(( ${#list_a[@]}+1 )) ) echo "Goodbye!"; break;;
-            *) echo not implemented # boris here
+            $(( ${#list_a[@]}+1 )) ) echo "Ничего не удалено";break;;
+            #*) echo not implemented # boris here
+            *) remove_class ${list_a[$REPLY - 1]} && break;;
         esac
     done
 }

@@ -12,3 +12,4 @@ p_namespace.FileSelect = FileSelect;
 
 {%% simple_list.js %%}
 p_namespace.SimpleList = SimpleList;
+
