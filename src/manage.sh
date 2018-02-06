@@ -66,7 +66,6 @@ remove_class(){
 
 remove(){
     #https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script#1716
-    echo not implemented
     PS3="Выберите компонент, который хотите удалить:"
     declare -a list_a
     list=`cat js/template/links | grep "{%%" | sed -s 's/{%% //g' | sed -s 's/.js %%}'//g | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g'`
