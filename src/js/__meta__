@@ -9,8 +9,7 @@
                     "button.js",
                     "line_edit.js",
                     "file_select.js",
-                    "simple_list.js",
-                    "stub_widget.js"
+                    "simple_list.js"
                 ]
             }
         }
