@@ -8,6 +8,7 @@ registerHelp('Button', {
                 color: 'цвет текста',
                 hover_color: 'цвет фона при наведении мышью',
                 hover_icon: 'иконка при наведении мышью. Работает только, если указана опция \'icon\'',
+                active_icon: 'иконка, которая устанавливается в случае, коогда кнопка нажата',
                 border: 'если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {color: ... , radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки',
                 //disabled_color:
                 disabled_icon: 'иконка на случай, когда кнопка "выключена" ("серая")'
@@ -18,6 +19,7 @@ registerHelp('Button', {
         });
 function Button(p_wContainer, p_options){
     Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);
+    this.options = p_options;
     if (p_options.hasOwnProperty('icon')){
         this.icon = true;
     }
@@ -101,6 +103,13 @@ Button.prototype.processStateChanges = function(s){
 Button.prototype._onClicked = function(){
     this.active = !this.active;
     this._state[this.activeVarName] = this.active;
-    this.e.className = this.active ? 'traliva_kit__bn active' : 'traliva_kit__bn';
+    if (this.icon){
+        if (this.options.hasOwnProperty('active_icon')){
+            Traliva.background(this.e, this.options[this.active ? 'active_icon' : 'icon']);
+        }
+    }
+    else{
+        this.e.className = this.active ? 'traliva_kit__bn active' : 'traliva_kit__bn';
+    }
     this._registerStateChanges();
 }

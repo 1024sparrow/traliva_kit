@@ -9,7 +9,8 @@
                     "button.js",
                     "line_edit.js",
                     "file_select.js",
-                    "simple_list.js"
+                    "simple_list.js",
+                    "tree.js"
                 ]
             }
         }
