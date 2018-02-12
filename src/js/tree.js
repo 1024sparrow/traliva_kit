@@ -8,6 +8,7 @@ registerHelp('Tree', {
         //updates. Имеется ввиду автоматическое обновление дерева, в случае, когда данные изменились на сервере. Для ручного изменения данных используйте объект changes.
         // Обновления пока не поддерживаются - когда надо будет, надо будет в Тралива включать Инициатор (агент обратной связи с сервером), и изменения в дереве получат ьчерез тот агент.
         //updates: 'объект. Поля: "initiator" - ; "interval" - интервал между запросами изменений в миллисекундах; "url" - сетевой адрес, по которому запрашивать изменения дерева.'
+        color: 'цвет текста',
         guiElements: 'Объект, характеризующий отображение элементов дерева. Поля:\n\ttreeicons_sprite - путь к спрайту, содержащем набор линий и узлов в разных состояниях\n\ttreeicons_w - ширина элемента спрайта (в пикселях)\n\ttreeicons_h - высота элемента спрайта (в пикселях)\n\tstates_sprite - путь к спрайту, содержащем набор иконок для разных состояний узла дерева\n\tstates_w - ширина элемента спрайта (в пикселях)\n\tstates_h - высота элемента спрайта (в пикселях)'
     },
     //stateObj:{},
@@ -73,7 +74,7 @@ function Tree(p_wContainer, p_options){
     eDest.className = '__treeview';
     eDest.style.overflow = "auto";
     eDest.appendChild(this.eTable);
-    this.__createElementForObject(undefined, this._getChildren());
+    //this.__createElementForObject(undefined, this._getChildren());
     //eDest.style.background = "rgb(194,194,193)";
     //eDest.style.background = "url(treeicons.png) no-repeat";
     //eDest.style.background = "url(treeicons.png) repeat-x";//boris here
@@ -255,7 +256,7 @@ Tree.prototype.__onRowClicked = function(id){
     }
 };
 Tree.prototype.__createElementForObject = function(wsObject, children){
-    //var children = this._getChildren(wsObject);
+    var children = this._getChildren(children);
     var treeData = this._state;
     if (treeData){
         if (treeData.removed){
@@ -273,6 +274,7 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
     for (var i = children.length - 1 ; i >= 0 ; i--){
         var oChild = children[i];
         var eRow = document.createElement('tr');
+        eRow.style.color = this.options.color || '#fff';
         eRow.className = "row";
         //var eDiv = document.createElement("div");//<-----------
         var eFirstColTable = document.createElement('table');
@@ -428,4 +430,7 @@ Tree.prototype.processStateChanges = function(s){
     if (!s)
         console.error('epic fail');
     // ...
+    if (s.changes)
+        //
+        this.__createElementForObject(undefined, this._getChildren());
 }
