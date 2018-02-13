@@ -76,7 +76,7 @@ function Tree(p_wContainer, p_options){
     }*/
     
     var eDest = document.createElement('div');
-    eDest.className = '__treeview';
+    eDest.className = 'traliva_kit__tree';
     eDest.style.overflow = "auto";
     eDest.appendChild(this.eTable);
     //this.__createElementForObject(undefined, this._getChildren());
@@ -86,7 +86,8 @@ function Tree(p_wContainer, p_options){
     //eDest.style.backgroundPositionY = '0 -160px';
     eDest.style.cursor = 'default';
     
-    var stylePrefix = ".__treeview ";
+    //var stylePrefix = ".__treeview ";
+    var stylePrefix = ".traliva_kit__tree ";
     var eGlobalStylesheet = document.createElement('style');
     document.head.appendChild(eGlobalStylesheet);
     var vitrinaStylesheet = eGlobalStylesheet.sheet;
