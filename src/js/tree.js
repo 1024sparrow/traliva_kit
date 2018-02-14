@@ -116,24 +116,45 @@ Tree.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 Tree.prototype.constructor = Tree;
 
 Tree.prototype._getChildren = function(parentObject){//<-- необходимо переопределить
+    var i, o;
     if (this.options.hasOwnProperty('getChildren'))
         return this.options.getChildren(parentObject ? parentObject.id : undefined);
-    var sourcePath = this.options.getChildrenUrl(parentObject ? parentObject.id : undefined);
-    var self = this;
-    Traliva.ajax({
-        sourcePath: sourcePath,
-        readyFunc:function(result){
-            var childrenObj = JSON.parse(result);
-            if (parentObject){
-                for (var i = 0 ; i < childrenObj.length ; i++){
-                    childrenObj[i].parentId = parentObject.id;
+    else if (this.options.hasOwnProperty('getChildrenUrl')){
+        var sourcePath = this.options.getChildrenUrl(parentObject ? parentObject.id : undefined);
+        var self = this;
+        Traliva.ajax({
+            sourcePath: sourcePath,
+            readyFunc:function(result){
+                var childrenObj = JSON.parse(result);
+                if (parentObject){
+                    for (i = 0 ; i < childrenObj.length ; i++){
+                        childrenObj[i].parentId = parentObject.id;
+                    }
                 }
+                var changes = {added:childrenObj};
+                self._applyChanges(changes);
             }
-            var changes = {added:childrenObj};
-            self._applyChanges(changes);
+        });
+        return [];//
+    }
+    else{ // работаеи по свойству this._state.data
+        var retVal;
+        if (parentObject === undefined){
+            if (this._state.hasOwnProperty('data') && this._state.data.length){
+                retVal = this._state.data;
+            }
+            else
+                return [];
         }
-    });
-    return [];//
+        else
+            retVal = parentObject.chi;
+        for (i = 0 ; i < retVal.length ; i++){
+            o = retVal[i];
+            o.hasChildren = (o.hasOwnProperty('chi') && o.chi.length) ? true : false;
+        }
+        return retVal;
+    }
+
 /*  if (parentObject === undefined)
         return [{id:111,name:"1 мсв",hasChildren:true,state:0}];
     else{
@@ -236,6 +257,8 @@ Tree.prototype.__removeObjectChildren = function(o){
     }
     delete o.children;
     
+    if (!treeData.hasOwnProperty('removed'))
+            treeData.removed = [];
     for (var i = candidates.length - 1 ; i >= 1 ; i--){
         var candidateId = candidates[i].id;
         treeData.removed.push(candidateId);
@@ -263,6 +286,7 @@ Tree.prototype.__onRowClicked = function(id){
 };
 Tree.prototype.__createElementForObject = function(wsObject, children){
     //var children = this._getChildren(children);
+    //if ((this.options.hasOwnProperty('getChildren')) || (this.options.hasOwnProperty('getChildrenUrl'))){
     var treeData = this._state;
     if (treeData){
         if (treeData.removed){
@@ -438,8 +462,9 @@ Tree.prototype.processStateChanges = function(s){
         console.error('epic fail');
     var i;
     if (s.changes){
-        if (s.changes === true)
+        if (s.changes === true){
             this.__createElementForObject(undefined, this._getChildren());
+        }
         else
             this._applyChanges(s.changes);
         if (this.options.shared === false){
