@@ -262,7 +262,6 @@ Tree.prototype.__onRowClicked = function(id){
     }
 };
 Tree.prototype.__createElementForObject = function(wsObject, children){
-    window.alert('>>>> '+JSON.stringify(children)+' <<<<');
     //var children = this._getChildren(children);
     var treeData = this._state;
     if (treeData){
@@ -300,9 +299,10 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
         }
         else
             oChild.level = (i === (children.length - 1)) ? [0] : [1];
-        console.log('**************');
-        console.log(oChild.element)
-        console.log(oChild.level);
+        //console.log('**************');
+        //console.log(oChild.element)
+        //console.log(oChild.level);
+
         //eDiv.style.width = "100%";
         //eDiv.style.height = "20px";
         
@@ -345,7 +345,6 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
                         }
                         else{//это плюс
                             div.className = ('line_' + (param ? 4 : 3));
-                            window.alert('%%%% '+JSON.stringify(object)+' %%%%');
                             wsTree.__createElementForObject(object, wsTree._getChildren(object));
                         }
                     }
