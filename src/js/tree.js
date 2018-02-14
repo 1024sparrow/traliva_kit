@@ -263,7 +263,7 @@ Tree.prototype.__onRowClicked = function(id){
 };
 Tree.prototype.__createElementForObject = function(wsObject, children){
     window.alert('>>>> '+JSON.stringify(children)+' <<<<');
-    var children = this._getChildren(children);
+    //var children = this._getChildren(children);
     var treeData = this._state;
     if (treeData){
         if (treeData.removed){
