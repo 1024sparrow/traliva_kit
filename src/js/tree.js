@@ -402,7 +402,6 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
         if (oChild.hasOwnProperty('d') && (typeof oChild.d == 'object') && (oChild.d instanceof Array) && oChild.d.length){
             if (oChild.d[0].hasOwnProperty('e')){
                 this.setDataToColumn(0, eTitle, oChild.d[0].e)
-                eTitle.innerHTML = JSON.stringify(oChild.d[0].level);
             }
         }
         
