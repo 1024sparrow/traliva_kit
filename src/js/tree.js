@@ -400,9 +400,7 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
         this.initializeDivForColumn(0, eTitle);
         var text = '<span style="color:#888;">Без названия</span>';
         if (oChild.hasOwnProperty('d') && (typeof oChild.d == 'object') && (oChild.d instanceof Array) && oChild.d.length){
-            if (oChild.d[0].hasOwnProperty('e')){
-                this.setDataToColumn(0, eTitle, oChild.d[0].e)
-            }
+            this.setDataToColumn(0, eTitle, oChild.d[0])
         }
         
         var eCell = eFirstColTableRow.insertCell();
@@ -433,7 +431,7 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
                 var eColSecond = eRow.insertCell();
                 var eDiv = document.createElement('div');
                 this.initializeDivForColumn(ii, eDiv);
-                this.setDataToColumn(ii, eDiv, oChild.d[ii].e)
+                this.setDataToColumn(ii, eDiv, oChild.d[ii])
                 eColSecond.appendChild(eDiv);
             }
         }
@@ -453,7 +451,16 @@ Tree.prototype.expand = function(row){
 Tree.prototype.initializeDivForColumn = function(col, div){
 }
 Tree.prototype.setDataToColumn = function(col, element, data){//Это базовая реализация. Переопределите, если у вас не простейший случай (когда тупо текст).
-    element.innerHTML = data || '';
+    var cand;
+    if (typeof data === 'string')
+        cand = data;
+    else if (typeof data === 'object')
+        cand = data.e;
+    else
+        //cand = '';
+        cand = typeof data;
+
+    element.innerHTML = cand;
 }
 
 Tree.prototype.processStateChanges = function(s){
