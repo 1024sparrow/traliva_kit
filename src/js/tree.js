@@ -104,10 +104,8 @@ function Tree(p_wContainer, p_options){
             vitrinaStylesheet.insertRule(stylePrefix + '.line_' + i + '{background:url(' + a + ') no-repeat;background-position: 0 ' + tmp + '}', 1);
             vitrinaStylesheet.insertRule(stylePrefix + '.selectedRow .line_' + i + '{background:url(' + a + ') no-repeat;background-position: -' + a0.treeicons_w + 'px ' + tmp + '}', 1);
         }
-//        vitrinaStylesheet.insertRule(stylePrefix + '.row{background:url(' + a + ') repeat-x;background-position: 0 -160px}', 1);
-//        vitrinaStylesheet.insertRule(stylePrefix + '.row .selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -200px}', 1);
         vitrinaStylesheet.insertRule(stylePrefix + '.row{background:url(' + a + ') repeat-x;background-position: 0 -' + (8 * a0.treeicons_h) + 'px}', 1);
-        //vitrinaStylesheet.insertRule(stylePrefix + '.row.selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -' + (10 * a0.treeicons_h) + 'px}', 1);
+        vitrinaStylesheet.insertRule(stylePrefix + '.row:hover{background:url(' + a + ') repeat-x;background-position: 0 -' + (11 * a0.treeicons_h) + 'px}', 1);
         vitrinaStylesheet.insertRule(stylePrefix + '.selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -' + (10 * a0.treeicons_h) + 'px}', 1);
     }
     
