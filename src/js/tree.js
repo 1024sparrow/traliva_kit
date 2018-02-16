@@ -308,6 +308,7 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
         eRow.className = "row";
         //var eDiv = document.createElement("div");//<-----------
         var eFirstColTable = document.createElement('table');
+        //eFirstColTable.width = '100%';//boris debug
         eFirstColTable.style.padding = 0;
         eFirstColTable.style.borderSpacing = '0';
         var eFirstColTableRow = eFirstColTable.insertRow();
@@ -422,9 +423,12 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
             var func = function(){
                 manager.__onRowClicked(id);
             };
-            eIcon.onclick = func;
-            eTitle.onclick = func;
+            //eIcon.onclick = func;
+            //eTitle.onclick = func;
+            //eCol.addEventListener('click', func);
+            eRow.addEventListener('click', func);
         })(this, oChild.id);
+        //var func = (function(self, rowId){return function(){};})(this, oChild.id);
 
         if (oChild.hasOwnProperty('d') && (typeof oChild.d == 'object') && (oChild.d instanceof Array) && oChild.d.length){
             for (var ii = 1 ; ii < oChild.d.length ; ii++){
