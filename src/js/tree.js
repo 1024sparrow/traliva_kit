@@ -65,7 +65,8 @@ function Tree(p_wContainer, p_options){
     this.eTable.style.width = "100%";
     this.eTable.style.tableLayout = "fixed";
     this.eTable.style.borderSpacing = "0";
-    this.__objectMap = {};//eDiv by id
+    this.__objectMap = {};//eDiv by id. Это содержимое первой колонки.
+    this.__rowMap = {};// eTr by id. Это вся строка. Это для того, чтобы ставить/снимать className="row selectedRow" <--> "row"
     this.__objects = {};//object by id
     this.__currentRow = -1;
     /*if (this._getUpdatesUrl){
@@ -106,7 +107,8 @@ function Tree(p_wContainer, p_options){
 //        vitrinaStylesheet.insertRule(stylePrefix + '.row{background:url(' + a + ') repeat-x;background-position: 0 -160px}', 1);
 //        vitrinaStylesheet.insertRule(stylePrefix + '.row .selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -200px}', 1);
         vitrinaStylesheet.insertRule(stylePrefix + '.row{background:url(' + a + ') repeat-x;background-position: 0 -' + (8 * a0.treeicons_h) + 'px}', 1);
-        vitrinaStylesheet.insertRule(stylePrefix + '.row .selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -' + (10 * a0.treeicons_h) + 'px}', 1);
+        //vitrinaStylesheet.insertRule(stylePrefix + '.row.selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -' + (10 * a0.treeicons_h) + 'px}', 1);
+        vitrinaStylesheet.insertRule(stylePrefix + '.selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -' + (10 * a0.treeicons_h) + 'px}', 1);
     }
     
     p_wContainer.setContent(eDest);
@@ -272,10 +274,12 @@ Tree.prototype.__onRowClicked = function(id){
         return;
     var treeData = this._state;
     if (this.__objectMap.hasOwnProperty(this.__currentRow)){
-        this.__objectMap[this.__currentRow].className = "";
+        //this.__objectMap[this.__currentRow].className = "";
+        this.__objects[this.__currentRow].element.className = "row";
     }
     if (this.__objectMap.hasOwnProperty(id)){
-        this.__objectMap[id].className = "selectedRow";
+        //this.__objectMap[id].className = "selectedRow";
+        this.__objects[id].element.className = "selectedRow";
         this.__currentRow = id;
         treeData.selected = id;
         this._registerStateChanges();
