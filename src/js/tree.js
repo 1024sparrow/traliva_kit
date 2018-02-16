@@ -419,16 +419,12 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
         eCol.appendChild(eFirstColTable);
         eRow.appendChild(eCol);
 
-        (function(manager, id){
-            var func = function(){
-                manager.__onRowClicked(id);
-            };
-            //eIcon.onclick = func;
-            //eTitle.onclick = func;
-            //eCol.addEventListener('click', func);
-            eRow.addEventListener('click', func);
-        })(this, oChild.id);
-        //var func = (function(self, rowId){return function(){};})(this, oChild.id);
+        eRow.addEventListener('click', (function(manager, id){return function(e){
+            //window.alert(e.target.className);//line_8
+            if (e.target.className)
+                return;
+            manager.__onRowClicked(id);
+        };})(this, oChild.id));
 
         if (oChild.hasOwnProperty('d') && (typeof oChild.d == 'object') && (oChild.d instanceof Array) && oChild.d.length){
             for (var ii = 1 ; ii < oChild.d.length ; ii++){
