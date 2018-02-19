@@ -178,7 +178,15 @@ Tree.prototype._getChildren = function(parentObject){//<-- необходимо 
     */
 };
 
+Tree.prototype.__cleanUp = function(){
+}
+
 Tree.prototype._applyChanges = function(changes){
+    if (changes === true){
+        this.__cleanUp();
+        this.__createElementForObject(undefined, this._getChildren());
+        return;
+    }
     if (changes.removed){
     }
     if (changes.changed){
@@ -437,10 +445,24 @@ Tree.prototype.__createElementForObject = function(wsObject, children){
                 eColSecond.appendChild(eDiv);
             }
         }
-        if (wsObject)
-            wsObject.element.parentNode.insertBefore(eRow, wsObject.element.nextSibling);
-        else
+        if (wsObject){
+            // дочерний у некоего элемента
+            //wsObject.element.parentNode.insertBefore(eRow, wsObject.element.nextSibling);
+
+            //this.__objects[]
+            //wsObject.element.parentNode.insertAfter(eRow, wsObject.children[wsObject.children.length - 1].element);
+            //wsObject.element.parentNode.after(eRow, wsObject.children[wsObject.children.length - 1].element);
+            if (wsObject.hasOwnProperty('children') && wsObject.children.length)
+                //;//
+                wsObject.element.parentNode.after(eRow, wsObject.children[0].element);
+            else
+                wsObject.element.parentNode.insertBefore(eRow, wsObject.element.nextSibling);
+        }
+        else {
+            // корневой элемент
+            window.alert('!!!');
             this.eTable.appendChild(eRow);
+        }
     }
 };
 Tree.prototype.reset = function(){
@@ -470,11 +492,7 @@ Tree.prototype.processStateChanges = function(s){
         console.error('epic fail');
     var i;
     if (s.changes){
-        if (s.changes === true){
-            this.__createElementForObject(undefined, this._getChildren());
-        }
-        else
-            this._applyChanges(s.changes);
+        this._applyChanges(s.changes);
         if (this.options.shared === false){
             s.changes = undefined;
             this._registerStateChanges();
