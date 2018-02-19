@@ -1,0 +1,73 @@
+function Tree(p_wContainer, p_options){
+    if (!p_options)
+        console.error('Tree: options must be set');
+    if (!p_options.hasOwnProperty('guiElements'))
+        p_options.guiElements = {};
+    (function(p){
+        if (!p.hasOwnProperty('treeicons_sprite'))
+            p.treeicons_sprite = undefined;
+        if (!p.hasOwnProperty('states_sprite'))
+            p.states_sprite = undefined;
+        p.treeicons_w = p.treeicons_w || 0;
+        p.treeicons_h = p.treeicons_h || 0;
+        p.states_w = p.states_w || 0;
+        p.states_h = p.states_h || 0;
+        if (p.states_w > p.treeicons_w)
+            p.states_w = p.treeicons_w;
+        if (p.states_h > p.treeicons_h)
+            p.states_h = p.treeicons_h;
+    })(p_options.guiElements);
+    this._guielements = p_options.guiElements;
+
+    this.options = p_options;
+    Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);
+    this.eTable = document.createElement('table');
+    this.eTable.style.width = "100%";
+    this.eTable.style.tableLayout = "fixed";
+    this.eTable.style.borderSpacing = "0";
+    this.__objectMap = {};//eDiv by id. Это содержимое первой колонки.
+    this.__rowMap = {};// eTr by id. Это вся строка. Это для того, чтобы ставить/снимать className="row selectedRow" <--> "row"
+    this.__objects = {};//object by id
+    this.__currentRow = -1;
+    /*if (this._getUpdatesUrl){
+        (function(myself){
+            var func = function(){myself.__onUpdateTimer();};
+            myself.intervalID = window.setInterval(func, 1000);
+        })(this);
+    }*/
+    
+    var eDest = document.createElement('div');
+    eDest.className = 'traliva_kit__tree';
+    eDest.style.overflow = "auto";
+    eDest.appendChild(this.eTable);
+    //this.__createElementForObject(undefined, this._getChildren());
+    //eDest.style.background = "rgb(194,194,193)";
+    //eDest.style.background = "url(treeicons.png) no-repeat";
+    //eDest.style.background = "url(treeicons.png) repeat-x";//boris here
+    //eDest.style.backgroundPositionY = '0 -160px';
+    eDest.style.cursor = 'default';
+    
+    //var stylePrefix = ".__treeview ";
+    var stylePrefix = ".traliva_kit__tree ";
+    var eGlobalStylesheet = document.createElement('style');
+    document.head.appendChild(eGlobalStylesheet);
+    var vitrinaStylesheet = eGlobalStylesheet.sheet;
+    vitrinaStylesheet.insertRule(stylePrefix + "*{cursor: default;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;-o-user-select: none;user-select: none;}", 0);
+    if (this._guielements.treeicons_sprite){
+        var a0 = this._guielements;
+        var a = a0.treeicons_sprite;
+        var i, tmp;
+        for (i = 0 ; i <= 10 ; i++){
+            tmp = i * a0.treeicons_h;
+            if (tmp > 0)
+                tmp = '-' + tmp + 'px';
+            vitrinaStylesheet.insertRule(stylePrefix + '.line_' + i + '{background:url(' + a + ') no-repeat;background-position: 0 ' + tmp + '}', 1);
+            vitrinaStylesheet.insertRule(stylePrefix + '.selectedRow .line_' + i + '{background:url(' + a + ') no-repeat;background-position: -' + a0.treeicons_w + 'px ' + tmp + '}', 1);
+        }
+        vitrinaStylesheet.insertRule(stylePrefix + '.row{background:url(' + a + ') repeat-x;background-position: 0 -' + (8 * a0.treeicons_h) + 'px}', 1);
+        vitrinaStylesheet.insertRule(stylePrefix + '.row:hover{background:url(' + a + ') repeat-x;background-position: 0 -' + (11 * a0.treeicons_h) + 'px}', 1);
+        vitrinaStylesheet.insertRule(stylePrefix + '.selectedRow{background:url(' + a + ') repeat-x;background-position: 0 -' + (10 * a0.treeicons_h) + 'px}', 1);
+    }
+    
+    p_wContainer.setContent(eDest);
+}

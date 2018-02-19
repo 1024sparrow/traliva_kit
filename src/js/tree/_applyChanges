@@ -1,0 +1,62 @@
+Tree.prototype._applyChanges = function(changes){
+    if (changes === true){
+        this.__cleanUp();
+        this.__createElementForObject(undefined, this._getChildren());
+        return;
+    }
+    if (changes.removed){
+    }
+    if (changes.changed){
+        for (var i = 0 ; i < changes.changed.length ; i++){
+            var item = changes.changed[i];
+            var id = item.id;
+            if (!this.__objectMap.hasOwnProperty(id)){
+                console.log("Error! server make update me an item, that I have not!");
+                continue;
+            }
+
+            var newState = item.state;
+            var eRowDiv = this.__objectMap[id];
+            for (var ii = 0 ; ii < eRowDiv.childNodes.length ; ii++){
+                if (eRowDiv.childNodes[ii].classList.contains("icon_container")){
+                    eRowDiv.childNodes[ii].style.backgroundPosition = "-"+(parseInt(newState) * 16).toString()+"px 0px";
+                }
+            }
+        }
+    }
+    if (changes.added){
+        //console.log('added: '+changes.added);
+        for (var i = 0 ; i < changes.added.length ; i++){
+            //console.log(JSON.stringify(changes.added[i]));
+            var o = changes.added[i];
+            if (this.__objects.hasOwnProperty(o.id))
+                this.__removeObjectChildren(o);
+        }
+        var groupsByParentId = {};
+        for (var i = 0 ; i < changes.added.length ; i++){
+            var o = changes.added[i];
+            if (!o.hasOwnProperty('parentId')){
+                if (!groupsByParentId.hasOwnProperty('-1'))
+                    groupsByParentId[-1] = [];
+                groupsByParentId[-1].unshift(o);
+            }
+            else{
+                var parentId = o.parentId;
+                if (!groupsByParentId.hasOwnProperty(parentId))
+                    groupsByParentId[parentId] = [];
+                groupsByParentId[parentId].push(o);
+            }
+        }
+        for (var i in groupsByParentId){
+            var oParent;//leave undefined
+            if (i >= 0){
+                oParent = this.__objects[i];
+                if (!oParent){
+                    console.log('epic fail');
+                    continue;
+                }
+            }
+            this.__createElementForObject(oParent, groupsByParentId[i])
+        }
+    }
+}

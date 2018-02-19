@@ -1,0 +1,46 @@
+{%% help %%}
+
+{%% constructor %%}
+
+Tree.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
+Tree.prototype.constructor = Tree;
+
+{%% _getChildren %%}
+
+{%% __cleanUp %%}
+
+{%% _applyChanges %%}
+
+{%% __removeObjectChildren %%}
+
+{%% __onRowClicked %%}
+
+{%% __createElementForObject %%}
+
+
+Tree.prototype.reset = function(){
+    this.eTable.innerHTML = "";
+    this.__createElementForObject();
+    return;
+};
+
+Tree.prototype.expand = function(row){
+}
+
+Tree.prototype.initializeDivForColumn = function(col, div){
+}
+
+Tree.prototype.setDataToColumn = function(col, element, data){//Это базовая реализация. Переопределите, если у вас не простейший случай (когда тупо текст).
+    var cand;
+    if (typeof data === 'string')
+        cand = data;
+    else if (typeof data === 'object')
+        cand = data.e;
+    else
+        //cand = '';
+        cand = typeof data;
+
+    element.innerHTML = cand;
+}
+
+{%% processStateChanges %%}

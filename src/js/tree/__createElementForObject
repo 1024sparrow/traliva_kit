@@ -1,0 +1,171 @@
+Tree.prototype.__createElementForObject = function(wsObject, children){
+    //var children = this._getChildren(children);
+    //if ((this.options.hasOwnProperty('getChildren')) || (this.options.hasOwnProperty('getChildrenUrl'))){
+    var treeData = this._state;
+    if (treeData){
+        if (treeData.removed){
+            for (var i = children.length - 1 ; i >= 0 ; i--){
+                var ii = treeData.removed.indexOf(children[i].id);
+                if (ii >= 0)
+                    treeData.removed.splice(ii, 1);
+            }
+        }
+    }
+    this._registerStateChanges();
+    if (wsObject){
+        wsObject.children = children;
+    }
+    for (var i = children.length - 1 ; i >= 0 ; i--){
+        var oChild = children[i];
+        var eRow = document.createElement('tr');
+        eRow.style.color = this.options.color || '#fff';
+        eRow.className = "row";
+        //var eDiv = document.createElement("div");//<-----------
+        var eFirstColTable = document.createElement('table');
+        //eFirstColTable.width = '100%';//boris debug
+        eFirstColTable.style.padding = 0;
+        eFirstColTable.style.borderSpacing = '0';
+        var eFirstColTableRow = eFirstColTable.insertRow();
+        eFirstColTableRow.style.height = this._guielements.states_h.toString() + 'px';
+        eFirstColTableRow.style.minHeight = this._guielements.states_h.toString() + 'px';
+        eFirstColTableRow.style.maxHeight = this._guielements.states_h.toString() + 'px';
+        eFirstColTableRow.style.padding = 0;
+        this.__objectMap[oChild.id] = eFirstColTableRow;
+        this.__objects[oChild.id] = oChild;
+        oChild.element = eRow;//eDiv;
+        if (wsObject){
+            oChild.level = wsObject.level.concat(i === (children.length - 1) ? 1 : 0);
+        }
+        else
+            oChild.level = (i === (children.length - 1)) ? [0] : [1];
+        //console.log('**************');
+        //console.log(oChild.element)
+        //console.log(oChild.level);
+
+        //eDiv.style.width = "100%";
+        //eDiv.style.height = "20px";
+        
+        //eDiv.style.border = "1px solid #f00";
+        //eDiv.style.color = "#fff";
+        //eDiv.style.padding = "0 0 0 "+(oChild.level*constSingleLevelPadding)+"px";//insert (oChild.level) images instead (lines from sprite)
+        
+        //eDiv.style.padding = 0;
+
+        for (var ii = 0 ; ii < (oChild.level.length - 1) ; ii++){
+            (function(self, num){
+                //console.log(oChild.level[num]);
+                var eLineElement = document.createElement("div");
+                eLineElement.className = 'lineelement';
+                //eLineElement.style.display = "inline-block";
+                eLineElement.style.width = self._guielements.treeicons_w.toString() + 'px';
+                eLineElement.style.height = self._guielements.treeicons_h.toString() + 'px';
+                var a = oChild.level[ii] ? 8 : 0;
+                eLineElement.className = ('line_' + a);
+                var eCell = eFirstColTableRow.insertCell();
+                eCell.style.padding = 0;
+                eCell.appendChild(eLineElement);
+            })(this, ii);
+        }
+        if (oChild.level.length){
+            var param = oChild.level[oChild.level.length - 1];
+            var eLineElement = document.createElement("div");
+            eLineElement.className = 'lineelement';
+            //eLineElement.style.display = "inline-block";
+            eLineElement.style.width = this._guielements.treeicons_w.toString() + 'px';
+            eLineElement.style.height = this._guielements.treeicons_h.toString() + 'px';
+            
+            if (oChild.hasChildren){
+                eLineElement.className = ('line_' + (param ? 7 : 6));
+                (function(object, div, wsTree){
+                    div.onclick = function(){
+                        if (object.children){//это минус
+                            div.className = ('line_' + (param ? 7 : 6));
+                            wsTree.__removeObjectChildren(object);
+                        }
+                        else{//это плюс
+                            div.className = ('line_' + (param ? 4 : 3));
+                            wsTree.__createElementForObject(object, wsTree._getChildren(object));
+                        }
+                    }
+                })(oChild, eLineElement, this);
+            }
+            else{
+                eLineElement.className = ('line_' + (param ? 2 : 1));
+            }
+            var eCell = eFirstColTableRow.insertCell();
+            eCell.style.padding = 0;
+            eCell.appendChild(eLineElement);
+        }
+        var eIcon = document.createElement("div");
+        eIcon.className += "icon_container";
+        //eIcon.src = "icons/state_" + oChild.state + ".png";
+        //eIcon.style.display = "inline-block";
+        eIcon.style.height = this._guielements.states_h.toString() + 'px';
+        eIcon.style.width = this._guielements.states_w.toString() + 'px';
+        //eIcon.style.background = "black";
+        eIcon.style.background = 'url(' + this._guielements.states_sprite + ') no-repeat';
+        //eIcon.style.backgroundSize = "16px";//картинка сама должна быть такого размера!
+        eIcon.style.backgroundPosition = "-"+
+            (parseInt(oChild.state) * this._guielements.states_w).toString() +
+            "px 0";
+        //eIcon.style.border = "2px solid red";
+        //eIcon.style.border = "2px solid rgb(194,194,193)";
+        
+        var eTitle = document.createElement("div");
+        this.initializeDivForColumn(0, eTitle);
+        var text = '<span style="color:#888;">Без названия</span>';
+        if (oChild.hasOwnProperty('d') && (typeof oChild.d == 'object') && (oChild.d instanceof Array) && oChild.d.length){
+            this.setDataToColumn(0, eTitle, oChild.d[0])
+        }
+        
+        var eCell = eFirstColTableRow.insertCell();
+        eCell.style.padding = 0;
+        eCell.appendChild(eIcon);
+        eCell = eFirstColTableRow.insertCell();
+        eCell.style.padding = 0;
+        eCell.appendChild(eTitle);
+        /*eDiv.style.maxHeight = "20px";
+        eDiv.style.fontSize = "12px";
+        eDiv.style.fontFamily = "'Open Sans', sans-serif";*/
+        
+        var eCol = document.createElement('td');
+        eCol.style.padding = "0";
+        eCol.appendChild(eFirstColTable);
+        eRow.appendChild(eCol);
+
+        eRow.addEventListener('click', (function(manager, id){return function(e){
+            //window.alert(e.target.className);//line_8
+            if (e.target.className)
+                return;
+            manager.__onRowClicked(id);
+        };})(this, oChild.id));
+
+        if (oChild.hasOwnProperty('d') && (typeof oChild.d == 'object') && (oChild.d instanceof Array) && oChild.d.length){
+            for (var ii = 1 ; ii < oChild.d.length ; ii++){
+                var eColSecond = eRow.insertCell();
+                var eDiv = document.createElement('div');
+                this.initializeDivForColumn(ii, eDiv);
+                this.setDataToColumn(ii, eDiv, oChild.d[ii])
+                eColSecond.appendChild(eDiv);
+            }
+        }
+        if (wsObject){
+            // дочерний у некоего элемента
+            //wsObject.element.parentNode.insertBefore(eRow, wsObject.element.nextSibling);
+
+            //this.__objects[]
+            //wsObject.element.parentNode.insertAfter(eRow, wsObject.children[wsObject.children.length - 1].element);
+            //wsObject.element.parentNode.after(eRow, wsObject.children[wsObject.children.length - 1].element);
+            if (wsObject.hasOwnProperty('children') && wsObject.children.length)
+                //;//
+                wsObject.element.parentNode.after(eRow, wsObject.children[0].element);
+            else
+                wsObject.element.parentNode.insertBefore(eRow, wsObject.element.nextSibling);
+        }
+        else {
+            // корневой элемент
+            window.alert('!!!');
+            this.eTable.appendChild(eRow);
+        }
+    }
+};

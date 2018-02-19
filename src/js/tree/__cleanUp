@@ -1,0 +1,2 @@
+Tree.prototype.__cleanUp = function(){
+}

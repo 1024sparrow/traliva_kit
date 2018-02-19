@@ -1,0 +1,21 @@
+{
+    "files":[
+        {
+            "target": "tree.js",
+            "source":{
+                "template": "template",
+                "list":[
+                    "help",
+                    "constructor",
+                    "_getChildren",
+                    "__cleanUp",
+                    "_applyChanges",
+                    "__removeObjectChildren",
+                    "__onRowClicked",
+                    "__createElementForObject",
+                    "processStateChanges"
+                ]
+            }
+        }
+    ]
+}
