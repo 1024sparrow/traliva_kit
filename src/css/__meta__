@@ -8,8 +8,7 @@
                     "button.css",
                     "line_edit.css",
                     "file_select.css",
-                    "simple_list.css",
-                    "tree.css"
+                    "simple_list.css"
                 ]
             }
         }

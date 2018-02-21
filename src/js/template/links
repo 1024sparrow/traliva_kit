@@ -12,6 +12,3 @@ p_namespace.FileSelect = FileSelect;
 
 {%% simple_list.js %%}
 p_namespace.SimpleList = SimpleList;
-
-{%% tree.js %%}
-p_namespace.Tree = Tree;
