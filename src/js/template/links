@@ -15,3 +15,6 @@ p_namespace.SimpleList = SimpleList;
 
 {%% tree_list.js %%}
 p_namespace.TreeList = TreeList;
+
+{%% text_edit.js %%}
+p_namespace.TextEdit = TextEdit;

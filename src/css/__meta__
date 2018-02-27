@@ -9,7 +9,8 @@
                     "line_edit.css",
                     "file_select.css",
                     "simple_list.css",
-                    "tree_list.css"
+                    "tree_list.css",
+                    "text_edit.css"
                 ]
             }
         }
