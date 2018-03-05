@@ -24,18 +24,28 @@ wRoot.addItem(wH3);
 //var 
 wSelectComponent.setContent(undefined, '#f00');
 wOptions.setContent(undefined, '#ff0');
-//wBnCreate.setContent(undefined, '#0ff');
-//wBnApplyState.setContent(undefined, '#00f');
+//wBnCreate.setContent(undefined, '#0ff');#
+//wBnApplyState.setContent(undefined, '#00f');#
 wH3.setContent(undefined, '#f0f');
-wState.setContent(undefined, '#fa0');
+//wState.setContent(undefined, '#fa0');
 
 var state = {
+    bnCreate: false,
+    bnApply: false,
+    teOptions:{}
 };
 var publisher = new Traliva.StatePublisher();
 publisher.setState(state);
-publisher.registerSubscriber(new TralivaKit.Button(wBnCreate, {title: 'Создать'}));
+publisher.registerSubscriber(new TralivaKit.Button(wBnCreate, {title: 'Создать'}).useSubstate('bnCreate'));
 publisher.registerSubscriber(new TralivaKit.Button(wBnApplyState, {title: 'Применить'}));
-//publisher.registerSubscriber();
+publisher.registerSubscriber(new TralivaKit.TextEdit(wOptions, {
+    bg: '#444',
+    color: '#fff'
+}));
+publisher.registerSubscriber(new TralivaKit.TextEdit(wState, {
+    bg: '#048',
+    color: '#fff'
+}));
 //publisher.registerSubscriber();
 //publisher.registerSubscriber();
 //publisher.registerSubscriber();

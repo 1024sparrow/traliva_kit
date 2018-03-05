@@ -20,6 +20,8 @@ function TextEdit(p_wContainer, p_options){
     this.e.style.resize = 'none';
     this.e.style.border = 'none';//'1px solid #ffa';
     this.e.style.color = p_options.color || '#ffa';
+    if (p_options.hasOwnProperty('bg'))
+        this.e.style.background = p_options.bg;
     p_wContainer._onResized = (function(e){return function(w, h){
         e.style.width = (w-0) + 'px';
         e.style.height = (h-0) + 'px';
