@@ -11,7 +11,8 @@
                     "file_select.js",
                     "simple_list.js",
                     "tree_list.js",
-                    "text_edit.js"
+                    "text_edit.js",
+                    "combo_box.js"
                 ]
             }
         }
