@@ -46,6 +46,18 @@ publisher.registerSubscriber(new TralivaKit.TextEdit(wState, {
     bg: '#048',
     color: '#fff'
 }));
+publisher.registerSubscriber(new TralivaKit.ComboBox(wSelectComponent, {
+    variants:[
+        {
+            id: '1',
+            title: '11'
+        },
+        {
+            id: '2',
+            title: '22'
+        }
+    ]
+}));
 //publisher.registerSubscriber();
 //publisher.registerSubscriber();
 //publisher.registerSubscriber();
