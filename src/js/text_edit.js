@@ -20,6 +20,12 @@ function TextEdit(p_wContainer, p_options){
     this.e.style.resize = 'none';
     this.e.style.border = 'none';//'1px solid #ffa';
     this.e.style.color = p_options.color || '#ffa';
+    this.e.addEventListener('change', (function(self, tt){return function(){
+        self._state[self._options.textVarName] = self.e.value;
+        if (tt)
+            self._state[tt] = true;
+        self._registerStateChanges();
+    };})(this, p_options.changedVarName));
     if (p_options.hasOwnProperty('bg'))
         this.e.style.background = p_options.bg;
     p_wContainer._onResized = (function(e){return function(w, h){
