@@ -6,11 +6,10 @@ Logics.prototype = Object.create(Traliva.StateSubscriber.prototype);
 Logics.prototype.constructor = Logics;
 Logics.prototype.processStateChanges = function(s){
     if (s.bnCreate){
-        console.log(JSON.stringify(s, undefined, 2));//
         if (s.selectComponent.current != -1){
             var state = JSON.parse(s.teState);
             this._oWidget = new TralivaKit[s.selectComponent.current](this._wWidget, JSON.parse(s.teOptions));
-            this._oWidget._state = JSON.parse(state);
+            this._oWidget._state = state;
             this._oWidget.processStateChanges(state);
         }
 
