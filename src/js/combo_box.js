@@ -36,7 +36,8 @@ ComboBox.prototype.processStateChanges = function(s){
     }
     else{
         if (this._current !== s.current){
-            this.e.value = s.current;
+            if (this.e)
+                this.e.value = s.current;
             this._current = s.current;
         }
     }
@@ -45,10 +46,10 @@ ComboBox.prototype._setupContainer = function(p_variants, p_current){
     //элемент select не поддерживает изменение вариантов, поэтому мы полностью заменяем select
     var i, t, tt;
     this._wContainer.setContent(Traliva.createElement('<select traliva="e"></select>', this));
-    for (i = 0 ; i < this._options.variants.length ; i++){
+    for (i = 0 ; i < p_variants.length ; i++){
         t = document.createElement('option');
-        t.value = this._options.variants[i].id;
-        tt = document.createTextNode(this._options.variants[i].title);
+        t.value = p_variants[i].id;
+        tt = document.createTextNode(p_variants[i].title);
         t.appendChild(tt);
         this.e.appendChild(t);
     }

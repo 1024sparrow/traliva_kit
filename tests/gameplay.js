@@ -1,3 +1,24 @@
+function Logics(p_wWidget){
+    Traliva.StateSubscriber.call(this);
+    this._wWidget = p_wWidget;
+}
+Logics.prototype = Object.create(Traliva.StateSubscriber.prototype);
+Logics.prototype.constructor = Logics;
+Logics.prototype.processStateChanges = function(s){
+    if (s.bnCreate){
+        console.log(JSON.stringify(s, undefined, 2));//
+        if (s.selectComponent.current != -1){
+            var state = JSON.parse(s.teState);
+            this._oWidget = new TralivaKit[s.selectComponent.current](this._wWidget, JSON.parse(s.teOptions));
+            this._oWidget._state = JSON.parse(state);
+            this._oWidget.processStateChanges(state);
+        }
+
+        s.bnCreate = false;
+        this._registerStateChanges();
+    }
+}
+
 var wRoot = new Traliva.Strip(Traliva.Strip__Orient__hor);
 
 var wH1 = new Traliva.Strip(Traliva.Strip__Orient__vert, wRoot);
@@ -32,33 +53,46 @@ wH3.setContent(undefined, '#f0f');
 var state = {
     bnCreate: false,
     bnApply: false,
-    teOptions:{}
+    selectComponent:{
+        variants:[
+            {
+                id: 'Label',
+                title: 'Label'
+            },
+            {
+                id: 'Button',
+                title: 'Button'
+            },
+            {
+                id: 'LineEdit',
+                title: 'LineEdit'
+            },
+        ],
+        variants_changed: true,
+        current: -1
+    },
+    teOptions:'{}',
+    teState:'{}'
 };
 var publisher = new Traliva.StatePublisher();
 publisher.setState(state);
-publisher.registerSubscriber(new TralivaKit.Button(wBnCreate, {title: 'Создать'}).useSubstate('bnCreate'));
-publisher.registerSubscriber(new TralivaKit.Button(wBnApplyState, {title: 'Применить'}));
+publisher.registerSubscriber(new TralivaKit.Button(wBnCreate, {
+    title: 'Создать',
+    activeVarName: 'bnCreate'
+}));
+publisher.registerSubscriber(new TralivaKit.Button(wBnApplyState, {
+    title: 'Применить',
+    activeVarName: 'bnApply'
+}));
 publisher.registerSubscriber(new TralivaKit.TextEdit(wOptions, {
     bg: '#444',
-    color: '#fff'
+    color: '#fff',
+    textVarName: 'teOptions'
 }));
 publisher.registerSubscriber(new TralivaKit.TextEdit(wState, {
     bg: '#048',
-    color: '#fff'
+    color: '#fff',
+    textVarName: 'teState'
 }));
-publisher.registerSubscriber(new TralivaKit.ComboBox(wSelectComponent, {
-    variants:[
-        {
-            id: '1',
-            title: '11'
-        },
-        {
-            id: '2',
-            title: '22'
-        }
-    ]
-}));
-//publisher.registerSubscriber();
-//publisher.registerSubscriber();
-//publisher.registerSubscriber();
-//publisher.registerSubscriber();
+publisher.registerSubscriber(new TralivaKit.ComboBox(wSelectComponent, {}).useSubstate('selectComponent'));
+publisher.registerSubscriber(new Logics(wH3));
