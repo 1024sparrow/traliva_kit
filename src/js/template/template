@@ -63,5 +63,28 @@ p_namespace.help = function(o){
 
 {%% links %%}
 
+function checkForInheritance(p_validating, p_validatingFor){
+    //return (new p_validating()) instanceof p_validatingFor;
+
+    var i;
+    var counter = 0;
+    for (i = p_validating.prototype ; i ; i = i.constructor.prototype.__proto__){
+        if (i.constructor === p_validatingFor)
+            return true;
+    }
+    return false;
+}
+
+p_namespace.list = function(){
+    var retVal = [];
+    var i, cand;
+    for (i in p_namespace){
+        cand = p_namespace[i];
+        if (checkForInheritance(cand, Traliva.WidgetStateSubscriber))
+            retVal.push(cand.name);
+    }
+    return retVal;
+}
+
 })(TralivaKit);
 }

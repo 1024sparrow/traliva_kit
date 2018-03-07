@@ -53,26 +53,18 @@ var state = {
     bnCreate: false,
     bnApply: false,
     selectComponent:{
-        variants:[
-            {
-                id: 'Label',
-                title: 'Label'
-            },
-            {
-                id: 'Button',
-                title: 'Button'
-            },
-            {
-                id: 'LineEdit',
-                title: 'LineEdit'
-            },
-        ],
+        variants:[],
         variants_changed: true,
         current: -1
     },
     teOptions:'{}',
     teState:'{}'
 };
+var i, list = TralivaKit.list();
+for (i = 0 ; i < list.length ; i++){
+    state.selectComponent.variants.push({id:list[i],title:list[i]});
+}
+
 var publisher = new Traliva.StatePublisher();
 publisher.setState(state);
 publisher.registerSubscriber(new TralivaKit.Button(wBnCreate, {
