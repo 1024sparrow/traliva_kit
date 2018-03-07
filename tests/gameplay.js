@@ -16,6 +16,12 @@ Logics.prototype.processStateChanges = function(s){
         s.bnCreate = false;
         this._registerStateChanges();
     }
+    if (s.bnApply){
+        if (this._oWidget)
+            this._oWidget.processStateChanges(JSON.parse(s.teState));
+        s.bnApply = false;
+        this._registerStateChanges();
+    }
 }
 
 var wRoot = new Traliva.Strip(Traliva.Strip__Orient__hor);
