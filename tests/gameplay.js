@@ -10,6 +10,10 @@ Logics.prototype.processStateChanges = function(s){
             var state = JSON.parse(s.teState);
             this._oWidget = new TralivaKit[s.selectComponent.current](this._wWidget, JSON.parse(s.teOptions));
             this._oWidget._state = state;
+            this._oWidget._registerStateChanges = (function(self){return function(){
+                self._state.teState = JSON.stringify(this._state);
+                self._registerStateChanges();
+            };})(this);
             this._oWidget.processStateChanges(state);
         }
 
@@ -68,7 +72,8 @@ var state = {
         current: -1
     },
     teOptions:'{}',
-    teState:'{}'
+    teState:'{}',
+    //componentState: {}
 };
 var i, list = TralivaKit.list();
 for (i = 0 ; i < list.length ; i++){
