@@ -81,8 +81,10 @@ function Button(p_wContainer, p_options){
 Button.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 Button.prototype.constructor = Button;
 Button.prototype.processStateChanges = function(s){
-    if (!s)
+    if (!s){
         console.error('epic fail');
+        return;
+    }
     if (this.titleVarName !== undefined){
         if (s[this.titleVarName] !== this.title){
             this.title = s[this.titleVarName] || '';

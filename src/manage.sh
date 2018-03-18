@@ -39,8 +39,10 @@ add(){
     echo "$name.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);" >> js/$file_name.js
     echo "$name.prototype.constructor = $name;" >> js/$file_name.js
     echo "$name.prototype.processStateChanges = function(s){" >> js/$file_name.js
-    echo "    if (!s)" >> js/$file_name.js
+    echo "    if (!s){" >> js/$file_name.js
     echo "        console.error('epic fail');" >> js/$file_name.js
+    echo "        return;" >> js/$file_name.js
+    echo "    }" >> js/$file_name.js
     echo "    // ..." >> js/$file_name.js
     echo "}" >> js/$file_name.js
 }

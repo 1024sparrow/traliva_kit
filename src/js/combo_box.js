@@ -25,8 +25,10 @@ function ComboBox(p_wContainer, p_options){
 ComboBox.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 ComboBox.prototype.constructor = ComboBox;
 ComboBox.prototype.processStateChanges = function(s){
-    if (!s)
+    if (!s){
         console.error('epic fail');
+        return;
+    }
     if (s.variants_changed){
         this._setupContainer(s.variants, (s.current === undefined) ? -1 : s.current);
         if (!this._options.shared){
