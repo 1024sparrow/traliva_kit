@@ -1,3 +1,4 @@
+
 {%% label.js %%}
 p_namespace.Label = Label;
 
