@@ -39,8 +39,10 @@ add(){
     echo "$name.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);" >> js/$file_name.js
     echo "$name.prototype.constructor = $name;" >> js/$file_name.js
     echo "$name.prototype.processStateChanges = function(s){" >> js/$file_name.js
-    echo "    if (!s)" >> js/$file_name.js
+    echo "    if (!s){" >> js/$file_name.js
     echo "        console.error('epic fail');" >> js/$file_name.js
+    echo "        return;" >> js/$file_name.js
+    echo "    }" >> js/$file_name.js
     echo "    // ..." >> js/$file_name.js
     echo "}" >> js/$file_name.js
 }
@@ -57,7 +59,8 @@ remove_class(){
     file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
     rm js/${file_name}.js css/${file_name}.css
     # удаляем из js/template/links
-    cat js/template/links | tr '\n' '\r' | sed "s/\r\r{%% $file_name.js %%}\rp_namespace.$name = $name;//" | tr '\r' '\n' > js/template/links
+    cat js/template/links | tr '\n' '\r' | sed "s/\r\r{%% $file_name.js %%}\rp_namespace.$name = $name;//" | tr '\r' '\n' > js/template/_links
+    mv js/template/_links js/template/links
     # удаляем из js/__meta__
     node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$file_name.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
     # удаляем из css/__meta__

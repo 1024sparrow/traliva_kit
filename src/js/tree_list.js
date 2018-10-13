@@ -36,7 +36,9 @@ function TreeList(p_wContainer, p_options){
 TreeList.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 TreeList.prototype.constructor = TreeList;
 TreeList.prototype.processStateChanges = function(s){
-    if (!s)
+    if (!s){
         console.error('epic fail');
+        return;
+    }
     // ...
 }

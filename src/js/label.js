@@ -42,8 +42,10 @@ function Label(p_wContainer, p_options){
 Label.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 Label.prototype.constructor = Label;
 Label.prototype.processStateChanges = function(s){
-    if (!s)
+    if (!s){
         console.error('epic fail');
+        return;
+    }
     if (this.textVarName !== undefined){
         if (s[this.textVarName] !== this.text){
             this.text = s[this.textVarName] || '';

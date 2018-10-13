@@ -36,8 +36,10 @@ function TextEdit(p_wContainer, p_options){
 TextEdit.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);
 TextEdit.prototype.constructor = TextEdit;
 TextEdit.prototype.processStateChanges = function(s){
-    if (!s)
+    if (!s){
         console.error('epic fail');
+        return;
+    }
     if (this._options.hasOwnProperty('changedVarName')){
         if (s[this._options.changedVarName]){
             this.e.value = s[this._options.textVarName] || '';
