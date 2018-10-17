@@ -106,15 +106,15 @@ $SimpleList.prototype.$_updateSelection = function($p_index){
     }
     this.$_current = $p_index;
 }
-$SimpleList.prototype.$_onClicked = function(p_e){
-    var i;
-    for (i = 0 ; i < this.$_elements.length ; i++){
-        if (p_e === this.$_elements[i]){
-            if (i === this.$_current)
+$SimpleList.prototype.$_onClicked = function($p_e){
+    var $1;
+    for ($1 = 0 ; $1 < this.$_elements.length ; $1++){
+        if ($p_e === this.$_elements[$1]){
+            if ($1 === this.$_current)
                 return;
             else{
-                this.$_updateSelection(i);
-                this.$_state.$current = i;
+                this.$_updateSelection($1);
+                this.$_state.$current = $1;
                 this.$_registerStateChanges();
                 break;
             }
