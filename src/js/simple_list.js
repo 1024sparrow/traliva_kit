@@ -1,4 +1,4 @@
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$SimpleList', {
             title:'Класс $SimpleList',
             descr:'Список элементов, с возможностью выбора какого-то одного элемента(выделяемость настраивается с помощью $options)',
@@ -18,7 +18,7 @@ registerHelp('$SimpleList', {
                 $changed: 'флаг, сигнализирующий виджету, что отображение данных надо обновить. Если задано, то объект со свойствами \'removed\', \'added\' и \'$changed\'(значения - порядковые индексы элементов). Именно в таком порядке и следует обрабатывать изменения. Если изменений нет, то следует писать false или undefined.'
             }
         });
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 function $SimpleList($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     $p_wContainer.$setContent($Traliva.$createElement('<table class="$traliva_kit__simplelist" traliva="$table"></table>', this));

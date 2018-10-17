@@ -1,4 +1,4 @@
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$TextEdit', {
     title: 'поле редактирования текста',
     //descr: '',
@@ -12,7 +12,7 @@ registerHelp('$TextEdit', {
     },
     //stateObj:{}
 });
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 function $TextEdit($p_wContainer, $p_options){
     this.$text;
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);

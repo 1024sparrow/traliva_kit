@@ -1,4 +1,4 @@
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$ComboBox', {
     $title: 'выпадающий список',
     //descr: '',
@@ -12,7 +12,7 @@ registerHelp('$ComboBox', {
         $current: 'id текущего элемента. Особое значение - \'-1\' - означает, что элемент не выбран.'
     }
 });
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 function $ComboBox($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$_options = $p_options;

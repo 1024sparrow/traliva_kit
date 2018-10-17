@@ -1,4 +1,4 @@
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$LineEdit', {
             title: 'Виджет строка ввода',
             options:{
@@ -9,7 +9,7 @@ registerHelp('$LineEdit', {
                 $hover_color:'цвет фона при наведении мышью'
             }
         });
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 function $LineEdit($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$requireVarName;
@@ -32,10 +32,10 @@ function $LineEdit($p_wContainer, $p_options){
     }
     if ($p_options.hasOwnProperty('$textVarName'))
         this.$textVarName = $p_options.$textVarName;
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
     else
         console.error('$LineEdit: $textVarName - обязательное поле для задания в options');
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
     if ($p_options.hasOwnProperty('$requireVarName')){
         this.$requireVarName = $p_options.$requireVarName;
     }

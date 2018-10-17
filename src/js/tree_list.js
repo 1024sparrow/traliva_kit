@@ -1,4 +1,4 @@
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$TreeList', {
     title: 'Простое дерево, выполненное в виде списка (с элементом "перейти на уровень выше")',
     //descr: '',
@@ -13,7 +13,7 @@ registerHelp('$TreeList', {
         current: 'id текущего элемента. Если не указан, но виджет является $selectable, текущим устанавливается первый корневой элемент'
     }
 });
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 function $TreeList($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$__TreeList = {

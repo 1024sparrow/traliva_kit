@@ -1,4 +1,4 @@
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$Label', {
             title: 'Виджет $Label - тупо отображает текст',
             options:{
@@ -8,7 +8,7 @@ registerHelp('$Label', {
                 $border: 'если свойство указано, будет добавлена рамочка, false для рамочки без закругления цветом текста, {$color: ... , $radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки'
             }
         });
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 function $Label($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     if ($p_options.hasOwnProperty('$text')){

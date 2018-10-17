@@ -1,4 +1,4 @@
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$FileSelect', {
             title:'Виджет Поле выбора файла из файловой системы пользователя',
             // $Traliva.api.get_filepath(p_file) - должна быть, возвращает путь к файлу.
@@ -9,7 +9,7 @@ registerHelp('$FileSelect', {
                 $hover_color:'цвет при наведении мышью'
             }
         });
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 function $FileSelect($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     $p_wContainer.$setContent($Traliva.$createElement('<input type="file" traliva="e" class="$traliva_kit__fileselect"></input>', this));

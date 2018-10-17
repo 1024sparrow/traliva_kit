@@ -6,7 +6,7 @@ else{
     $TralivaKit = {__d:{help:{}}};
 (function($p_namespace){
 
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 /*
 Формат объекта справки:
 title(text)
@@ -61,11 +61,11 @@ $p_namespace.help = function(o){
         }
     }
 }
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 
 {%% links %%}
 
-##USAGE_BEGIN#traliva_kit_debug#
+#USAGE_BEGIN#traliva_kit_debug##
 function checkForInheritance(p_validating, p_validatingFor){
     //return (new p_validating()) instanceof p_validatingFor;
 
@@ -88,7 +88,7 @@ $p_namespace.list = function(){
     }
     return retVal;
 }
-##USAGE_END#traliva_kit_debug#
+#USAGE_END#traliva_kit_debug##
 
 })($TralivaKit);
 }
