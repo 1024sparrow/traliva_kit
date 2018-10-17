@@ -1,4 +1,4 @@
-.traliva_kit__bn{
+.$traliva_kit__bn{
     color: #666;
     /*background: #eee;*/
     margin: 5px;
@@ -8,12 +8,12 @@
     font-size: 32px;
     cursor: pointer;
 }
-.traliva_kit__bn:hover{
+.$traliva_kit__bn:hover{
     background: #fa8;
 }
-.traliva_kit__bn.active{
+.$traliva_kit__bn.active{
     background: #ffa;
 }
-.traliva_kit__bn.active:hover{
+.$traliva_kit__bn.active:hover{
     background: #fa8;
 }
