@@ -19,7 +19,7 @@ function $TextEdit($p_wContainer, $p_options){
     this.$_options = $p_options;
     if (!$p_options.hasOwnProperty('$textVarName'))
         this.$_options.$textVarName = '$text';
-    $p_wContainer.$setContent($Traliva.createElement('<textarea spellcheck="false" traliva="e"></textarea>', this));
+    $p_wContainer.$setContent($Traliva.$createElement('<textarea spellcheck="false" traliva="e"></textarea>', this));
     this.e.style.resize = 'none';
     this.e.style.border = 'none';//'1px solid #ffa';
     this.e.style.color = $p_options.$color || '#ffa';

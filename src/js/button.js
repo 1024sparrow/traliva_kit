@@ -35,7 +35,7 @@ function $Button($p_wContainer, $p_options){
     }
     this.$activeVarName = ($p_options.hasOwnProperty('$activeVarName')) ? $p_options.$activeVarName : '$active';
     this.$active = false;
-    /*var e = */$Traliva.$createElement('<div traliva="e"></div>', this);
+    var e = $Traliva.$createElement('<div traliva="e"></div>', this);
     if (this.$icon){
         this.e.style.$border = 'none';
         $Traliva.$background(this.e, $p_options.$icon);

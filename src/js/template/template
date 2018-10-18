@@ -83,7 +83,7 @@ $p_namespace.list = function(){
     var i, cand;
     for (i in $p_namespace){
         cand = $p_namespace[i];
-        if (checkForInheritance(cand, Traliva.WidgetStateSubscriber))
+        if (checkForInheritance(cand, $Traliva.$WidgetStateSubscriber))
             retVal.push(cand.name);
     }
     return retVal;
