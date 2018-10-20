@@ -63,9 +63,7 @@ function $Button($p_wContainer, $p_options){
             this.e.style.border = '1px solid '+$p_options.$color;
             if ($p_options.hasOwnProperty('$border')){
                 this.e.style.border = '1px solid ' + $p_options.$border.$color || $p_options.$color;
-                if ($p_options.$border && $p_options.$border.hasOwnProperty('$radius')){
-                    this.e.style.borderRadius = $p_options.$border.$radius;
-                }
+                this.e.style.borderRadius = ($p_options.$border && $p_options.$border.hasOwnProperty('$radius')) ? $p_options.$border.$radius : 0;
             }
         }
     }
