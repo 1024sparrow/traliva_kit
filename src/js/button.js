@@ -38,6 +38,7 @@ function $Button($p_wContainer, $p_options){
     }
     this.$activeVarName = ($p_options.hasOwnProperty('$activeVarName')) ? $p_options.$activeVarName : '$active';
     this.$active = false;
+    this.$hovered = false;
     var e = $Traliva.$createElement('<div traliva="e"></div>', this);
     if (this.$icon){
         this.e.style.border = 'none';
@@ -69,23 +70,32 @@ function $Button($p_wContainer, $p_options){
     }
     if (this.$icon){
         if ($p_options.hasOwnProperty('$hover_icon')){
-            this.e.addEventListener('mouseover', (function(o,e,f){return function(){f(e,o);};})($p_options.$hover_icon, this.e, $Traliva.$background));
-            this.e.addEventListener('mouseleave', (function(o,e,f){return function(){f(e,o);};})($p_options.$icon, this.e, $Traliva.$background));
+            this.$fUpdateBgHovered = (function($1,$2,$3,$4){$4.$hovered=true;return function(){$3($2,$1);};})($p_options.$hover_icon, this.e, $Traliva.$background, this);
+            this.$fUpdateBgUnhovered = (function($1,$2,$3,$4){$4.$hovered=false;return function(){$3($2,$1);};})($p_options.$icon, this.e, $Traliva.$background, this);
         }
     }
     else{
+        /*this.e.className = this.$active ? '$traliva_kit__bn $active' : '$traliva_kit__bn';*/
         if ($p_options.hasOwnProperty('$hover_color')){
-            this.e.addEventListener('mouseover', (function($1){ return function(){
+            this.$fUpdateBgHovered = (function($1, $2){ return function(){
+                console.log('-- hovered --');//
+                $2.$hovered = true;
                 this.style.background = $1;
-            };})($p_options.$hover_color));
-            this.e.addEventListener('mouseleave', (function($p_self, $p_activeVarName, $p_bgColor, $p_activeBgColor){ return function(){
+            };})($p_options.$hover_color, this);
+            this.$fUpdateBgUnhovered = (function($p_self, $p_activeVarName, $p_bgColor, $p_activeBgColor){ return function(){
+                console.log('-- unhovered --');//
+                $p_self.$hovered = false;
                 var $1 = 'rgba(0,0,0,0)';
                 if ($p_bgColor)
-                    this.style.background = $p_self.$_state[$p_activeVarName] ? ($p_activeBgColor || $p_bgColor || $1) : (p_bgColor || $1);
+                    this.style.background = $p_self.$_state[$p_activeVarName] ? ($p_activeBgColor || $p_bgColor) : (p_bgColor);
                 else
                     this.style.background = $1;
-            };})(this, this.$activeVarName, $p_options.$bgColor, $p_options.$active_bgColor));
+            };})(this, this.$activeVarName, $p_options.$bgColor, $p_options.$active_bgColor);
         }
+    }
+    if ($p_options.hasOwnProperty(this.$icon ? '$hover_icon' : '$hover_color')){
+        this.e.addEventListener('mouseover', this.$fUpdateBgHovered);
+        this.e.addEventListener('mouseleave', this.$fUpdateBgUnhovered);
     }
     this.e.addEventListener('click', function($self){return function(){
         $self.$_onClicked();
@@ -110,10 +120,12 @@ $Button.prototype.$processStateChanges = function(s){
     }
     if (s[this.$activeVarName] !== this.$active){
         this.$active = s[this.$activeVarName];
-        if (this.$icon)
-            ;//
-        else
-            this.e.className = this.$active ? '$traliva_kit__bn $active' : '$traliva_kit__bn';
+        if (this.$hovered){
+            this.$fUpdateBgHovered;
+        }
+        else{
+            this.$fUpdateBgUnhovered;
+        }
     }
 }
 $Button.prototype.$_onClicked = function(){
