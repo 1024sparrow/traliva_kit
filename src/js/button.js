@@ -7,9 +7,12 @@ registerHelp('$Button', {
                 $titleVarName:'имя свойства, в котором записан текст кнопки (если изменится значение такого свойства у объекта состояния, кнопка изменит свой текст). По умолч. \'$title\'',
                 $activeVarName:'имя свойства(boolean), значение которого будет меняться при нажатии на кнопку. По умолч. \'$active\'',
                 $color: 'цвет текста',
+                $bgColor: 'цвет фона кнопки (в отличие от "bg", относится не ко всей прямоугольной области, а лишь к нажимаемой части)',
                 $hover_color: 'цвет фона при наведении мышью',
                 $hover_icon: 'иконка при наведении мышью. Работает только, если указана опция \'$icon\'',
                 $active_icon: 'иконка, которая устанавливается в случае, коогда кнопка нажата',
+                $active_color: 'цвет текста в случае, когда кнопка "нажата"',
+                $active_bgColor: 'цвет фона в случае, когда кнопка "нажата"',
                 $border: 'если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {$color: ... , $radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки',
                 //disabled_color:
                 $disabled_icon: 'иконка на случай, когда кнопка "выключена" ("серая")'
@@ -51,6 +54,9 @@ function $Button($p_wContainer, $p_options){
     else{
         if (this.$title)
             this.e.innerHTML = this.$title;
+        if ($p_options.hasOwnProperty('$bgColor')){
+            this.e.style.background = $p_options.$bgColor;
+        }
         this.e.className = '$traliva_kit__bn';
         if ($p_options.hasOwnProperty('$color')){
             this.e.style.color = $p_options.$color;
@@ -71,8 +77,16 @@ function $Button($p_wContainer, $p_options){
     }
     else{
         if ($p_options.hasOwnProperty('$hover_color')){
-            this.e.addEventListener('mouseover', (function(c){return function(){this.style.background = c;};})($p_options.$hover_color))
-            this.e.addEventListener('mouseleave', (function(c){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+            this.e.addEventListener('mouseover', (function($1){ return function(){
+                this.style.background = $1;
+            };})($p_options.$hover_color));
+            this.e.addEventListener('mouseleave', (function($p_self, $p_activeVarName, $p_bgColor, $p_activeBgColor){ return function(){
+                var $1 = 'rgba(0,0,0,0)';
+                if ($p_bgColor)
+                    this.style.background = $p_self.$_state[$p_activeVarName] ? ($p_activeBgColor || $p_bgColor || $1) : (p_bgColor || $1);
+                else
+                    this.style.background = $1;
+            };})(this, this.$activeVarName, $p_options.$bgColor, $p_options.$active_bgColor));
         }
     }
     this.e.addEventListener('click', function($self){return function(){
