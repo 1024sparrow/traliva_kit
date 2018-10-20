@@ -37,7 +37,7 @@ function $Button($p_wContainer, $p_options){
     this.$active = false;
     var e = $Traliva.$createElement('<div traliva="e"></div>', this);
     if (this.$icon){
-        this.e.style.$border = 'none';
+        this.e.style.border = 'none';
         $Traliva.$background(this.e, $p_options.$icon);
         if (this.$title)
             this.e.$title = this.$title;
@@ -53,10 +53,10 @@ function $Button($p_wContainer, $p_options){
             this.e.innerHTML = this.$title;
         this.e.className = '$traliva_kit__bn';
         if ($p_options.hasOwnProperty('$color')){
-            this.e.style.$color = $p_options.$color;
-            this.e.style.$border = '1px solid '+$p_options.$color;
+            this.e.style.color = $p_options.$color;
+            this.e.style.border = '1px solid '+$p_options.$color;
             if ($p_options.hasOwnProperty('$border')){
-                this.e.style.$border = '1px solid ' + $p_options.$border.$color || $p_options.$color;
+                this.e.style.border = '1px solid ' + $p_options.$border.$color || $p_options.$color;
                 if ($p_options.$border && $p_options.$border.hasOwnProperty('$radius')){
                     this.e.style.borderRadius = $p_options.$border.$radius;
                 }
@@ -76,7 +76,7 @@ function $Button($p_wContainer, $p_options){
         }
     }
     this.e.addEventListener('click', function($self){return function(){
-        $self._onClicked();
+        $self.$_onClicked();
     };}(this));
     $p_wContainer.$setContent(e);
 }
