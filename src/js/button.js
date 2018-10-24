@@ -87,7 +87,7 @@ function $Button($p_wContainer, $p_options){
                 $p_self.$hovered = false;
                 var $1 = 'rgba(0,0,0,0)';
                 if ($p_bgColor)
-                    this.style.background = $p_self.$_state[$p_activeVarName] ? ($p_activeBgColor || $p_bgColor) : (p_bgColor);
+                    this.style.background = $p_self.$_state[$p_activeVarName] ? ($p_activeBgColor || $p_bgColor) : ($p_bgColor);
                 else
                     this.style.background = $1;
             };})(this, this.$activeVarName, $p_options.$bgColor, $p_options.$active_bgColor);
