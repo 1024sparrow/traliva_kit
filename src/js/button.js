@@ -12,7 +12,8 @@ registerHelp('$Button', {
                 $hover_icon: 'иконка при наведении мышью. Работает только, если указана опция \'$icon\'',
                 $active_icon: 'иконка, которая устанавливается в случае, коогда кнопка нажата',
                 $active_color: 'цвет текста в случае, когда кнопка "нажата"',
-                $active_bgColor: 'цвет фона в случае, когда кнопка "нажата"',
+                $activeBgColor: 'цвет фона в случае, когда кнопка "нажата"',
+                $activeHoverBgColor: 'цвет "нажатой" кнопки при наведении мышью',
                 $border: 'если свойство указано, будет заданы специфические параметры рамочки, false для рамочки без закругления цветом текста, {$color: ... , $radius: ...}, если хотите задать радиус скругления рамочки и/или цвет рамочки',
                 //disabled_color:
                 $disabled_icon: 'иконка на случай, когда кнопка "выключена" ("серая")'
@@ -105,8 +106,9 @@ function $Button($p_wContainer, $p_options){
         }
     }*/
     if ($p_options.hasOwnProperty(this.$icon ? '$hover_icon' : '$hover_color')){
-        this.e.addEventListener('mouseover', (function($1){$1.$hovered = true;return function(){$1.$_updateGui();};})(this));//this.$fUpdateBgHovered);
-        this.e.addEventListener('mouseleave', (function($1){$1.$hovered = false;return function(){$1.$_updateGui();};})(this));//this.$fUpdateBgUnhovered);
+        console.log('set');
+        this.e.addEventListener('mouseover', (function($1){return function(){$1.$hovered = true;$1.$_updateGui();};})(this));//this.$fUpdateBgHovered);
+        this.e.addEventListener('mouseleave', (function($1){return function(){$1.$hovered = false;$1.$_updateGui();};})(this));//this.$fUpdateBgUnhovered);
     }
     this.e.addEventListener('click', function($self){return function(){
         $self.$_onClicked();
@@ -143,14 +145,15 @@ $Button.prototype.$processStateChanges = function(s){
 $Button.prototype.$_onClicked = function(){
     this.$active = !this.$active;
     this.$_state[this.$activeVarName] = this.$active;
-    if (this.$icon){
-        if (this.$options.hasOwnProperty('$active_icon')){
-            $Traliva.$background(this.e, this.$options[this.$active ? '$active_icon' : '$icon']);
+    this.$_updateGui();
+    /*if (this.sssicon){
+        if (this.sssoptions.hasOwnProperty('sssactive_icon')){
+            sssTraliva.sssbackground(this.e, this.sssoptions[this.sssactive ? 'sssactive_icon' : 'sssicon']);
         }
     }
     else{
-        this.e.className = this.$active ? '$traliva_kit__bn $active' : '$traliva_kit__bn';
-    }
+        this.e.className = this.sssactive ? 'ssstraliva_kit__bn sssactive' : 'ssstraliva_kit__bn';
+    }*/
     this.$_registerStateChanges();
 }
 $Button.prototype.$_updateGui = function(){
@@ -165,12 +168,20 @@ $Button.prototype.$_updateGui = function(){
     else{
         console.log(2);
         if (this.$options.hasOwnProperty('$hover_color')){
-            console.log(22);
+            console.log('22 hovered:' +  this.$hovered + ', active: ' + this.$active);
             //this.e.style.background = this.$options.$hover_color;
             var $1 = 'rgba(0,0,0,0)';
             if (this.$options.$bgColor){
-                console.log(222);
-                this.e.style.background = this.$_state[this.$options.$activeVarName] ? (this.$options.$activeBgColor || this.$options.$bgColor) : (this.$options.$bgColor);
+                if (this.$hovered){
+                    this.e.style.background = this.$_state[this.$activeVarName] ? (this.$options.$activeHoverBgColor || this.$options.$hover_color || this.$options.$bgColor) : (this.$options.$hover_color || this.$options.$bgColor);
+                }
+                else{
+                    console.log(222);
+                    console.log('state:', this.$_state);
+                    console.log('options:', this.$options);
+                    //console.log('--> ', this.$_state[this.$activeVarName] ? (this.$options.$activeBgColor || this.$options.$bgColor) : '#afa');
+                    this.e.style.background = this.$_state[this.$activeVarName] ? (this.$options.$activeBgColor || this.$options.$bgColor) : (this.$options.$bgColor);
+                }
             }
             else
                 this.style.background = $1;
