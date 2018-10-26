@@ -106,7 +106,6 @@ function $Button($p_wContainer, $p_options){
         }
     }*/
     if ($p_options.hasOwnProperty(this.$icon ? '$hover_icon' : '$hover_color')){
-        console.log('set');
         this.e.addEventListener('mouseover', (function($1){return function(){$1.$hovered = true;$1.$_updateGui();};})(this));//this.$fUpdateBgHovered);
         this.e.addEventListener('mouseleave', (function($1){return function(){$1.$hovered = false;$1.$_updateGui();};})(this));//this.$fUpdateBgUnhovered);
     }
@@ -141,6 +140,7 @@ $Button.prototype.$processStateChanges = function(s){
             this.sssfUpdateBgUnhovered;
         }*/
     }
+    this.$_updateGui();
 }
 $Button.prototype.$_onClicked = function(){
     this.$active = !this.$active;
@@ -157,18 +157,13 @@ $Button.prototype.$_onClicked = function(){
     this.$_registerStateChanges();
 }
 $Button.prototype.$_updateGui = function(){
-    console.log('-- button: update gui --');
     if (this.$icon){
-        console.log(1);
         if (this.$options.hasOwnProperty('$hover_icon')){
-            console.log(11);
             $Traliva.$background(this.e, this.$options.$hover_icon);
         }
     }
     else{
-        console.log(2);
         if (this.$options.hasOwnProperty('$hover_color')){
-            console.log('22 hovered:' +  this.$hovered + ', active: ' + this.$active);
             //this.e.style.background = this.$options.$hover_color;
             var $1 = 'rgba(0,0,0,0)';
             if (this.$options.$bgColor){
@@ -176,10 +171,6 @@ $Button.prototype.$_updateGui = function(){
                     this.e.style.background = this.$_state[this.$activeVarName] ? (this.$options.$activeHoverBgColor || this.$options.$hover_color || this.$options.$bgColor) : (this.$options.$hover_color || this.$options.$bgColor);
                 }
                 else{
-                    console.log(222);
-                    console.log('state:', this.$_state);
-                    console.log('options:', this.$options);
-                    //console.log('--> ', this.$_state[this.$activeVarName] ? (this.$options.$activeBgColor || this.$options.$bgColor) : '#afa');
                     this.e.style.background = this.$_state[this.$activeVarName] ? (this.$options.$activeBgColor || this.$options.$bgColor) : (this.$options.$bgColor);
                 }
             }
