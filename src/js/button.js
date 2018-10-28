@@ -77,7 +77,7 @@ function $Button($p_wContainer, $p_options){
         $self.$_onClicked();
     };}(this));
     $p_wContainer.$setContent(e);
-}
+};
 $Button.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Button.prototype.constructor = $Button;
 $Button.prototype.$processStateChanges = function(s){
@@ -99,13 +99,13 @@ $Button.prototype.$processStateChanges = function(s){
         this.$_updateGui();
     }
     this.$_updateGui();
-}
+};
 $Button.prototype.$_onClicked = function(){
     this.$active = !this.$active;
     this.$_state[this.$activeVarName] = this.$active;
     this.$_updateGui();
     this.$_registerStateChanges();
-}
+};
 $Button.prototype.$_updateGui = function(){
     if (this.$icon){
         if (this.$options.hasOwnProperty('$hover_icon')){
@@ -128,4 +128,4 @@ $Button.prototype.$_updateGui = function(){
         }
         this.e.className = this.$active ? '$traliva_kit__bn $active' : '$traliva_kit__bn';
     }
-}
+};

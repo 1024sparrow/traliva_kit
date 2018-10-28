@@ -34,7 +34,7 @@ function $TreeList($p_wContainer, $p_options){
         )
     );
     // ...
-}
+};
 $TreeList.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $TreeList.prototype.constructor = $TreeList;
 $TreeList.prototype.$processStateChanges = function(s){
@@ -43,4 +43,4 @@ $TreeList.prototype.$processStateChanges = function(s){
         return;
     }
     // ...
-}
+};

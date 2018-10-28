@@ -40,7 +40,7 @@ function $Label($p_wContainer, $p_options){
     //this.e.innerHTML = this.$text;
     this.e.style.textAlign = 'center';
     $p_wContainer.$setContent(e);
-}
+};
 $Label.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Label.prototype.constructor = $Label;
 $Label.prototype.$processStateChanges = function(s){
@@ -54,4 +54,4 @@ $Label.prototype.$processStateChanges = function(s){
             this.e.innerHTML = this.$text;
         }
     }
-}
+};

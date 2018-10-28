@@ -1,11 +1,11 @@
 #USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$ComboBox', {
-    $title: 'выпадающий список',
+    title: 'выпадающий список',
     //descr: '',
-    $options:{
+    options:{
         $variants: 'список вариантов (исходный).'
     },
-    $stateObj:{
+    stateObj:{
         $variants: 'список вариантов. Каждый должен быть представлен объектом с полями $id и $title',
         $variants_changed: '(boolean) флаг о том, что список вариантов изменился, и список отображаемых вариантов необходимо обновить',
         $shared: '(boolean) если true, то компонент не будет сам снимать флаг о том, что данные изменились (внешнее снятие флага)',
@@ -23,7 +23,7 @@ function $ComboBox($p_wContainer, $p_options){
     else{
         // "нет вариантов" - отображаем пустой список (сейчас это просто отсутвие виджета)
     }
-}
+};
 $ComboBox.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $ComboBox.prototype.constructor = $ComboBox;
 $ComboBox.prototype.$processStateChanges = function(s){
@@ -45,7 +45,7 @@ $ComboBox.prototype.$processStateChanges = function(s){
             this.$_current = s.$current;
         }
     }
-}
+};
 $ComboBox.prototype.$_setupContainer = function($p_variants, $p_current){
     //элемент select не поддерживает изменение вариантов, поэтому мы полностью заменяем select
     var $1, $2, $3;
@@ -62,10 +62,10 @@ $ComboBox.prototype.$_setupContainer = function($p_variants, $p_current){
         $self.$_state.$current = $self.e.value;
         $self.$_current = $self.e.value;
         $self.$_registerStateChanges();
-    };})(this))
+    };})(this));
     this.$_current = $p_current;
     this.$_wContainer.$_onResized = (function(e){return function($w, $h){
         e.style.width = $w + 'px';
         e.style.height = $h + 'px';
     };})(this.e);
-}
+};

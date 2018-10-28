@@ -31,17 +31,17 @@ function $FileSelect($p_wContainer, $p_options){
         this.e.style.border = '1px solid ' + $p_options.$color;
     }
     if ($p_options.hasOwnProperty('$hover_color')){
-        this.e.addEventListener('mouseover', (function($1){return function(){this.style.background = $1;};})($p_options.$hover_color))
-        this.e.addEventListener('mouseleave', (function($1){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+        this.e.addEventListener('mouseover', (function($1){return function(){this.style.background = $1;};})($p_options.$hover_color));
+        this.e.addEventListener('mouseleave', (function($1){return function(){this.style.background = 'rgba(0,0,0,0)';};})());
     }
     /*$p_wContainer._onResized = (function($self){
         return function(w,h){
             $self.e.style.width = (w - 18) + 'px';
         }
     })(this);*/
-}
+};
 $FileSelect.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $FileSelect.prototype.constructor = $FileSelect;
 $FileSelect.prototype.processStateChanges = function(s){
     //boris here: применить изменения в выбранном файле
-}
+};

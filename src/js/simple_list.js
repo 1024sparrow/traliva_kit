@@ -35,7 +35,7 @@ function $SimpleList($p_wContainer, $p_options){
     }
     this.$_current = -1;//порядковый индекс
     this.$_elements = [];
-}
+};
 $SimpleList.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $SimpleList.prototype.constructor = $SimpleList;
 $SimpleList.prototype.$processStateChanges = function(s){
@@ -55,7 +55,7 @@ $SimpleList.prototype.$processStateChanges = function(s){
             this.$_updateSelection(s.$current);
         }
     }
-}
+};
 $SimpleList.prototype.$_update = function(){
     var $1, $eRow, $eCell, $2;
 
@@ -82,7 +82,7 @@ $SimpleList.prototype.$_update = function(){
         $eCell.appendChild($2);
         this.$_elements.push($2);
     }
-}
+};
 $SimpleList.prototype.$_updateSelection = function($p_index){
     var $1, $e;
     for ($1 = 0 ; $1 < this.$_elements.length ; $1++){
@@ -105,7 +105,7 @@ $SimpleList.prototype.$_updateSelection = function($p_index){
         }
     }
     this.$_current = $p_index;
-}
+};
 $SimpleList.prototype.$_onClicked = function($p_e){
     var $1;
     for ($1 = 0 ; $1 < this.$_elements.length ; $1++){
@@ -120,4 +120,4 @@ $SimpleList.prototype.$_onClicked = function($p_e){
             }
         }
     }
-}
+};

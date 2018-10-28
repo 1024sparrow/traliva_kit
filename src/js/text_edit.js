@@ -35,7 +35,7 @@ function $TextEdit($p_wContainer, $p_options){
         e.style.width = ($w-0) + 'px';
         e.style.height = ($h-0) + 'px';
     };})(this.e);
-}
+};
 $TextEdit.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $TextEdit.prototype.constructor = $TextEdit;
 $TextEdit.prototype.processStateChanges = function(s){
@@ -59,4 +59,4 @@ $TextEdit.prototype.processStateChanges = function(s){
         }
     }
     // ...
-}
+};

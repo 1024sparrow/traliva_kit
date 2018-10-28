@@ -17,7 +17,7 @@ children(object) - у справки могут быть дочерние стр
 */
 function registerHelp(p_className, p_o){
     $p_namespace.__d.help[p_className] = p_o;
-}
+};
 //
 $p_namespace.help = function(o){
     var i, o;
@@ -60,7 +60,7 @@ $p_namespace.help = function(o){
             }
         }
     }
-}
+};
 #USAGE_END#traliva_kit_debug##
 
 {%% links %%}
@@ -76,7 +76,7 @@ function checkForInheritance(p_validating, p_validatingFor){
             return true;
     }
     return false;
-}
+};
 
 $p_namespace.list = function(){
     var retVal = [];
@@ -87,7 +87,7 @@ $p_namespace.list = function(){
             retVal.push(cand.name);
     }
     return retVal;
-}
+};
 #USAGE_END#traliva_kit_debug##
 
 })($TralivaKit);

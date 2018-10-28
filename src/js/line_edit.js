@@ -27,8 +27,8 @@ function $LineEdit($p_wContainer, $p_options){
         this.e.style.border = '1px solid ' + $p_options.$color;
     }
     if ($p_options.hasOwnProperty('$hover_color')){
-        this.e.addEventListener('mouseover', (function($1){return function(){this.style.background = $1;};})($p_options.$hover_color))
-        this.e.addEventListener('mouseleave', (function($1){return function(){this.style.background = 'rgba(0,0,0,0)';};})())
+        this.e.addEventListener('mouseover', (function($1){return function(){this.style.background = $1;};})($p_options.$hover_color));
+        this.e.addEventListener('mouseleave', (function($1){return function(){this.style.background = 'rgba(0,0,0,0)';};})());
     }
     if ($p_options.hasOwnProperty('$textVarName'))
         this.$textVarName = $p_options.$textVarName;
@@ -46,7 +46,7 @@ function $LineEdit($p_wContainer, $p_options){
         }})(this));
         // event 'change' fires only on focus off
     }
-}
+};
 $LineEdit.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $LineEdit.prototype.constructor = $LineEdit;
 $LineEdit.prototype.$processStateChanges = function(s){
@@ -61,4 +61,4 @@ $LineEdit.prototype.$processStateChanges = function(s){
     }
     if (this.e.value !== s[this.$textVarName])
         this.e.value = s[this.$textVarName];
-}
+};

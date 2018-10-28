@@ -23,7 +23,7 @@ function $LargeTextEdit($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$options = $p_options;
     // ...
-}
+};
 $LargeTextEdit.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $LargeTextEdit.prototype.constructor = $LargeTextEdit;
 $LargeTextEdit.prototype.$processStateChanges = function(s){
@@ -32,4 +32,4 @@ $LargeTextEdit.prototype.$processStateChanges = function(s){
         return;
     }
     // ...
-}
+};
