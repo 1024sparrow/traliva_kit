@@ -124,7 +124,7 @@ $Button.prototype.$_updateGui = function(){
                 }
             }
             else
-                this.style.background = $1;
+                this.e.style.background = $1;
         }
         this.e.className = this.$active ? '$traliva_kit__bn $active' : '$traliva_kit__bn';
     }
