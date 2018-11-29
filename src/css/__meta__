@@ -1,7 +1,7 @@
 {
     "files": [
         {
-            "target": "traliva_kit.css",
+            "target": "style.css",
             "source": {
                 "list": [
                     "label.css",
@@ -11,7 +11,8 @@
                     "simple_list.css",
                     "tree_list.css",
                     "text_edit.css",
-                    "combo_box.css"
+                    "combo_box.css",
+                    "large_text_edit.css"
                 ]
             }
         }

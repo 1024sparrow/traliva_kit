@@ -20,25 +20,27 @@ add(){
 
     echo >> js/template/links
     echo "{%% $file_name.js %%}" >> js/template/links
-    echo "p_namespace.$name = $name;" >> js/template/links
+    echo "\$p_namespace.\$$name = \$$name;" >> js/template/links
 
     node -e "var a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.js');fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4));"
     node -e "var a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.css');fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4));"
     touch css/$file_name.css
 
-    echo "registerHelp('$name', {" > js/$file_name.js
+    echo "#USAGE_BEGIN#traliva_kit_debug##" > js/$file_name.js
+    echo "registerHelp('\$$name', {" >> js/$file_name.js
     echo "    title: 'краткого описания нет'," >> js/$file_name.js
     echo "    //descr: ''," >> js/$file_name.js
     echo "    //options:{}," >> js/$file_name.js
     echo "    //stateObj:{}" >> js/$file_name.js
     echo "});" >> js/$file_name.js
-    echo "function $name(p_wContainer, p_options){" >> js/$file_name.js
-    echo "    Traliva.WidgetStateSubscriber.call(this, p_wContainer, p_options);" >> js/$file_name.js
+    echo "#USAGE_END#traliva_kit_debug##" >> js/$file_name.js
+    echo "function \$$name(\$p_wContainer, \$p_options){" >> js/$file_name.js
+    echo "    \$Traliva.\$WidgetStateSubscriber.call(this, \$p_wContainer, \$p_options);" >> js/$file_name.js
     echo "    // ..." >> js/$file_name.js
     echo "}" >> js/$file_name.js
-    echo "$name.prototype = Object.create(Traliva.WidgetStateSubscriber.prototype);" >> js/$file_name.js
-    echo "$name.prototype.constructor = $name;" >> js/$file_name.js
-    echo "$name.prototype.processStateChanges = function(s){" >> js/$file_name.js
+    echo "\$$name.prototype = Object.create(\$Traliva.\$WidgetStateSubscriber.prototype);" >> js/$file_name.js
+    echo "\$$name.prototype.constructor = \$$name;" >> js/$file_name.js
+    echo "\$$name.prototype.\$processStateChanges = function(s){" >> js/$file_name.js
     echo "    if (!s){" >> js/$file_name.js
     echo "        console.error('epic fail');" >> js/$file_name.js
     echo "        return;" >> js/$file_name.js

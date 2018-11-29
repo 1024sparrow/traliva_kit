@@ -12,7 +12,8 @@
                     "simple_list.js",
                     "tree_list.js",
                     "text_edit.js",
-                    "combo_box.js"
+                    "combo_box.js",
+                    "large_text_edit.js"
                 ]
             }
         }

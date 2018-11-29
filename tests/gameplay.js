@@ -8,9 +8,7 @@ Logics.prototype.processStateChanges = function(s){
     if (s.bnCreate){
         if (s.selectComponent.current != -1){
             var state = JSON.parse(s.teState);
-            var w = new Traliva.Widget(this._wWidget);
-            this._wWidget.setContent(w);
-            this._oWidget = new TralivaKit[s.selectComponent.current](w, JSON.parse(s.teOptions));
+            this._oWidget = new TralivaKit[s.selectComponent.current](this._wWidget, JSON.parse(s.teOptions));
             this._oWidget._state = state;
             this._oWidget._registerStateChanges = (function(self){return function(){
                 self._state.teState = JSON.stringify(this._state);
