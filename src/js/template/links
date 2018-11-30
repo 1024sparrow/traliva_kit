@@ -26,3 +26,6 @@ $p_namespace.$ComboBox = $ComboBox;
 
 {%% large_text_edit.js %%}
 $p_namespace.$LargeTextEdit = $LargeTextEdit;
+
+{%% static_html.js %%}
+$p_namespace.$StaticHtml = $StaticHtml;

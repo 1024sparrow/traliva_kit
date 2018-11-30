@@ -13,7 +13,8 @@
                     "tree_list.js",
                     "text_edit.js",
                     "combo_box.js",
-                    "large_text_edit.js"
+                    "large_text_edit.js",
+                    "static_html.js"
                 ]
             }
         }
