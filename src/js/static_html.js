@@ -12,9 +12,13 @@ registerHelp('$StaticHtml', {
 function $StaticHtml($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$_options = $p_options;
-    if ($p_options.$html)
+    this.$_prevVal = '';
+    this.$_wContainer = $p_wContainer;
+    if ($p_options.$html){
         $p_wContainer.$setContent($Traliva.$createElement($p_options.$html));
-}
+        this.$_prevVal = $p_options.$html;
+    }
+};
 $StaticHtml.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $StaticHtml.prototype.constructor = $StaticHtml;
 $StaticHtml.prototype.$processStateChanges = function(s){
@@ -22,5 +26,11 @@ $StaticHtml.prototype.$processStateChanges = function(s){
         console.error('epic fail');
         return;
     }
-    //if ()
-}
+    if (!this.$_options.$htmlVarName)
+        return;
+    var $0 = this.$_state[this.$_options.$htmlVarName] || this.$_options.$html || '';
+    if ($0 === this.$_prevVal)
+        return;
+    this.$_wContainer.$setContent($Traliva.$createElement($0));
+    this.$_prevVal = $0;
+};
