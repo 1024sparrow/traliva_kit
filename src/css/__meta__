@@ -12,7 +12,8 @@
                     "tree_list.css",
                     "text_edit.css",
                     "combo_box.css",
-                    "large_text_edit.css"
+                    "large_text_edit.css",
+                    "static_html.css"
                 ]
             }
         }
