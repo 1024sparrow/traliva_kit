@@ -34,10 +34,10 @@ add(){
     echo "    //stateObj:{}" >> js/$file_name.js
     echo "});" >> js/$file_name.js
     echo "#USAGE_END#traliva_kit_debug##" >> js/$file_name.js
-    echo "function \$$name(\$p_wContainer, \$p_options){" >> js/$file_name.js
-    echo "    \$Traliva.\$WidgetStateSubscriber.call(this, \$p_wContainer, \$p_options);" >> js/$file_name.js
+    echo "function \$$name(\$p_wContainer, \$p_options, \$p_widgets){" >> js/$file_name.js
+    echo "    \$Traliva.\$WidgetStateSubscriber.call(this, \$p_wContainer, \$p_options, \$p_widgets);" >> js/$file_name.js
     echo "    // ..." >> js/$file_name.js
-    echo "}" >> js/$file_name.js
+    echo "};" >> js/$file_name.js
     echo "\$$name.prototype = Object.create(\$Traliva.\$WidgetStateSubscriber.prototype);" >> js/$file_name.js
     echo "\$$name.prototype.constructor = \$$name;" >> js/$file_name.js
     echo "\$$name.prototype.\$processStateChanges = function(s){" >> js/$file_name.js
@@ -46,7 +46,8 @@ add(){
     echo "        return;" >> js/$file_name.js
     echo "    }" >> js/$file_name.js
     echo "    // ..." >> js/$file_name.js
-    echo "}" >> js/$file_name.js
+    echo "};" >> js/$file_name.js
+    echo "//\$$name.widgetsFields = [];" >> js/$file_name.js
 }
 
 list(){
