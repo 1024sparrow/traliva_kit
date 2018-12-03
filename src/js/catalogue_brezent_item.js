@@ -6,8 +6,9 @@ registerHelp('$CatalogueBrezentItem', {
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
-function $CatalogueBrezentItem($p_wContainer, $p_options){
-    $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
+function $CatalogueBrezentItem($p_wContainer, $p_options, $p_widgets){
+    $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
+    $p_wContainer.$setContent($Traliva.$createElement('<img src="'+$p_options.$image+'"></img>'));
     // ...
 };
 $CatalogueBrezentItem.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
