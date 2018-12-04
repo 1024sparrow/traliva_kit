@@ -1,0 +1,36 @@
+#USAGE_BEGIN#traliva_kit_debug##
+registerHelp('$Strip', {
+    title: 'Линейный лейаут: элементы встроку или встолбец',
+    //descr: '',
+    options:{
+        $orient: 'горизонтальный или вертикальный. Перечисление $TralivaKit__Strip__orient:v,h'
+    },
+    //stateObj:{}
+});
+#USAGE_END#traliva_kit_debug##
+
+#ENUM#$TralivaKit__Strip__orient:v,h##
+//#e#$TralivaKit__Strip__orient:h##;
+function $Strip($p_wContainer, $p_options, $p_widgets){
+    $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
+	this.$__orient = $p_options.$orient;
+	this.$__items = [];
+	this.$__sizes = [];
+	this.$__w;
+	this.$__h;
+
+	this.$_eTable = document.createElement('table');
+	this.$_eTable.style.border = 'none';
+	this.$_eTable.cellSpacing = '0';
+	if (this.$__orient === #e#$TralivaKit__Strip__orient:h##){
+		this.$_eRowSingle = this.$_eTable.insertRow(0);
+	}
+    $p_wContainer.$setContent(this.$_eTable);
+	//$_WidgetBase.call(this, $p_parentWidget, $p_attr);
+    // ...
+};
+$Strip.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
+$Strip.prototype.constructor = $Strip;
+$Strip.widgetsFields = ['$items'];
+{%% process_state_changes.js %%}
+{%% __update_sizes.js %%}

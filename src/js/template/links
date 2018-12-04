@@ -29,3 +29,9 @@ $p_namespace.$LargeTextEdit = $LargeTextEdit;
 
 {%% static_html.js %%}
 $p_namespace.$StaticHtml = $StaticHtml;
+
+{%% strip.js %%}
+$p_namespace.$Strip = $Strip;
+
+{%% stack.js %%}
+$p_namespace.$Stack = $Stack;
