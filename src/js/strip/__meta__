@@ -1,0 +1,14 @@
+{
+    "files":[
+        {
+            "target": "strip.js",
+            "source":{
+                "template": "t",
+                "list":[
+                    'process_state_changes.js',
+                    '__update_sizes.js'
+                ]
+            }
+        }
+    ]
+}

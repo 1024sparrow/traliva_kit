@@ -16,6 +16,8 @@
                     "static_html.css",
                     "catalogue.css",
                     "catalogue_brezent_item.css"
+                    "strip.css",
+                    "stack.css"
                 ]
             }
         }
