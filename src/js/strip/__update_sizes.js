@@ -1,5 +1,5 @@
 $Strip.prototype.$__updateSizes = function(){
-	var $totalForParts = (this.$__orient === #e#$TralivaKit__Strip__orient#h##) ? this.$__w : this.$__h;
+	var $totalForParts = (this.$__orient === #e#$TralivaKit__Strip__orient:h##) ? this.$__w : this.$__h;
 	if ($totalForParts < 0)
 		return;
 	var $totalParts = 0;

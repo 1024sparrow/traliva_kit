@@ -18,6 +18,7 @@ function $Strip($p_wContainer, $p_options, $p_widgets){
 	this.$__sizes = [];
 	this.$__w;
 	this.$__h;
+    this.$__wContainer = $p_wContainer;
 
 	this.$_eTable = document.createElement('table');
 	this.$_eTable.style.border = 'none';
@@ -26,11 +27,24 @@ function $Strip($p_wContainer, $p_options, $p_widgets){
 		this.$_eRowSingle = this.$_eTable.insertRow(0);
 	}
     $p_wContainer.$setContent(this.$_eTable);
+    (function(self){
+    $p_wContainer.$_onResized = function($w, $h){
+        self.$__w = $w;
+        self.$__h = $h;
+        self.$__updateSizes();
+    };
+    $p_wContainer.$_onChildVisibilityChanged = function($wChild){
+        self.$__updateSizes();
+    };
+    })(this);
+    this.$_updateItems($p_widgets);
 	//$_WidgetBase.call(this, $p_parentWidget, $p_attr);
     // ...
 };
 $Strip.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Strip.prototype.constructor = $Strip;
-$Strip.widgetsFields = ['$items'];
+$Strip.$widgetsFields = ['$items'];
 {%% process_state_changes.js %%}
 {%% __update_sizes.js %%}
+$Strip.prototype.$_updateItems = function(){
+};
