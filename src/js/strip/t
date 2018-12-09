@@ -37,7 +37,7 @@ function $Strip($p_wContainer, $p_options, $p_widgets){
         self.$__updateSizes();
     };
     })(this);
-    this.$_updateItems($p_widgets);
+    this.$_updateItems($p_widgets.$items);
 	//$_WidgetBase.call(this, $p_parentWidget, $p_attr);
     // ...
 };
@@ -46,5 +46,19 @@ $Strip.prototype.constructor = $Strip;
 $Strip.$widgetsFields = ['$items'];
 {%% process_state_changes.js %%}
 {%% __update_sizes.js %%}
-$Strip.prototype.$_updateItems = function(){
+$Strip.prototype.$_updateItems = function($p_content){
+    console.log('^^', $p_content);//
+	/*var $eCell;
+	if (this.$__orient === #e#TralivaKit__Strip__orient:h##){
+		//$eCell = this.$_eRowSingle.insertCell(this.$_eRowSingle.cells.length);
+        
+	}
+	else {
+		var $eRow = this.$_eTable.insertRow(this.$_eTable.rows.length);
+		$eCell = $eRow.insertCell(0);
+	}
+	$eCell.appendChild($p_itemWidget.$_div);
+	$eCell.style.padding = '0';
+	this.$__items.push($p_itemWidget);
+	this.$__sizes.push($size);*/
 };
