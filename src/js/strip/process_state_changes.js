@@ -3,5 +3,6 @@ $Strip.prototype.$processStateChanges = function(s){
         console.error('epic fail');
         return;
     }
+    $Traliva.$WidgetStateSubscriber.call(this, s);
     // ...
 };

@@ -37,7 +37,9 @@ function $Strip($p_wContainer, $p_options, $p_widgets){
         self.$__updateSizes();
     };
     })(this);
-    this.$_updateItems($p_widgets.$items);
+    console.log('strip constructor parameters: ', $p_wContainer, $p_options, $p_widgets);
+    //this.$_updateItems($p_widgets.$items);
+    this.$_updateItems($p_options.$_children.$items);
 	//$_WidgetBase.call(this, $p_parentWidget, $p_attr);
     // ...
 };
@@ -48,6 +50,30 @@ $Strip.$widgetsFields = ['$items'];
 {%% __update_sizes.js %%}
 $Strip.prototype.$_updateItems = function($p_content){
     console.log('^^', $p_content);//
+    var $1,
+        $eCell, $itemWidget, $size,
+        $0;
+    // убираем лишние
+    for ($1 = $p_content.length ; $1 < this.$__items.length ; ++$1){
+    }
+
+    // добавляем новые
+    for ($1 = this.$__items.length ? this.$__items.length - 1 : 0 ; $1 < $p_content.length ; ++$1){
+        $size = this.$_transformStringSize($p_content[$1].$size);
+        $itemWidget = $p_content[$1].$_widget;
+        if (this.$__orient == #e#$TralivaKit__Strip__orient:h##){
+            $eCell = this.$_eRowSingle.insertCell(this.$_eRowSingle.cells.length);
+        }
+        else {
+            var $eRow = this.$_eTable.insertRow(this.$_eTable.rows.length);
+            $eCell = $eRow.insertCell(0);
+        }
+        $eCell.appendChild($itemWidget.$_div);
+        $eCell.style.padding = '0';
+        this.$__items.push($itemWidget);
+        this.$__sizes.push($size);
+    }
+
 	/*var $eCell;
 	if (this.$__orient === #e#TralivaKit__Strip__orient:h##){
 		//$eCell = this.$_eRowSingle.insertCell(this.$_eRowSingle.cells.length);
@@ -61,4 +87,7 @@ $Strip.prototype.$_updateItems = function($p_content){
 	$eCell.style.padding = '0';
 	this.$__items.push($p_itemWidget);
 	this.$__sizes.push($size);*/
+};
+$Strip.prototype.$_updateLayout = function($p){
+    console.log('strip: update layout: ', $p);//
 };
