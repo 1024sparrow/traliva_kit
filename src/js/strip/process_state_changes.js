@@ -1,8 +1,9 @@
 $Strip.prototype.$processStateChanges = function(s){
+    $Traliva.$WidgetStateSubscriber.prototype.$processStateChanges.call(this, s);
     if (!s){
         console.error('epic fail');
         return;
     }
-    $Traliva.$WidgetStateSubscriber.call(this, s);
+    console.log('BORIS HERE');
     // ...
 };
