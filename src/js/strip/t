@@ -11,8 +11,8 @@ registerHelp('$Strip', {
 
 #ENUM#$TralivaKit__Strip__orient:v,h##
 //#e#$TralivaKit__Strip__orient:h##;
-function $Strip($p_wContainer, $p_options, $p_widgets){
-    $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
+function $Strip($p_wContainer, $p_options, $p_descr){
+    var $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_descr);
 	this.$__orient = $p_options.$orient;
 	this.$__items = [];
 	this.$__sizes = [];
@@ -37,9 +37,10 @@ function $Strip($p_wContainer, $p_options, $p_widgets){
         self.$__updateSizes();
     };
     })(this);
-    console.log('strip constructor parameters: ', $p_wContainer, $p_options, $p_widgets);
-    //this.$_updateItems($p_widgets.$items);
-    this.$_updateItems($p_options.$_children.$items);
+    console.log('strip constructor parameters: ', $p_wContainer, $p_options, $p_descr);
+    //this.$_updateItems($p_options.$_children.$items);
+    if ($children)
+        this.$_updateItems($children.$items);
 	//$_WidgetBase.call(this, $p_parentWidget, $p_attr);
     // ...
 };

@@ -29,7 +29,7 @@ $Strip.prototype.$__updateSizes = function(){
 		}
 
 		var $1 = this.$__items[$0];
-		if (this.$__orient == $Traliva.$Strip__Orient__hor)
+		if (this.$__orient == #e#$TralivaKit__Strip__orient:h##)
 			$1.$resize($tmpSize,this.$__h);
 		else
 			$1.$resize(this.$__w, $tmpSize);
