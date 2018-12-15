@@ -39,6 +39,7 @@ function $Strip($p_wContainer, $p_options, $p_descr){
     })(this);
     console.log('strip constructor parameters: ', $p_wContainer, $p_options, $p_descr);
     //this.$_updateItems($p_options.$_children.$items);
+    console.log('strip constructor children: ', $children);
     if ($children)
         this.$_updateItems($children.$items);
 	//$_WidgetBase.call(this, $p_parentWidget, $p_attr);
@@ -91,4 +92,5 @@ $Strip.prototype.$_updateItems = function($p_content){
 };
 $Strip.prototype.$_updateLayout = function($p){
     console.log('strip: update layout: ', $p);//
+    this.$_updateItems($p ? ($p.$items || []) : []);
 };
