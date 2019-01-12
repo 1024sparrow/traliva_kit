@@ -16,7 +16,7 @@
                     "large_text_edit.js",
                     "static_html.js",
                     "catalogue.js",
-                    "catalogue_brezent_item.js"
+                    "catalogue_brezent_item.js",
                     "strip.js",
                     "stack.js"
                 ]
