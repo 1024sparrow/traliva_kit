@@ -5,8 +5,8 @@
             "source":{
                 "template": "t",
                 "list":[
-                    'process_state_changes.js',
-                    '__update_sizes.js'
+                    "process_state_changes.js",
+                    "__update_sizes.js"
                 ]
             }
         }
