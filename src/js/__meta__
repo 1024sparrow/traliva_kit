@@ -16,7 +16,8 @@
                     "large_text_edit.js",
                     "static_html.js",
                     "strip.js",
-                    "stack.js"
+                    "stack.js",
+                    "roll_in.js"
                 ]
             }
         }

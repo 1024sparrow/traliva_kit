@@ -35,3 +35,6 @@ $p_namespace.$Strip = $Strip;
 
 {%% stack.js %%}
 $p_namespace.$Stack = $Stack;
+
+{%% roll_in.js %%}
+$p_namespace.$RollIn = $RollIn;

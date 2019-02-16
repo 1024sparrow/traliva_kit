@@ -15,7 +15,8 @@
                     "large_text_edit.css",
                     "static_html.css",
                     "strip.css",
-                    "stack.css"
+                    "stack.css",
+                    "roll_in.css"
                 ]
             }
         }
