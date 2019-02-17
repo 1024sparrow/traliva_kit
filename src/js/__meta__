@@ -18,7 +18,8 @@
                     "catalogue.js",
                     "catalogue_brezent_item.js",
                     "strip.js",
-                    "stack.js"
+                    "stack.js",
+                    "roll_in.js"
                 ]
             }
         }
