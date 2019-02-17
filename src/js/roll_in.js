@@ -3,14 +3,14 @@ registerHelp('$RollIn', {
     title: 'Выкатывающееся меню для смартфонов',
     //descr: '',
     options:{
-        $visibleName: 'имя свойства, которое в объекте состояния указывает, выкачен виджет или нет должен быть. Значение по умолчанию - \'visible\'.'
+        $visibleName: 'имя свойства, которое в объекте состояния указывает, выкачен виджет или нет должен быть. Значение по умолчанию - \'$visible\'.'
     },
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
 function $RollIn($p_wContainer, $p_options, $p_widgets){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
-    this.$_rollInState = false;
+    //this.$_rollInState = undefined;
     #USAGE_BEGIN#debug##
     if (typeof $p_options.$visibleName !== 'string'){
         console.log('ERROR: опция $visibleName должна быть явно указана (тип строка).');
@@ -35,16 +35,18 @@ $RollIn.prototype.$processStateChanges = function(s){
         return;
     }
     var $0;
-    $0 = s[this.$_options.$visibleName] ? true : false;
+    $0 = s[this.$_options.$visibleName || '$visible'] ? true : false;
     if (this.$_rollInState !== $0){
         console.log($0);
         if ($0){
-            //this.$_eMenuRect.style.display = 'block';
+            //this.$e.style.display = 'block';
             this.$_eMenuRect.style.left = '0px';
+            this.$e.style.backgroundColor = 'rgba(0,0,0,0.5)';
         }
         else{
-            //this.$_eMenuRect.style.display = 'none';
+            //this.$e.style.display = 'none';
             this.$_eMenuRect.style.left = '-' + this.$_w + 'px';
+            this.$e.style.backgroundColor = 'rgba(0,0,0,0)';
         }
         this.$_rollInState = $0;
     }
