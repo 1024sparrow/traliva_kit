@@ -20,6 +20,10 @@ function $RollIn($p_wContainer, $p_options, $p_widgets){
     this.$e = $Traliva.$createElement('<div traliva="$_eMenuRect"><h1>Hello!</h1></div>', this, '$traliva_kit__roll_inn');
     $p_wContainer.$_onResized = (function($0){return function($w, $h){
         $0.$_w = $0.$_getMenuWidth($w);
+        if (!$0.$_rollState){
+            $0.$_eMenuRect.style.left = '-' + this.$_w + 'px';
+            $0.$_eMenuRect.style.width = '' + $0.$_getMenuWidth($w) + 'px';
+        }
     };})(this);
     console.log(this.$e);
     $p_wContainer.$setContent(this.$e);
