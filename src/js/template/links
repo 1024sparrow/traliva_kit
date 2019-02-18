@@ -30,6 +30,12 @@ $p_namespace.$LargeTextEdit = $LargeTextEdit;
 {%% static_html.js %%}
 $p_namespace.$StaticHtml = $StaticHtml;
 
+{%% catalogue.js %%}
+$p_namespace.$Catalogue = $Catalogue;
+
+{%% catalogue_brezent_item.js %%}
+$p_namespace.$CatalogueBrezentItem = $CatalogueBrezentItem;
+
 {%% strip.js %%}
 $p_namespace.$Strip = $Strip;
 

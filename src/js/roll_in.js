@@ -3,7 +3,7 @@ registerHelp('$RollIn', {
     title: 'Выкатывающееся меню для смартфонов',
     //descr: '',
     options:{
-        $visibleName: 'имя свойства, которое в объекте состояния указывает, выкачен виджет или нет должен быть. Значение по умолчанию - \'$visible\'.'
+        $visibleVarName: 'имя свойства, которое в объекте состояния указывает, выкачен виджет или нет должен быть. Значение по умолчанию - \'$visible\'.'
     },
     //stateObj:{}
 });
@@ -12,8 +12,8 @@ function $RollIn($p_wContainer, $p_options, $p_widgets){
     var $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
     //this.$_rollInState = undefined;
     #USAGE_BEGIN#debug##
-    if (typeof $p_options.$visibleName !== 'string'){
-        console.log('ERROR: опция $visibleName должна быть явно указана (тип строка).');
+    if (typeof $p_options.$visibleVarName !== 'string'){
+        console.log('ERROR: опция $visibleVarName должна быть явно указана (тип строка).');
     }
     #USAGE_END#debug##
     this.$_options = $p_options;
@@ -48,7 +48,7 @@ $RollIn.prototype.$processStateChanges = function(s){
         return;
     }
     var $0;
-    $0 = s[this.$_options.$visibleName || '$visible'] ? true : false;
+    $0 = s[this.$_options.$visibleVarName || '$visible'] ? true : false;
     if (this.$_rollInState !== $0){
         console.log($0);
         if ($0){

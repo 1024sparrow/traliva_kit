@@ -14,6 +14,8 @@
                     "combo_box.css",
                     "large_text_edit.css",
                     "static_html.css",
+                    "catalogue.css",
+                    "catalogue_brezent_item.css",
                     "strip.css",
                     "stack.css",
                     "roll_in.css"
