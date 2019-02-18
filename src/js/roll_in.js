@@ -9,7 +9,7 @@ registerHelp('$RollIn', {
 });
 #USAGE_END#traliva_kit_debug##
 function $RollIn($p_wContainer, $p_options, $p_widgets){
-    $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
+    var $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
     //this.$_rollInState = undefined;
     #USAGE_BEGIN#debug##
     if (typeof $p_options.$visibleName !== 'string'){
@@ -17,7 +17,8 @@ function $RollIn($p_wContainer, $p_options, $p_widgets){
     }
     #USAGE_END#debug##
     this.$_options = $p_options;
-    this.$e = $Traliva.$createElement('<div traliva="$_eMenuRect"><h1>Hello!</h1></div>', this, '$traliva_kit__roll_inn');
+    //this.$e = $Traliva.$createElement('<div traliva="$_eMenuRect"><h1>Hello!</h1></div>', this, '$traliva_kit__roll_inn');
+    this.$e = $Traliva.$createElement('<div traliva="$_eMenuRect"/>', this, '$traliva_kit__roll_inn');
     $p_wContainer.$_onResized = (function($0){return function($w, $h){
         $0.$_w = $0.$_getMenuWidth($w);
         if (!$0.$_rollState){
@@ -26,10 +27,17 @@ function $RollIn($p_wContainer, $p_options, $p_widgets){
         }
     };})(this);
     console.log(this.$e);
+    if ($p_widgets){ // Содержимое меню формируется динамически
+        console.log('СТАТИКА:', $p_widgets, $children, $p_options);//
+    }
+    else if ($p_options.$_children){ // Содержимое меню задано статически
+        console.log('ДИНАМИКА:', $p_widgets, $children, $p_options);//
+    }
     $p_wContainer.$setContent(this.$e);
 };
 $RollIn.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $RollIn.prototype.constructor = $RollIn;
+$RollIn.$widgetsFields = ['$content'];
 $RollIn.prototype.$_getMenuWidth = function($p_width){
     return $p_width * 0.8;
 };
