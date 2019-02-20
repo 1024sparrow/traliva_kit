@@ -28,10 +28,10 @@ function $RollIn($p_wContainer, $p_options, $p_widgets){
     };})(this);
     console.log(this.$e);
     if ($p_widgets){ // Содержимое меню формируется динамически
-        console.log('СТАТИКА:', $p_widgets, $children, $p_options);//
+        console.log('ДИНАМИКА:', $p_widgets, $children, $p_options);//
     }
     else if ($p_options.$_children){ // Содержимое меню задано статически
-        console.log('ДИНАМИКА:', $p_widgets, $children, $p_options);//
+        console.log('СТАТИКА:', $p_widgets, $children, $p_options);//
     }
     $p_wContainer.$setContent(this.$e);
 };

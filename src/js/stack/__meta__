@@ -1,0 +1,13 @@
+{
+    "files":[
+        {
+            "target": "stack.js",
+            "source":{
+                "template": "t.js",
+                "list":[
+                    "process_state_changes.js"
+                ]
+            }
+        }
+    ]
+}
