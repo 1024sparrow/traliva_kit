@@ -19,7 +19,8 @@
                     "catalogue_brezent_item.js",
                     "strip.js",
                     "stack.js",
-                    "roll_in.js"
+                    "roll_in.js",
+                    "90223_nav_bar.js"
                 ]
             }
         }

@@ -18,7 +18,8 @@
                     "catalogue_brezent_item.css",
                     "strip.css",
                     "stack.css",
-                    "roll_in.css"
+                    "roll_in.css",
+                    "90223_nav_bar.css"
                 ]
             }
         }

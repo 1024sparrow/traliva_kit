@@ -44,3 +44,6 @@ $p_namespace.$Stack = $Stack;
 
 {%% roll_in.js %%}
 $p_namespace.$RollIn = $RollIn;
+
+{%% 90223_nav_bar.js %%}
+$p_namespace.$90223NavBar = $90223NavBar;
