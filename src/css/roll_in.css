@@ -6,7 +6,7 @@
     height: 100%;
     position: relative;
 }
-.$traliva_kit__roll_inn div{
+.$traliva_kit__roll_inn > div{
     /*display: none;*/
     transition-property: left;
     transition-duration: 0.2s;

@@ -9,7 +9,9 @@ registerHelp('$RollIn', {
 });
 #USAGE_END#traliva_kit_debug##
 function $RollIn($p_wContainer, $p_options, $p_widgets){
-    var $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
+    var $0,
+        $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets)
+    ;
     //this.$_rollInState = undefined;
     #USAGE_BEGIN#debug##
     if (typeof $p_options.$visibleVarName !== 'string'){
@@ -33,6 +35,15 @@ function $RollIn($p_wContainer, $p_options, $p_widgets){
     }
     else if ($p_options.$_children){ // Содержимое меню задано статически
         console.log('СТАТИКА:', $p_widgets, $children, $p_options);//
+    }
+    if ($children){
+        $0 = $children.$content;
+        if ($0 && ($0 = $0.pop())){
+            $0 = $0.$_widget.$_div;
+            $0.style.height = '100%';
+            $0.style.width = '100%';
+            this.$_eMenuRect.appendChild($0);
+        }
     }
     $p_wContainer.$setContent(this.$e);
 };
