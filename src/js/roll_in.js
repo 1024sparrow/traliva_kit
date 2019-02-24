@@ -67,29 +67,30 @@ $RollIn.prototype.$processStateChanges = function(s){
         if ($0){
             this.$_visibilityToChange = true;
             this.$_wContainer.$setVisible(true);
-            this.$_eMenuRect.style.left = '0px';
-            this.$e.style.backgroundColor = 'rgba(0,0,0,0.5)';
         }
         else{
             this.$_visibilityToChange = false;
-            setTimeout((function($0){return function(){
-                $0.$_updateVisibility();
-            };})(this), 200); // 200мс. - время действия анимации (см. CSS)
-            //this.$_wContainer.$setVisible(false); // boris dm
             this.$_eMenuRect.style.left = '-' + this.$_w + 'px';
             this.$e.style.backgroundColor = 'rgba(0,0,0,0)';
         }
+        setTimeout((function($0){return function(){
+            $0.$_updateVisibility();
+        };})(this), 200); // 200мс. - время действия анимации (см. CSS)
+
         //this.$_wContainer.$setMouseEventsBlocked(false);//
         //console.log('BLOCKED:', $0);//
         this.$_rollInState = $0;
     }
-
-    // ...
-    //
 };
 $RollIn.prototype.$_updateVisibility = function(){
     var $0 = this.$_state[this.$_options.$visibleVarName || '$visible'] ? true : false;
-    if ($0 === this.$_visibilityToChange)
-        this.$_wContainer.$setVisible($0);
+    if ($0 === this.$_visibilityToChange){
+        if ($0){
+            this.$_eMenuRect.style.left = '0px';
+            this.$e.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        }
+        else{
+            this.$_wContainer.$setVisible($0);
+        }
+    }
 };
-//$RollIn.widgetsFields = [];
