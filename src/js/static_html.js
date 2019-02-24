@@ -14,10 +14,16 @@ function $StaticHtml($p_wContainer, $p_options){
     this.$_options = $p_options;
     this.$_prevVal = '';
     this.$_wContainer = $p_wContainer;
+    //this.$_e;
     if ($p_options.$html){
-        $p_wContainer.$setContent($Traliva.$createElement($p_options.$html));
+        this.$_e = $Traliva.$createElement($p_options.$html, undefined, '$traliva_kit__static_html');
+        $p_wContainer.$setContent(this.$_e);
         this.$_prevVal = $p_options.$html;
     }
+    $p_wContainer.$_onResized = function(w, h){
+        this.$_contentDiv.style.width = '' + w + 'px';
+        this.$_contentDiv.style.height = '' + h + 'px';
+    };
 };
 $StaticHtml.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $StaticHtml.prototype.constructor = $StaticHtml;
@@ -31,6 +37,7 @@ $StaticHtml.prototype.$processStateChanges = function(s){
     var $0 = this.$_state[this.$_options.$htmlVarName] || this.$_options.$html || '';
     if ($0 === this.$_prevVal)
         return;
-    this.$_wContainer.$setContent($Traliva.$createElement($0, undefined, '$traliva_kit__static_html'));
+    this.$_e = $Traliva.$createElement($0, undefined, '$traliva_kit__static_html');
+    this.$_wContainer.$setContent(this.$_e);
     this.$_prevVal = $0;
 };
