@@ -18,7 +18,9 @@ function $RollIn($p_wContainer, $p_options, $p_widgets){
         console.log('ERROR: опция $visibleVarName должна быть явно указана (тип строка).');
     }
     #USAGE_END#debug##
+    //this.$_visibilityToChange;
     this.$_options = $p_options;
+    this.$_wContainer = $p_wContainer;
     //this.$e = $Traliva.$createElement('<div traliva="$_eMenuRect"><h1>Hello!</h1></div>', this, '$traliva_kit__roll_inn');
     this.$e = $Traliva.$createElement('<div traliva="$_eMenuRect"/>', this, '$traliva_kit__roll_inn');
     $p_wContainer.$_onResized = (function($0){return function($w, $h){
@@ -63,19 +65,31 @@ $RollIn.prototype.$processStateChanges = function(s){
     if (this.$_rollInState !== $0){
         console.log($0);
         if ($0){
-            //this.$e.style.display = 'block';
+            this.$_visibilityToChange = true;
+            this.$_wContainer.$setVisible(true);
             this.$_eMenuRect.style.left = '0px';
             this.$e.style.backgroundColor = 'rgba(0,0,0,0.5)';
         }
         else{
-            //this.$e.style.display = 'none';
+            this.$_visibilityToChange = false;
+            setTimeout((function($0){return function(){
+                $0.$_updateVisibility();
+            };})(this), 200); // 200мс. - время действия анимации (см. CSS)
+            //this.$_wContainer.$setVisible(false); // boris dm
             this.$_eMenuRect.style.left = '-' + this.$_w + 'px';
             this.$e.style.backgroundColor = 'rgba(0,0,0,0)';
         }
+        //this.$_wContainer.$setMouseEventsBlocked(false);//
+        //console.log('BLOCKED:', $0);//
         this.$_rollInState = $0;
     }
 
     // ...
     //
+};
+$RollIn.prototype.$_updateVisibility = function(){
+    var $0 = this.$_state[this.$_options.$visibleVarName || '$visible'] ? true : false;
+    if ($0 === this.$_visibilityToChange)
+        this.$_wContainer.$setVisible($0);
 };
 //$RollIn.widgetsFields = [];
