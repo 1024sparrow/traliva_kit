@@ -31,6 +31,6 @@ $StaticHtml.prototype.$processStateChanges = function(s){
     var $0 = this.$_state[this.$_options.$htmlVarName] || this.$_options.$html || '';
     if ($0 === this.$_prevVal)
         return;
-    this.$_wContainer.$setContent($Traliva.$createElement($0, undefined, '$traliva_kit__static_html'));
+    this.$_wContainer.$setContent($Traliva.$createElement($0));
     this.$_prevVal = $0;
 };
