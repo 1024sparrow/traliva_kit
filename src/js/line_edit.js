@@ -14,7 +14,7 @@ function $LineEdit($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$requireVarName;
 
-    $p_wContainer.$setContent($Traliva.createElement('<input type="text" traliva="e" class="$traliva_kit__lineedit"></input>', this));
+    $p_wContainer.$setContent($Traliva.$createElement('<input type="text" traliva="e" class="$traliva_kit__lineedit"></input>', this));
     $p_wContainer.$_onResized = (function($self){
         return function(w,h){
             $$self.e.style.width = (w - 32) + 'px';
