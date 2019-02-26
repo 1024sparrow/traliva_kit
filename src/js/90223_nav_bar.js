@@ -34,11 +34,11 @@ function $90223NavBar($p_wContainer, $p_options, $p_widgets){
     $p_options.$bg = $color1;
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$_options = $p_options;
+    this.$_buttons = {};
     if ($target === '$desktop'){
         $eTable = document.createElement('table');
         $eTable.style.height = '100%';
         $eRow = $eTable.insertRow(-1);
-        this.$_buttons = {};
         //this.$_current;
         for ($1 = 0 ; $1 < $variants.length ; ++$1){
             $0 = $variants[$1];
@@ -67,9 +67,19 @@ function $90223NavBar($p_wContainer, $p_options, $p_widgets){
         $p_wContainer.$_div.style.overflow = 'auto';
         for ($1 = 0 ; $1 < $variants.length ; ++$1){
             $0 = $variants[$1];
-            $eRow = document.createElement('p');
-            $eRow.innerHTML = $0.$title;
-            $eTable.appendChild($eRow);
+            $2 = document.createElement('p');
+            this.$_buttons[$0.$id] = {
+                $element: $2,
+                $enabled: false // не используется
+            };
+            $2.innerHTML = $0.$title;
+            $2.style.padding = '20px';
+            $2.style.color = $color2;
+            $2.style.cursor = 'pointer';
+            $2.addEventListener('click', (function($1, $2){return function(){
+                $1.$_onTabClicked($2);
+            };})(this, $0.$id));
+            $eTable.appendChild($2);
         }
         $p_wContainer.$setContent($eTable);
     }
@@ -93,15 +103,13 @@ $90223NavBar.prototype.$processStateChanges = function(s){
         return;
     }
     var $1;
-    if (this.$_options.$target === '$desktop'){
+    if (this.$_options.$target === '$desktop' || this.$_options.$target === '$mobile'){
         $1 = s[this.$_options.$valueVarName || '$value'];
         if ($1 !== this.$_current){
             this.$_setButtonHighlighten(this.$_current, false);
             this.$_setButtonHighlighten($1, true);
             this.$_current = $1;
         }
-    }
-    else if (this.$_options.$target === '$mobile'){
     }
 };
 //$90223NavBar.widgetsFields = [];
