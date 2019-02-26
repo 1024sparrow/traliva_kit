@@ -37,12 +37,12 @@ function $90223NavBar($p_wContainer, $p_options, $p_widgets){
     if ($target === '$desktop'){
         $eTable = document.createElement('table');
         $eTable.style.height = '100%';
-        $eRow = $eTable.insertRow();
+        $eRow = $eTable.insertRow(-1);
         this.$_buttons = {};
         //this.$_current;
         for ($1 = 0 ; $1 < $variants.length ; ++$1){
             $0 = $variants[$1];
-            $2 = $eRow.insertCell();
+            $2 = $eRow.insertCell(-1);
             this.$_buttons[$0.$id] = {
                 $element: $2,
                 $enabled: false // не используется
