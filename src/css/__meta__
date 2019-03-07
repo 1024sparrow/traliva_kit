@@ -19,7 +19,8 @@
                     "strip.css",
                     "stack.css",
                     "roll_in.css",
-                    "90223_nav_bar.css"
+                    "90223_nav_bar.css",
+                    "bedsheet.css"
                 ]
             }
         }

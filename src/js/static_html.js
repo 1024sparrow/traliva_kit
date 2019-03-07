@@ -15,12 +15,23 @@ function $StaticHtml($p_wContainer, $p_options){
     this.$_prevVal = '';
     this.$_wContainer = $p_wContainer;
     //this.$_e;
+    var $1;
     if ($p_options.$html){
-        this.$_e = $Traliva.$createElement($p_options.$html, undefined, '$traliva_kit__static_html');
+        this.$_e = $Traliva.$createElement('<div traliva=$container>' + $p_options.$html + '</div>', $1 = {}, '$traliva_kit__static_html');
+        console.log('22', $1);//
+        //this.$_e.style.margin = 'auto';//
         $p_wContainer.$setContent(this.$_e);
         this.$_prevVal = $p_options.$html;
+        //$1.$container.style.width = '600px';
     }
+    else
+        console.log('22 облом');//
+    //var $1 = this.$_e;
     $p_wContainer.$_onResized = function(w, h){
+        //if ($1)
+        //    $1.style.margin = 'auto';
+        //this.$_div.style.margin = 'auto';//
+        //this.$_contentDiv.style.width = '600px';//'' + ((w > 600) ? 600 : w) + 'px';
         this.$_contentDiv.style.width = '' + w + 'px';
         this.$_contentDiv.style.height = '' + h + 'px';
     };

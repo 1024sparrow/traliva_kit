@@ -20,7 +20,8 @@
                     "strip.js",
                     "stack.js",
                     "roll_in.js",
-                    "90223_nav_bar.js"
+                    "90223_nav_bar.js",
+                    "bedsheet.js"
                 ]
             }
         }

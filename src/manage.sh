@@ -47,7 +47,7 @@ add(){
     echo "    }" >> js/$file_name.js
     echo "    // ..." >> js/$file_name.js
     echo "};" >> js/$file_name.js
-    echo "//\$$name.widgetsFields = [];" >> js/$file_name.js
+    echo "//\$$name.\$widgetsFields = [];" >> js/$file_name.js
 }
 
 list(){
