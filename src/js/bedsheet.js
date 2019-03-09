@@ -9,7 +9,6 @@ registerHelp('$Bedsheet', {
 function $Bedsheet($p_wContainer, $p_options, $p_widgets){
     var $children, $content, $1, $2 = {};
     $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
-    console.log('3333:',$children.$content);//
     $content = $children.$content;
     #USAGE_BEGIN#traliva_kit_debug##if ($content)#USAGE_END#traliva_kit_debug##
         $content = $content[0];
@@ -20,9 +19,23 @@ function $Bedsheet($p_wContainer, $p_options, $p_widgets){
     }
     #USAGE_END#traliva_kit_debug##
     $1 = $Traliva.$createElement('<div traliva="$1"></div>', $2);
-    console.log('4444:', $2);
+    $2.$1.style.margin = 'auto';
+    $2.$1.style.background = 'rgba(255,255,255,0.3)';
+    $2.$1.style.padding = '10px';
+    $2.$1.style.borderRight = '1px solid #420';
+    $2.$1.style.borderLeft = '1px solid #420';
+    $1.style.overflow = '';
+    $p_wContainer.$_onResized = (function($0){return function($w, $h){
+        this.$_content.style.height = '' + $h + 'px';
+        $0.minHeight = '' + ($h - 20) + 'px';
+        var $1 = $w * 0.9;
+        if ($1 > 800)
+            $1 = 800;
+        $0.width = '' + $1 + 'px';
+    };})($2.$1.style);
     $2.$1.appendChild($content.$_widget.$_div);
     $p_wContainer.$setContent($1);
+    $p_wContainer.$_content.style.overflow = 'auto';
 };
 $Bedsheet.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Bedsheet.prototype.constructor = $Bedsheet;
