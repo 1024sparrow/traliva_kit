@@ -1,13 +1,24 @@
 #USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$Bedsheet', {
     title: 'Простыня - это контейнер, который отображает контент на широких (десктопных) экранах не на всю ширину, а лишь на узкой вертикальной полосе по центру',
-    //descr: '',
+    descr: 'Используйте конструктор как функцию, чтобы сгенерировать в лейауте описание виджета, обёрнутого этим контейнером',
     //options:{},
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
 function $Bedsheet($p_wContainer, $p_options, $p_widgets){
     var $children, $content, $1, $2 = {};
+    if (this.constructor !== $Bedsheet){ // это не конструктор, а тупо функция
+        // сокращённая семантика для сокращения лейаутов.
+        // Должны вернуть фрагмент описателя лейаута.
+        // p_wContainer - это не $Traliva.$Widget, а часть описания лейаута (объект или строка).
+        return {
+            $type: $Bedsheet,
+            $content: [{
+                $_widget: $p_wContainer
+            }]
+        };
+    }
     $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
     $content = $children.$content;
     #USAGE_BEGIN#traliva_kit_debug##if ($content)#USAGE_END#traliva_kit_debug##
