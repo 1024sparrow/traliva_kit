@@ -31,7 +31,8 @@ function $Bedsheet($p_wContainer, $p_options, $p_widgets){
     #USAGE_END#traliva_kit_debug##
     $1 = $Traliva.$createElement('<div traliva="$1"></div>', $2);
     $2.$1.style.margin = 'auto';
-    $2.$1.style.background = 'rgba(255,255,255,0.3)';
+    //$2.$1.style.background = 'rgba(255,255,255,0.3)';
+    $2.$1.style.background = '#ffc';
     $2.$1.style.padding = '10px';
     $2.$1.style.borderRight = '1px solid #420';
     $2.$1.style.borderLeft = '1px solid #420';
