@@ -24,20 +24,29 @@ function $StaticHtml($p_wContainer, $p_options){
         this.$_prevVal = $p_options.$html;
         //$1.$container.style.width = '600px';
     }
-    else
-        console.log('22 облом');//
+    //else
+    //    console.log('22 облом');//
     //var $1 = this.$_e;
     $p_wContainer.$_onResized = function(w, h){
         //if ($1)
         //    $1.style.margin = 'auto';
         //this.$_div.style.margin = 'auto';//
         //this.$_contentDiv.style.width = '600px';//'' + ((w > 600) ? 600 : w) + 'px';
+
         this.$_contentDiv.style.width = '' + w + 'px';
-        this.$_contentDiv.style.height = '' + h + 'px';
+        //this.$_contentDiv.style.height = '' + h + 'px';
+        return {
+            $h: this.$_contentDiv.clientHeight
+        };
     };
 };
 $StaticHtml.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $StaticHtml.prototype.constructor = $StaticHtml;
+$StaticHtml.prototype.$destroy = function(){
+    //this.$_wContainer.$_contentDiv.removeAttribute('style');
+    //console.log('static html destroy');
+    //this.$_e.removeAttribute('style');
+};
 $StaticHtml.prototype.$processStateChanges = function(s){
     if (!s){
         console.error('epic fail');

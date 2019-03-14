@@ -43,6 +43,8 @@ function $Stack($p_wContainer, $p_options, $p_widgets){
 $Stack.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Stack.prototype.constructor = $Stack;
 $Stack.$widgetsFields = ['$items'];
+$Stack.prototype.$destroy = function(){
+};
 $Stack.prototype.$_createContentElem = function(){
 	return this.$_eStack;
 };

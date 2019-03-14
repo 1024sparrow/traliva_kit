@@ -37,20 +37,24 @@ function $Bedsheet($p_wContainer, $p_options, $p_widgets){
     $2.$1.style.borderRight = '1px solid #420';
     $2.$1.style.borderLeft = '1px solid #420';
     $1.style.overflow = '';
-    $p_wContainer.$_onResized = (function($0){return function($w, $h){
+    $p_wContainer.$_onResized = (function($0, $1){return function($w, $h){
         this.$_content.style.height = '' + $h + 'px';
-        $0.minHeight = '' + ($h - 20) + 'px';
-        var $1 = $w * 0.9;
-        if ($1 > 800)
-            $1 = 800;
-        $0.width = '' + $1 + 'px';
-    };})($2.$1.style);
+        $0.style.minHeight = '' + ($h - 20) + 'px';
+        var $2 = $w * 0.9;
+        if ($2 > 800)
+            $2 = 800;
+        $0.style.width = '' + $2 + 'px';
+        console.log('content: ', $1);//
+        $1.$_widget.$resize($2, 0);
+    };})($2.$1, $content);
     $2.$1.appendChild($content.$_widget.$_div);
     $p_wContainer.$setContent($1);
     $p_wContainer.$_content.style.overflow = 'auto';
 };
 $Bedsheet.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Bedsheet.prototype.constructor = $Bedsheet;
+$Bedsheet.prototype.$destroy = function(){
+};
 $Bedsheet.prototype.$processStateChanges = function(s){
 };
 $Bedsheet.$widgetsFields = ['$content'];
