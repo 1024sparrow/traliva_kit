@@ -4,7 +4,8 @@ registerHelp('$StaticHtml', {
     //descr: '',
     options:{
         $html: 'HTML, отображаемый данным виджетом.',
-        $htmlVarName: 'имя переменной в объекте состояния, в которой хранится HTML-код, который данный виджет должен отображать. Если не задано, то отображаемый код будет неизменным. Если значение переменной имеет неопределённое значение, то отображается HTML-код, заданный в опции "html".'
+        $htmlVarName: 'имя переменной в объекте состояния, в которой хранится HTML-код, который данный виджет должен отображать. Если не задано, то отображаемый код будет неизменным. Если значение переменной имеет неопределённое значение, то отображается HTML-код, заданный в опции "html".',
+        $processor: 'функция преобразования DOM-элемента сразу после установки innerHTML=<значение HTML`>. Единственный параметр: DOM-элемент (div), возвращаемое значение не требуется.'
     }
     //stateObj:{}
 });
@@ -18,7 +19,8 @@ function $StaticHtml($p_wContainer, $p_options){
     var $1;
     if ($p_options.$html){
         this.$_e = $Traliva.$createElement('<div traliva=$container>' + $p_options.$html + '</div>', $1 = {}, '$traliva_kit__static_html');
-        console.log('22', $1);//
+        if ($p_options.$processor)
+            $p_options.$processor($1.$container);
         //this.$_e.style.margin = 'auto';//
         $p_wContainer.$setContent(this.$_e);
         this.$_prevVal = $p_options.$html;
@@ -58,6 +60,9 @@ $StaticHtml.prototype.$processStateChanges = function(s){
     if ($0 === this.$_prevVal)
         return;
     this.$_e = $Traliva.$createElement($0, undefined, '$traliva_kit__static_html');
+    console.log('----------------------\n', this.$_options);//
+    if (this.$_options.$processor)
+        this.$_options.$processor(this.$_e);
     this.$_wContainer.$setContent(this.$_e);
     this.$_prevVal = $0;
 };
