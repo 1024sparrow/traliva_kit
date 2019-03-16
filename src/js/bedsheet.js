@@ -54,12 +54,11 @@ function $Bedsheet($p_wContainer, $p_options, $p_widgets){
             $2 = $w * 0.9;
             if ($2 > 800)
                 $2 = 800;
-            $0.style.width = '' + $2 + 'px';
         }
         else{
-            $2 = $w;
-            $0.style.width = '100%';
+            $2 = $w - 35;
         }
+        $0.style.width = '' + $2 + 'px';
         console.log('content: ', $1);//
         $1.$_widget.$resize($2, 0);
     };})($2.$1, $content, $p_options);
