@@ -1,3 +1,4 @@
+#USAGE_BEGIN#TralivaKit.SimpleList##
 .$traliva_kit__simplelist{
     color: #48f;
     width: 100%;
@@ -8,3 +9,4 @@
 .$traliva_kit__simplelist tr:hover{
     background: #004;
 }
+#USAGE_END#TralivaKit.SimpleList##

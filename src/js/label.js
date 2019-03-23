@@ -9,6 +9,7 @@ registerHelp('$Label', {
             }
         });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.Label##
 function $Label($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     if ($p_options.hasOwnProperty('$text')){
@@ -55,3 +56,4 @@ $Label.prototype.$processStateChanges = function(s){
         }
     }
 };
+#USAGE_END#TralivaKit.Label##

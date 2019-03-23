@@ -19,6 +19,7 @@ registerHelp('$LargeTextEdit', {
     }
 });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.LargeTextEdit##
 function $LargeTextEdit($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$options = $p_options;
@@ -33,3 +34,4 @@ $LargeTextEdit.prototype.$processStateChanges = function(s){
     }
     // ...
 };
+#USAGE_END#TralivaKit.LargeTextEdit##

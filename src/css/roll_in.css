@@ -1,3 +1,4 @@
+#USAGE_BEGIN#TralivaKit.RollIn##
 .$traliva_kit__roll_inn{
     transition-property: background-color;
     transition-duration: 0.2s;
@@ -17,3 +18,4 @@
     left: 0px;
     top: 0px;
 }
+#USAGE_END#TralivaKit.RollIn##

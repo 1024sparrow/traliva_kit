@@ -1,3 +1,4 @@
+#USAGE_BEGIN#TralivaKit.Label##
 .$traliva_kit__label{
     /*padding: 4px;*/
     margin: 5px;
@@ -6,3 +7,4 @@
 .$traliva_kit__label div{
     margin: 5px;
 }
+#USAGE_END#TralivaKit.Label##

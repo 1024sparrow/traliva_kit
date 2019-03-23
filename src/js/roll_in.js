@@ -8,6 +8,7 @@ registerHelp('$RollIn', {
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.RollIn##
 function $RollIn($p_wContainer, $p_options, $p_widgets){
     var $0,
         $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets)
@@ -94,3 +95,4 @@ $RollIn.prototype.$_updateVisibility = function(){
         }
     }
 };
+#USAGE_END#TralivaKit.RollIn##

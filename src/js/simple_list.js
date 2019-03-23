@@ -19,6 +19,7 @@ registerHelp('$SimpleList', {
             }
         });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.SimpleList##
 function $SimpleList($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     $p_wContainer.$setContent($Traliva.$createElement('<table class="$traliva_kit__simplelist" traliva="$table"></table>', this));
@@ -121,3 +122,4 @@ $SimpleList.prototype.$_onClicked = function($p_e){
         }
     }
 };
+#USAGE_END#TralivaKit.SimpleList##

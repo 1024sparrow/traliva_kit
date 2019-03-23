@@ -10,6 +10,7 @@ registerHelp('$FileSelect', {
             }
         });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.FileSelect##
 function $FileSelect($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     $p_wContainer.$setContent($Traliva.$createElement('<input type="file" traliva="e" class="$traliva_kit__fileselect"></input>', this));
@@ -45,3 +46,4 @@ $FileSelect.prototype.constructor = $FileSelect;
 $FileSelect.prototype.processStateChanges = function(s){
     //boris here: применить изменения в выбранном файле
 };
+#USAGE_END#TralivaKit.FileSelect##

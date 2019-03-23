@@ -10,6 +10,7 @@ registerHelp('$LineEdit', {
             }
         });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.LineEdit##
 function $LineEdit($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$requireVarName;
@@ -62,3 +63,4 @@ $LineEdit.prototype.$processStateChanges = function(s){
     if (this.e.value !== s[this.$textVarName])
         this.e.value = s[this.$textVarName];
 };
+#USAGE_END#TralivaKit.LineEdit##

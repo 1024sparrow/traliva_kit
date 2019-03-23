@@ -1,3 +1,4 @@
+#USAGE_BEGIN#TralivaKit.FileSelect##
 .$traliva_kit__fileselect{
     color: #666;
     border: 1px solid #666;
@@ -9,3 +10,4 @@
 .$traliva_kit__fileselect:hover{
     background: #fa8;
 }
+#USAGE_END#TralivaKit.FileSelect##

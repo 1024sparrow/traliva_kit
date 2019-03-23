@@ -23,6 +23,7 @@ registerHelp('$Button', {
             }
         });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.Button##
 function $Button($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$options = $p_options;
@@ -129,3 +130,4 @@ $Button.prototype.$_updateGui = function(){
         this.e.className = this.$active ? '$traliva_kit__bn $active' : '$traliva_kit__bn';
     }
 };
+#USAGE_END#TralivaKit.Button##

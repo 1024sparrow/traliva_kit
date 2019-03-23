@@ -1,3 +1,4 @@
+#USAGE_BEGIN#TralivaKit.StaticHtml##
 .$traliva_kit__static_html{
     user-select: text;
     -moz-user-select: text;
@@ -6,3 +7,4 @@
     -ms-user-select: text;
     overflow: auto;
 }
+#USAGE_END#TralivaKit.StaticHtml##

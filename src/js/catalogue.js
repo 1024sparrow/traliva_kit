@@ -6,6 +6,7 @@ registerHelp('$Catalogue', {
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
+#USAGE_BEGIN#TralivaKit.Catalogue##
 function $Catalogue($p_wContainer, $p_options, $p_widgets){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
     console.log('Catalogue constrictor: taken p_widgets: ', $p_widgets);//
@@ -23,3 +24,4 @@ $Catalogue.prototype.$processStateChanges = function(s){
 $Catalogue.widgetsFields = [
     '$items'
 ];
+#USAGE_END#TralivaKit.Catalogue##
