@@ -13,7 +13,6 @@ registerHelp('$ComboBox', {
     }
 });
 #USAGE_END#traliva_kit_debug##
-#USAGE_BEGIN#TralivaKit.ComboBox##
 function $ComboBox($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$_options = $p_options;
@@ -70,4 +69,3 @@ $ComboBox.prototype.$_setupContainer = function($p_variants, $p_current){
         e.style.height = $h + 'px';
     };})(this.e);
 };
-#USAGE_END#TralivaKit.ComboBox##

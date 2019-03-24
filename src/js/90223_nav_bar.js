@@ -12,7 +12,6 @@ registerHelp('90223NavBar', {
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
-#USAGE_BEGIN#TralivaKit.90223NavBar##
 function $90223NavBar($p_wContainer, $p_options, $p_widgets){
     var $eTable,
         $eRow,
@@ -139,4 +138,3 @@ $90223NavBar.prototype.$_setButtonHighlighten = function($p_bnId, $p_if){
         }
     }
 };
-#USAGE_END#TralivaKit.90223NavBar##

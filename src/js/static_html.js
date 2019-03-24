@@ -10,7 +10,6 @@ registerHelp('$StaticHtml', {
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
-#USAGE_BEGIN#TralivaKit.StaticHtml##
 function $StaticHtml($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$_options = $p_options;
@@ -67,4 +66,3 @@ $StaticHtml.prototype.$processStateChanges = function(s){
     this.$_wContainer.$setContent(this.$_e);
     this.$_prevVal = $0;
 };
-#USAGE_END#TralivaKit.StaticHtml##

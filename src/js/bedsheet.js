@@ -11,7 +11,6 @@ registerHelp('$Bedsheet', {
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
-#USAGE_BEGIN#TralivaKit.Bedsheet##
 function $Bedsheet($p_wContainer, $p_options, $p_widgets){
     var $children, $content, $1, $2 = {}, $3;
     if (this.constructor !== $Bedsheet){ // это не конструктор, а тупо функция
@@ -74,4 +73,3 @@ $Bedsheet.prototype.$destroy = function(){
 $Bedsheet.prototype.$processStateChanges = function(s){
 };
 $Bedsheet.$widgetsFields = ['$content'];
-#USAGE_END#TralivaKit.Bedsheet##

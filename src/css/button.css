@@ -1,4 +1,3 @@
-#USAGE_BEGIN#traliva_kit_debug##
 .$traliva_kit__bn{
     color: #666;
     background: #eee;
@@ -18,4 +17,3 @@
 .$traliva_kit__bn.$active:hover{
     background: #fa8;
 }
-#USAGE_END#TralivaKit.Button##

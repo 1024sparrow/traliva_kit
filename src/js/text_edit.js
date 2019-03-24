@@ -13,7 +13,6 @@ registerHelp('$TextEdit', {
     //stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
-#USAGE_BEGIN#TralivaKit.TextEdit##
 function $TextEdit($p_wContainer, $p_options){
     this.$text;
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
@@ -61,4 +60,3 @@ $TextEdit.prototype.processStateChanges = function(s){
     }
     // ...
 };
-#USAGE_END#TralivaKit.TextEdit##
