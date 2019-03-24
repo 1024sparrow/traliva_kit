@@ -19,8 +19,10 @@ add(){
     file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
 
     echo >> js/template/links
+    echo "#USAGE_BEGIN#TralivaKit.$name##" >> js/template/links
     echo "{%% $file_name.js %%}" >> js/template/links
     echo "\$p_namespace.\$$name = \$$name;" >> js/template/links
+    echo "#USAGE_END#TralivaKit.$name##" >> js/template/links
 
     node -e "var a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.js');fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4));"
     node -e "var a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.css');fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4));"
@@ -34,6 +36,7 @@ add(){
     echo "    //stateObj:{}" >> js/$file_name.js
     echo "});" >> js/$file_name.js
     echo "#USAGE_END#traliva_kit_debug##" >> js/$file_name.js
+    #echo "#USAGE_BEGIN#Traliva.$name##" >> js/$file_name.js
     echo "function \$$name(\$p_wContainer, \$p_options, \$p_widgets){" >> js/$file_name.js
     echo "    \$Traliva.\$WidgetStateSubscriber.call(this, \$p_wContainer, \$p_options, \$p_widgets);" >> js/$file_name.js
     echo "    // ..." >> js/$file_name.js
@@ -48,6 +51,7 @@ add(){
     echo "    // ..." >> js/$file_name.js
     echo "};" >> js/$file_name.js
     echo "//\$$name.\$widgetsFields = [];" >> js/$file_name.js
+    #echo "#USAGE_END#Traliva.$name##" >> js/$file_name.js
 }
 
 list(){
@@ -62,7 +66,7 @@ remove_class(){
     file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
     rm js/${file_name}.js css/${file_name}.css
     # удаляем из js/template/links
-    cat js/template/links | tr '\n' '\r' | sed "s/\r\r{%% $file_name.js %%}\rp_namespace.$name = $name;//" | tr '\r' '\n' > js/template/_links
+    cat js/template/links | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $file_name.js %%}\r\$p_namespace.\$$name = \$$name;\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > js/template/_links
     mv js/template/_links js/template/links
     # удаляем из js/__meta__
     node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$file_name.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
