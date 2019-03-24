@@ -3,6 +3,7 @@
         {
             "target": "style.css",
             "source": {
+                "template": "t",
                 "list": [
                     "label.css",
                     "button.css",
