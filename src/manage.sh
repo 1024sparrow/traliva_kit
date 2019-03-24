@@ -24,6 +24,11 @@ add(){
     echo "\$p_namespace.\$$name = \$$name;" >> js/template/links
     echo "#USAGE_END#TralivaKit.$name##" >> js/template/links
 
+    echo >> css/t
+    echo "#USAGE_BEGIN#TralivaKit.$name##" >> css/t
+    echo "{%% $file_name.css %%}" >> css/t
+    echo "#USAGE_END#TralivaKit.$name##" >> css/t
+
     node -e "var a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.js');fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4));"
     node -e "var a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.css');fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4));"
     touch css/$file_name.css
@@ -68,6 +73,8 @@ remove_class(){
     # удаляем из js/template/links
     cat js/template/links | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $file_name.js %%}\r\$p_namespace.\$$name = \$$name;\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > js/template/_links
     mv js/template/_links js/template/links
+    cat css/t | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $file_name.css %%}\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > css/_t
+    mv css/_t css/t
     # удаляем из js/__meta__
     node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$file_name.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
     # удаляем из css/__meta__
