@@ -1,69 +1,69 @@
 
 
-#USAGE_BEGIN#Traliva.Label##
+#USAGE_BEGIN#$$Traliva$Label##
 {%% label.css %%}
-#USAGE_END#Traliva.Label##
+#USAGE_END#$Traliva$Label##
 
-#USAGE_BEGIN#Traliva.Button##
+#USAGE_BEGIN#$Traliva$Button##
 {%% button.css %%}
-#USAGE_END#Traliva.Button##
+#USAGE_END#$Traliva$Button##
 
-#USAGE_BEGIN#Traliva.LineEdit##
+#USAGE_BEGIN#$Traliva$LineEdit##
 {%% line_edit.css %%}
-#USAGE_END#Traliva.LineEdit##
+#USAGE_END#$Traliva$LineEdit##
 
-#USAGE_BEGIN#Traliva.FileSelect##
+#USAGE_BEGIN#$Traliva$FileSelect##
 {%% file_select.css %%}
-#USAGE_END#Traliva.FileSelect##
+#USAGE_END#$Traliva$FileSelect##
 
-#USAGE_BEGIN#Traliva.SimpleList##
+#USAGE_BEGIN#$Traliva$SimpleList##
 {%% simple_list.css %%}
-#USAGE_END#Traliva.SimpleList##
+#USAGE_END#$Traliva$SimpleList##
 
-#USAGE_BEGIN#Traliva.TreeList##
+#USAGE_BEGIN#$Traliva$TreeList##
 {%% tree_list.css %%}
-#USAGE_END#Traliva.TreeList##
+#USAGE_END#$Traliva$TreeList##
 
-#USAGE_BEGIN#Traliva.TextEdit##
+#USAGE_BEGIN#$Traliva$TextEdit##
 {%% text_edit.css %%}
-#USAGE_END#Traliva.TextEdit##
+#USAGE_END#$Traliva$TextEdit##
 
-#USAGE_BEGIN#Traliva.ComboBox##
+#USAGE_BEGIN#$Traliva$ComboBox##
 {%% combo_box.css %%}
-#USAGE_END#Traliva.ComboBox##
+#USAGE_END#$Traliva$ComboBox##
 
-#USAGE_BEGIN#Traliva.LargeText##
+#USAGE_BEGIN#$Traliva$LargeText##
 {%% large_text_edit.css %%}
-#USAGE_END#Traliva.LargeText##
+#USAGE_END#$Traliva$LargeText##
 
-#USAGE_BEGIN#Traliva.StaticHtml##
+#USAGE_BEGIN#$Traliva$StaticHtml##
 {%% static_html.css %%}
-#USAGE_END#Traliva.StaticHtml##
+#USAGE_END#$Traliva$StaticHtml##
 
-#USAGE_BEGIN#Traliva.Catalogue##
+#USAGE_BEGIN#$Traliva$Catalogue##
 {%% catalogue.css %%}
-#USAGE_END#Traliva.Catalogue##
+#USAGE_END#$Traliva$Catalogue##
 
-#USAGE_BEGIN#Traliva.CatalogueBrezentItem##
+#USAGE_BEGIN#$Traliva$CatalogueBrezentItem##
 {%% catalogue_brezent_item.css %%}
-#USAGE_END#Traliva.CatalogueBrezentItem##
+#USAGE_END#$Traliva$CatalogueBrezentItem##
 
-#USAGE_BEGIN#Traliva.Strip##
+#USAGE_BEGIN#$Traliva$Strip##
 {%% strip.css %%}
-#USAGE_END#Traliva.Strip##
+#USAGE_END#$Traliva$Strip##
 
-#USAGE_BEGIN#Traliva.Stack##
+#USAGE_BEGIN#$Traliva$Stack##
 {%% stack.css %%}
-#USAGE_END#Traliva.Stack##
+#USAGE_END#$Traliva$Stack##
 
-#USAGE_BEGIN#Traliva.RollIn##
+#USAGE_BEGIN#$Traliva$RollIn##
 {%% roll_in.css %%}
-#USAGE_END#Traliva.RollIn##
+#USAGE_END#$Traliva$RollIn##
 
-#USAGE_BEGIN#Traliva.90223NavBar##
+#USAGE_BEGIN#$Traliva$90223NavBar##
 {%% 90223_nav_bar.css %%}
-#USAGE_END#Traliva.90223NavBar##
+#USAGE_END#$Traliva$90223NavBar##
 
-#USAGE_BEGIN#Traliva.Bedsheet##
+#USAGE_BEGIN#$Traliva$Bedsheet##
 {%% bedsheet.css %%}
-#USAGE_END#Traliva.Bedsheet##
+#USAGE_END#$Traliva$Bedsheet##

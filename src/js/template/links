@@ -1,86 +1,86 @@
 
 
-#USAGE_BEGIN#Traliva.Label##
+#USAGE_BEGIN#$Traliva$Label##
 {%% label.js %%}
 $p_namespace.$Label = $Label;
-#USAGE_END#Traliva.Label##
+#USAGE_END#$Traliva$Label##
 
-#USAGE_BEGIN#Traliva.Button##
+#USAGE_BEGIN#$Traliva$Button##
 {%% button.js %%}
 $p_namespace.$Button = $Button;
-#USAGE_END#Traliva.Button##
+#USAGE_END#$Traliva$Button##
 
-#USAGE_BEGIN#Traliva.LineEdit##
+#USAGE_BEGIN#$Traliva$LineEdit##
 {%% line_edit.js %%}
 $p_namespace.$LineEdit = $LineEdit;
-#USAGE_END#Traliva.LineEdit##
+#USAGE_END#$Traliva$LineEdit##
 
-#USAGE_BEGIN#Traliva.FileSelect##
+#USAGE_BEGIN#$Traliva$FileSelect##
 {%% file_select.js %%}
 $p_namespace.$FileSelect = $FileSelect;
-#USAGE_END#Traliva.FileSelect##
+#USAGE_END#$Traliva$FileSelect##
 
-#USAGE_BEGIN#Traliva.SimpleList##
+#USAGE_BEGIN#$Traliva$SimpleList##
 {%% simple_list.js %%}
 $p_namespace.$SimpleList = $SimpleList;
-#USAGE_END#Traliva.SimpleList##
+#USAGE_END#$Traliva$SimpleList##
 
-#USAGE_BEGIN#Traliva.TreeList##
+#USAGE_BEGIN#$Traliva$TreeList##
 {%% tree_list.js %%}
 $p_namespace.$TreeList = $TreeList;
-#USAGE_END#Traliva.TreeList##
+#USAGE_END#$Traliva$TreeList##
 
-#USAGE_BEGIN#Traliva.TextEdit##
+#USAGE_BEGIN#$Traliva$TextEdit##
 {%% text_edit.js %%}
 $p_namespace.$TextEdit = $TextEdit;
-#USAGE_END#Traliva.TextEdit##
+#USAGE_END#$Traliva$TextEdit##
 
-#USAGE_BEGIN#Traliva.ComboBox##
+#USAGE_BEGIN#$Traliva$ComboBox##
 {%% combo_box.js %%}
 $p_namespace.$ComboBox = $ComboBox;
-#USAGE_END#Traliva.ComboBox##
+#USAGE_END#$Traliva$ComboBox##
 
-#USAGE_BEGIN#Traliva.LargeText##
+#USAGE_BEGIN#$Traliva$LargeText##
 {%% large_text_edit.js %%}
 $p_namespace.$LargeTextEdit = $LargeTextEdit;
-#USAGE_END#Traliva.LargeText##
+#USAGE_END#$Traliva$LargeText##
 
-#USAGE_BEGIN#Traliva.StaticHtml##
+#USAGE_BEGIN#$Traliva$StaticHtml##
 {%% static_html.js %%}
 $p_namespace.$StaticHtml = $StaticHtml;
-#USAGE_END#Traliva.StaticHtml##
+#USAGE_END#$Traliva$StaticHtml##
 
-#USAGE_BEGIN#Traliva.Catalogue##
+#USAGE_BEGIN#$Traliva$Catalogue##
 {%% catalogue.js %%}
 $p_namespace.$Catalogue = $Catalogue;
-#USAGE_END#Traliva.Catalogue##
+#USAGE_END#$Traliva$Catalogue##
 
-#USAGE_BEGIN#Traliva.CatalogueBrezentItem##
+#USAGE_BEGIN#$Traliva$CatalogueBrezentItem##
 {%% catalogue_brezent_item.js %%}
 $p_namespace.$CatalogueBrezentItem = $CatalogueBrezentItem;
-#USAGE_END#Traliva.CatalogueBrezentItem##
+#USAGE_END#$Traliva$CatalogueBrezentItem##
 
-#USAGE_BEGIN#Traliva.Strip##
+#USAGE_BEGIN#$Traliva$Strip##
 {%% strip.js %%}
 $p_namespace.$Strip = $Strip;
-#USAGE_END#Traliva.Strip##
+#USAGE_END#$Traliva$Strip##
 
-#USAGE_BEGIN#Traliva.Stack##
+#USAGE_BEGIN#$Traliva$Stack##
 {%% stack.js %%}
 $p_namespace.$Stack = $Stack;
-#USAGE_END#Traliva.Stack##
+#USAGE_END#$Traliva$Stack##
 
-#USAGE_BEGIN#Traliva.RollIn##
+#USAGE_BEGIN#$Traliva$RollIn##
 {%% roll_in.js %%}
 $p_namespace.$RollIn = $RollIn;
-#USAGE_END#Traliva.RollIn##
+#USAGE_END#$Traliva$RollIn##
 
-#USAGE_BEGIN#Traliva.90223NavBar##
+#USAGE_BEGIN#$Traliva$90223NavBar##
 {%% 90223_nav_bar.js %%}
 $p_namespace.$90223NavBar = $90223NavBar;
-#USAGE_END#Traliva.90223NavBar##
+#USAGE_END#$Traliva$90223NavBar##
 
-#USAGE_BEGIN#Traliva.Bedsheet##
+#USAGE_BEGIN#$Traliva$Bedsheet##
 {%% bedsheet.js %%}
 $p_namespace.$Bedsheet = $Bedsheet;
-#USAGE_END#Traliva.Bedsheet##
+#USAGE_END#$Traliva$Bedsheet##
