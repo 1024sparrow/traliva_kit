@@ -19,15 +19,15 @@ add(){
     file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
 
     echo >> js/template/links
-    echo "#USAGE_BEGIN#\$TralivaKit\$$name##" >> js/template/links
+    echo "#USAGE_BEGIN#TralivaKit__$name##" >> js/template/links
     echo "{%% $file_name.js %%}" >> js/template/links
     echo "\$p_namespace.\$$name = \$$name;" >> js/template/links
-    echo "#USAGE_END#\$TralivaKit\$$name##" >> js/template/links
+    echo "#USAGE_END#TralivaKit__$name##" >> js/template/links
 
     echo >> css/t
-    echo "#USAGE_BEGIN#\$TralivaKit\$$name##" >> css/t
+    echo "#USAGE_BEGIN#TralivaKit__$name##" >> css/t
     echo "{%% $file_name.css %%}" >> css/t
-    echo "#USAGE_END#\$TralivaKit\$$name##" >> css/t
+    echo "#USAGE_END#TralivaKit__$name##" >> css/t
 
     node -e "var a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.js');fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4));"
     node -e "var a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8'));a.files[0].source.list.push('$file_name.css');fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4));"
