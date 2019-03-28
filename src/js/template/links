@@ -84,3 +84,8 @@ $p_namespace.$90223NavBar = $90223NavBar;
 {%% bedsheet.js %%}
 $p_namespace.$Bedsheet = $Bedsheet;
 #USAGE_END#TralivaKit__Bedsheet##
+
+#USAGE_BEGIN#TralivaKit__Contacts##
+{%% contacts.js %%}
+$p_namespace.$Contacts = $Contacts;
+#USAGE_END#TralivaKit__Contacts##

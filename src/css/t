@@ -67,3 +67,7 @@
 #USAGE_BEGIN#TralivaKit__Bedsheet##
 {%% bedsheet.css %%}
 #USAGE_END#TralivaKit__Bedsheet##
+
+#USAGE_BEGIN#TralivaKit__Contacts##
+{%% contacts.css %%}
+#USAGE_END#TralivaKit__Contacts##
