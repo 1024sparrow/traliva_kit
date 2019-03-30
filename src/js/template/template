@@ -6,7 +6,7 @@ else{
     $TralivaKit = {__d:{help:{}}};
 (function($p_namespace){
 
-#USAGE#traliva_kit_debug:TralivaKit__Label,TralivaKit__Button,TralivaKit__LineEdit,TralivaKit__FileSelect,TralivaKit__SimpleList,TralivaKit__TreeList,TralivaKit__TextEdit,TralivaKit__ComboBox,TralivaKit__LargeText,TralivaKit__StaticHtml,TralivaKit__Catalogue,TralivaKit__CatalogueBrezentItem,TralivaKit__Strip,TralivaKit__Stack,TralivaKit__RollIn,TralivaKit__90223NavBar,TralivaKit__Bedsheet,TralivaKit__Contacts,traliva_kit_debug##
+{%% list %%}
 #USAGE_BEGIN#traliva_kit_debug##
 /*
 Формат объекта справки:

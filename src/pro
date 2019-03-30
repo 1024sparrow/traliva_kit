@@ -1,6 +1,8 @@
 module.exports = {
     target: '../compiled',
     file:{
+        'js_list': 'build_scripts/js_list.sh',
+        'js_links': 'build_scripts/js_links.sh'
     },
     dir:{
         res: 'build_scripts/style_res_deploy.sh',

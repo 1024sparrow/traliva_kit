@@ -1,0 +1,22 @@
+{
+    "files":[
+        {
+            "target": "links",
+            "type": ["js_links"],
+            "source":{
+                "list":[
+                    "list"
+                ]
+            }
+        },
+        {
+            "target": "list",
+            "type": ["js_list"],
+            "source":{
+                "list":[
+                    "list"
+                ]
+            }
+        }
+    ]
+}

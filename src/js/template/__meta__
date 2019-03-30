@@ -1,11 +1,12 @@
 {
     "files":[
         {
-            "target": "template",
+            "target": "t",
             "source":{
                 "template": "template",
                 "list":[
-                    "links"
+                    "links",
+                    "list"
                 ]
             }
         }

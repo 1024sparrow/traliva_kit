@@ -3,7 +3,7 @@
         {
             "target": "traliva_kit.js",
             "source": {
-                "template": "template",
+                "template": "t",
                 "list": [
                     "label.js",
                     "button.js",
