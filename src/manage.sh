@@ -18,13 +18,6 @@ add(){
     read name
     file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
 
-    #echo >> js/template/links
-    #echo "#USAGE_BEGIN#TralivaKit__$name##" >> js/template/links
-    #echo "{%% $file_name.js %%}" >> js/template/links
-    #echo "\$p_namespace.\$$name = \$$name;" >> js/template/links
-    #echo "#USAGE_END#TralivaKit__$name##" >> js/template/links
-
-    echo >> js/template/src/list
     echo "$name $file_name.js" >> js/template/src/list
 
     echo >> css/t
@@ -63,42 +56,77 @@ add(){
 }
 
 list(){
-    list=`cat js/template/links | grep "{%%" | sed -s 's/{%% //g' | sed -s 's/.js %%}'//g`
-    for i in $list;do echo $i | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g';done # camel_case to snake_case used.
+    #list=`cat js/template/links | grep "{%%" | sed -s 's/{%% //g' | sed -s 's/.js %%}'//g`
+    #for i in $list;do echo $i | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g';done # camel_case to snake_case used.
+
+    a=0
+    for i in `cat js/template/src/list`
+    do
+        if [[ $a -eq 0 ]]
+        then
+            echo -n "$i"
+        else
+            #echo " ($i)" # вывод имён файлов загромождает - не наглядный список получается. А имена файлов и так очевидные.
+            echo
+        fi
+        a=$[ ! a ]
+    done
 }
 
 remove_class(){
+    #echo "remove class: $1 $2"
     if [ -z $1 ];then return 1;fi
     #echo "Выбран класс на удаление: $1"
     name=$1
-    file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
-    rm js/${file_name}.js css/${file_name}.css
+    #file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
+    rm js/$2.js css/$2.css
+    # удаляем из js/template/src/list
+    cat js/template/src/list | tr '\n' '\r' | sed "s/\r$1 $2.js//" | tr '\r' '\n' > js/template/src/list.tmp
+    mv js/template/src/list.tmp js/template/src/list
     # удаляем из js/template/links
-    cat js/template/links | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $file_name.js %%}\r\$p_namespace.\$$name = \$$name;\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > js/template/_links
-    mv js/template/_links js/template/links
-    cat css/t | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $file_name.css %%}\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > css/_t
+    #cat js/template/links | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $2.js %%}\r\$p_namespace.\$$name = \$$name;\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > js/template/_links
+    #mv js/template/_links js/template/links
+    cat css/t | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $2.css %%}\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > css/_t
     mv css/_t css/t
     # удаляем из js/__meta__
-    node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$file_name.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
+    node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$2.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
     # удаляем из css/__meta__
-    node -e " var i, a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$file_name.css'){ list.splice(i, 1); break; } } fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4)); "
+    node -e " var i, a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$2.css'){ list.splice(i, 1); break; } } fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4)); "
+    echo OK
 }
 
 remove(){
     #https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script#1716
     PS3="Выберите компонент, который хотите удалить:"
-    declare -a list_a
-    list=`cat js/template/links | grep "{%%" | sed -s 's/{%% //g' | sed -s 's/.js %%}'//g | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g'`
-    
+    list=''
+    declare -a list_a # classnames
+    declare -a list_b # filenames (without extention)
+    #list=`cat js/template/links | grep "{%%" | sed -s 's/{%% //g' | sed -s 's/.js %%}'//g | sed -e 's/_\([a-z]\)/\U\1/g' -e 's/^\([a-z]\)/\U\1/g'`
+
+    a=0
     counter=0
-    for i in $list;do list_a[$counter]=$i;let "counter = $counter + 1";done
+    for i in `cat js/template/src/list`
+    do
+        if [[ $a -eq 0 ]]
+        then
+            list_a[$counter]=$i
+            list="${list} ${i}"
+        else
+            list_b[$counter]=${i/.js/}
+            let "counter = $counter + 1"
+        fi
+        a=$[ ! a ]
+    done
+    
+    #counter=0
+    #for i in $list;do list_a[$counter]=$i;let "counter = $counter + 1";done
     #echo ${list[@]}
     select opt in $list "я передумал - ничего удалять не надо"; do
         case "$REPLY" in
             #$(( ${#list[@]}+1 )) ) echo "Goodbye!"; break;;
             $(( ${#list_a[@]}+1 )) ) echo "Ничего не удалено";break;;
             #*) echo not implemented # boris here
-            *) remove_class ${list_a[$REPLY - 1]} && break;;
+            *) remove_class ${list_a[$REPLY - 1]} ${list_b[$REPLY - 1]} && break;;
         esac
     done
 }
