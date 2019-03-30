@@ -25,7 +25,7 @@ add(){
     #echo "#USAGE_END#TralivaKit__$name##" >> js/template/links
 
     echo >> js/template/src/list
-    echo "$name $file_name" >> js/template/src/list
+    echo "$name $file_name.js" >> js/template/src/list
 
     echo >> css/t
     echo "#USAGE_BEGIN#TralivaKit__$name##" >> css/t
