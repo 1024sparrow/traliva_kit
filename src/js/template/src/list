@@ -6,7 +6,7 @@ SimpleList simple_list.js
 TreeList tree_list.js
 TextEdit text_edit.js
 ComboBox combo_box.js
-LargeText large_text.js
+LargeTextEdit large_text_edit.js
 StaticHtml static_html.js
 Catalogue catalogue.js
 CatalogueBrezentItem catalogue_brezent_item.js

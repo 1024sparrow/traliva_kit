@@ -18,11 +18,14 @@ add(){
     read name
     file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
 
-    echo >> js/template/links
-    echo "#USAGE_BEGIN#TralivaKit__$name##" >> js/template/links
-    echo "{%% $file_name.js %%}" >> js/template/links
-    echo "\$p_namespace.\$$name = \$$name;" >> js/template/links
-    echo "#USAGE_END#TralivaKit__$name##" >> js/template/links
+    #echo >> js/template/links
+    #echo "#USAGE_BEGIN#TralivaKit__$name##" >> js/template/links
+    #echo "{%% $file_name.js %%}" >> js/template/links
+    #echo "\$p_namespace.\$$name = \$$name;" >> js/template/links
+    #echo "#USAGE_END#TralivaKit__$name##" >> js/template/links
+
+    echo >> js/template/src/list
+    echo "$name $file_name" >> js/template/src/list
 
     echo >> css/t
     echo "#USAGE_BEGIN#TralivaKit__$name##" >> css/t
