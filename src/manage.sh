@@ -74,25 +74,21 @@ list(){
 }
 
 remove_class(){
-    #echo "remove class: $1 $2"
     if [ -z $1 ];then return 1;fi
-    #echo "Выбран класс на удаление: $1"
     name=$1
     #file_name=`echo $name | sed -e 's/\([A-Z]\)/_\L\1/g' -e 's/^_//'` # snake_case to camel_case.
     rm js/$2.js css/$2.css
     # удаляем из js/template/src/list
     cat js/template/src/list | tr '\n' '\r' | sed "s/\r$1 $2.js//" | tr '\r' '\n' > js/template/src/list.tmp
     mv js/template/src/list.tmp js/template/src/list
-    # удаляем из js/template/links
-    #cat js/template/links | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $2.js %%}\r\$p_namespace.\$$name = \$$name;\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > js/template/_links
-    #mv js/template/_links js/template/links
+    # удаляем из css/t
     cat css/t | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit__$1##\r{%% $2.css %%}\r#USAGE_END#TralivaKit__$1##//" | tr '\r' '\n' > css/t.tmp
     mv css/t.tmp css/t
     # удаляем из js/__meta__
     node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$2.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
     # удаляем из css/__meta__
     node -e " var i, a = JSON.parse(fs.readFileSync('css/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$2.css'){ list.splice(i, 1); break; } } fs.writeFileSync('css/__meta__', JSON.stringify(a, undefined, 4)); "
-    echo OK
+    echo Класс $1 успешно удалён
 }
 
 remove(){
