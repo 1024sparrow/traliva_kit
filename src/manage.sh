@@ -86,8 +86,8 @@ remove_class(){
     # удаляем из js/template/links
     #cat js/template/links | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $2.js %%}\r\$p_namespace.\$$name = \$$name;\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > js/template/_links
     #mv js/template/_links js/template/links
-    cat css/t | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit.$name##\r{%% $2.css %%}\r#USAGE_END#TralivaKit.$name##//" | tr '\r' '\n' > css/_t
-    mv css/_t css/t
+    cat css/t | tr '\n' '\r' | sed "s/\r\r#USAGE_BEGIN#TralivaKit__$1##\r{%% $2.css %%}\r#USAGE_END#TralivaKit__$1##//" | tr '\r' '\n' > css/t.tmp
+    mv css/t.tmp css/t
     # удаляем из js/__meta__
     node -e " var i, a = JSON.parse(fs.readFileSync('js/__meta__', 'utf8')), list = a.files[0].source.list; for (i = 0 ; i < list.length ; i++){ if (list[i] === '$2.js'){ list.splice(i, 1); break; } } fs.writeFileSync('js/__meta__', JSON.stringify(a, undefined, 4)); "
     # удаляем из css/__meta__
