@@ -1,0 +1,42 @@
+/*.$traliva_kit__contacts{
+}*/
+.$traliva_kit__contacts{
+    background: #040;
+    height:100%;
+}
+.$card{
+    width: 512px;
+    height: 160px;
+    background: #fff;
+    position:relative;
+    display:inline-block;
+    margin:10px;
+}
+.$card_icon{
+    width: 64px;
+    height:64px;
+    border: 2px solid #000;
+    border-radius: 32px;
+    position:fixed;
+    z-index:1;
+}
+.$card_icon_mobile{
+    width: 64px;
+    height:64px;
+    border: 2px solid #000;
+    border-radius: 32px;
+    display: inline-block;
+    position:relative;
+    z-index:1;
+}
+.$bn{
+    padding: 20px;
+    border: 2px solid #420;
+    border-radius: 20px;
+    background: #fff;
+    text-align: center;
+}
+/*td > div:hover{*/
+.$bn:hover{
+    background: #aaa;
+}
