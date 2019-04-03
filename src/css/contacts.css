@@ -4,6 +4,15 @@
     background: #040;
     height:100%;
 }
+.$traliva_kit__contacts__tab{
+    position:absolute;
+    top:0;
+    left:0;
+    border:2px solid #000;
+    border-radius:32px;
+    padding:16px;
+    background: #ffe;
+}
 .$card{
     width: 512px;
     height: 160px;

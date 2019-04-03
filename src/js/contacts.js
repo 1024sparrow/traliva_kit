@@ -38,7 +38,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     this.$icons = {};
     var $target = $p_options.$target || '$mobile',
         $tabsPosition = $p_options.$tabsPosition || '$top',
-        $fOnBnClicked, $eBns,
+        $fOnBnClicked, $eBns, $eTabs,
         $0, $1
     ;
 
@@ -46,36 +46,48 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     if ($target === '$mobile'){
         $content = $Traliva.$createElement(`
         <div style="width:100%;">
-            <div traliva="$eBnPhone" m_type="$eBnPhone" class="$card_icon_mobile" style="background:url(phone_64.png) #ffa;"></div>
-            <div traliva="$eBnAddress" m_type="$eBnAddress" class="$card_icon_mobile" style="background:url(map_64.png) #ffa;top:20px;"></div>
-            <div traliva="$eBnRequisites" m_type="$eBnRequisites" class="$card_icon_mobile" style="background:url(requisites_64.png) #ffa;"></div>
-            <div traliva="$eBnSocial" m_type="$eBnSocial" class="$card_icon_mobile" style="background:url(social_64.png) #ffa;"></div>
+            <div traliva="$eBnPhone" m_type="$phone" class="$card_icon_mobile" style="background:url(phone_64.png) #ffa;"></div>
+            <div traliva="$eBnAddress" m_type="$address" class="$card_icon_mobile" style="background:url(map_64.png) #ffa;top:20px;"></div>
+            <div traliva="$eBnRequisites" m_type="$requisites" class="$card_icon_mobile" style="background:url(requisites_64.png) #ffa;"></div>
+            <div traliva="$eBnSocial" m_type="$social" class="$card_icon_mobile" style="background:url(social_64.png) #ffa;"></div>
         </div>
-        <div $traliva="$eee1" style="border:2px solid #000;border-radius:32px;padding:16px;background: #ffe;">
-            <table>
-                <tr>
-                    <td colspan="2">
-                        <p><strong>Телефон: </strong> +7 (123) 456-78-90</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="$bn">
-                            Позвонить
-                        </div>
-                    </td>
-                    <td>
-                        <div class="$bn">
-                            Заказать звонок
-                        </div>
-                    </td>
-                </tr>
-            </table>
+        <div style="position:relative">
+            <div traliva="$eTabPhone" class="$traliva_kit__contacts__tab">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <p><strong>Телефон: </strong> +7 (123) 456-78-90</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="$bn">
+                                Позвонить
+                            </div>
+                        </td>
+                        <td>
+                            <div class="$bn">
+                                Заказать звонок
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div traliva="$eTabAddress" class="$traliva_kit__contacts__tab">
+                <p>Вкладка с адресом</p>
+            </div>
+            <div traliva="$eTabRequisites" class="$traliva_kit__contacts__tab">
+                <p>Вкладка с банковскими реквизитами</p>
+            </div>
+            <div traliva="$eTabSocial" class="$traliva_kit__contacts__tab">
+                <p>Вкладка с соц.сетями</p>
+            </div>
         </div>
 
             `, this, '$traliva_kit__contacts');
         $p_wContainer.$setContent($content);
         $eBns = [this.$eBnPhone, this.$eBnAddress, this.$eBnRequisites, this.$eBnSocial];
+        $eTabs = [this.$eTabPhone, this.$eTabAddress, this.$eTabRequisites, this.$eTabSocial];
         $fOnBnClicked = (function($eBns){ return function(){
             var $0, $1, $2, $3, $4, $type;
             $3 = this.attributes;
@@ -107,10 +119,15 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             $0.addEventListener('click', $fOnBnClicked);
         }
         $p_wContainer.$_onResized = (function($1){return function($w, $h){
-            //console.log('on resized');
-            //$1.style.height = (h - 64 - 32) + 'px'; // 64 - below icons height; 32 - paddings
-            $1.style.height = (h - 76 - 32) + 'px'; // 64 - below icons height; 32 - paddings
-        };})(this.$eee1);
+            var $2,
+                $3 = '' + ($h - 76 - 34) + 'px',
+                $4 = '' + ($w - 34) + 'px'
+            ;
+            for ($2 = 0 ; $2 < $1.length ; ++$2){
+                $1[$2].style.height = $3;
+                $1[$2].style.width = $4;
+            }
+        };})($eTabs);
     }
     #USAGE_BEGIN#debug##
     else{
