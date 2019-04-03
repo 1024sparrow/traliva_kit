@@ -37,17 +37,19 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     this.$tiles = {};
     this.$icons = {};
     var $target = $p_options.$target || '$mobile',
-        $tabsPosition = $p_options.$tabsPosition || '$top'
+        $tabsPosition = $p_options.$tabsPosition || '$top',
+        $fOnBnClicked, $eBns,
+        $0, $1
     ;
 
     var $content;
     if ($target === '$mobile'){
         $content = $Traliva.$createElement(`
         <div style="width:100%;">
-            <div class="$card_icon_mobile" style="background:url(phone_64.png) #ffa;"></div>
-            <div class="$card_icon_mobile" style="background:url(map_64.png) #ffa;top:20px;"></div>
-            <div class="$card_icon_mobile" style="background:url(requisites_64.png) #ffa;"></div>
-            <div class="$card_icon_mobile" style="background:url(social_64.png) #ffa;"></div>
+            <div traliva="$eBnPhone" m_type="$eBnPhone" class="$card_icon_mobile" style="background:url(phone_64.png) #ffa;"></div>
+            <div traliva="$eBnAddress" m_type="$eBnAddress" class="$card_icon_mobile" style="background:url(map_64.png) #ffa;top:20px;"></div>
+            <div traliva="$eBnRequisites" m_type="$eBnRequisites" class="$card_icon_mobile" style="background:url(requisites_64.png) #ffa;"></div>
+            <div traliva="$eBnSocial" m_type="$eBnSocial" class="$card_icon_mobile" style="background:url(social_64.png) #ffa;"></div>
         </div>
         <div $traliva="$eee1" style="border:2px solid #000;border-radius:32px;padding:16px;background: #ffe;">
             <table>
@@ -73,6 +75,37 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
 
             `, this, '$traliva_kit__contacts');
         $p_wContainer.$setContent($content);
+        $eBns = [this.$eBnPhone, this.$eBnAddress, this.$eBnRequisites, this.$eBnSocial];
+        $fOnBnClicked = (function($eBns){ return function(){
+            var $0, $1, $2, $3, $4, $type;
+            $3 = this.attributes;
+            for2: for ($2 = 0 ; $2 < $3.length ; ++$2){
+                if ($3[$2].nodeName === 'm_type'){
+                    $type = $3[$2].nodeValue;
+                    break for2;
+                }
+            }
+            for ($1 = 0 ; $1 < $eBns.length ; ++$1){
+                $0 = $eBns[$1];
+                $3 = $0.attributes;
+                for2: for ($2 = 0 ; $2 < $3.length ; ++$2){
+                    if ($3[$2].nodeName === 'm_type'){
+                        $4 = $3[$2].nodeValue;
+                        break for2;
+                    }
+                }
+                if ($4 === $type){
+                    $0.style.top = '20px';
+                }
+                else{
+                    $0.style.top = '0';
+                }
+            }
+        };})($eBns);
+        for ($1 = 0 ; $1 < $eBns.length ; ++$1){
+            $0 = $eBns[$1];
+            $0.addEventListener('click', $fOnBnClicked);
+        }
         $p_wContainer.$_onResized = (function($1){return function($w, $h){
             //console.log('on resized');
             //$1.style.height = (h - 64 - 32) + 'px'; // 64 - below icons height; 32 - paddings
