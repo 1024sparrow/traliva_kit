@@ -211,10 +211,10 @@ $Contacts.prototype.$processStateChanges = function(s){
     if ($0.$social){
     }
     $0 = s[this.$curTabVarName] || '';
-    if ($0 && !this.prevVal[$0]){
-        #USAGE_BEGIN#debug##
+    if ($0 && !this.$prevVal[$0]){
+        //#USAGE_BEGIN#debug##
         console.log('incorrect current tab identifier');
-        #USAGE_END#debug##
+        //#USAGE_END#debug##
         $0 = s[this.$curTabVarName] = '';
     }
     if (this.$currentTab !== $0){
