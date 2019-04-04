@@ -210,7 +210,7 @@ $Contacts.prototype.$processStateChanges = function(s){
     }
     if ($0.$social){
     }
-    $0 = s[this.$curTabVarName];
+    $0 = s[this.$curTabVarName] || '';
     if ($0 && !this.prevVal[$0]){
         #USAGE_BEGIN#debug##
         console.log('incorrect current tab identifier');
@@ -218,6 +218,8 @@ $Contacts.prototype.$processStateChanges = function(s){
         $0 = s[this.$curTabVarName] = '';
     }
     if (this.$currentTab !== $0){
+        this.$fOnBnClicked()($0);
+        this.$currentTab = $0;
     }
 };
 //$Contacts.$widgetsFields = [];
@@ -237,10 +239,13 @@ $Contacts.prototype.$_correctTabExisten = function($p_tabId, $p_ifExisten){
 $Contacts.prototype.$_switchTo = function($p_tab){
 };
 $Contacts.prototype.$fOnBnClicked = function(){
-    var $widgets = this.$widgets;
+    var $widgets = this.$widgets,
+        $self = this;
     return function($p_id){
-        var $0, $1, $2, $3, $4, $type;
-        if (typeof $p_id === 'string')
+        var $0, $1, $2, $3,
+            $4 = typeof $p_id === 'string',
+            $type;
+        if ($4)
             $type = $p_id;
         else{
             $3 = this.attributes;
@@ -262,6 +267,10 @@ $Contacts.prototype.$fOnBnClicked = function(){
                 $0.$bn.style.top = '0';
                 $0.$tab.style.display = 'none';
             }
+        }
+        if (!$4){
+            $self.$_state[$self.$curTabVarName] = $type;
+            $self.$_registerStateChanges();
         }
     };
 };
