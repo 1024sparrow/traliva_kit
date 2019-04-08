@@ -139,6 +139,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         console.log('not implemented');
     }
     #USAGE_END#debug##
+    console.log('Y^%$%$^&%$^&%$^&%$:', this.$prevVal);//
 };
 $Contacts.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Contacts.prototype.constructor = $Contacts;
@@ -190,6 +191,8 @@ $Contacts.prototype.$processStateChanges = function(s){
     // Добавление-убирание вкладок
     for ($1 = 0 ; $1 < this.$idSeq.length ; ++$1){
         $2 = this.$idSeq[$1];
+        console.log('---', $2, ':', this.$prevVal[$2], $0[$2]);//
+        console.log('----', !this.$prevVal[$2], !$0[$2]);//
         if (!this.$prevVal[$2] !== !$0[$2])
             this.$_correctTabExisten($2, $0[$2]);
     }
@@ -225,14 +228,18 @@ $Contacts.prototype.$processStateChanges = function(s){
 //$Contacts.$widgetsFields = [];
 // p_ifExisten - или undefined, или соответвующее значение (новое)
 $Contacts.prototype.$_correctTabExisten = function($p_tabId, $p_ifExisten){
+    console.log('_correctTabExisten:', $p_tabId, $p_ifExisten);//
+    var $1 = this.$widgets[$p_tabId];
     if ($p_ifExisten){
         if (!this.$prevVal.hasOwnProperty($p_tabId)){
             this.$prevVal[$p_tabId] = JSON.parse(JSON.stringify($p_ifExisten));
+            $1.$bn.style.display = 'inline-block';
         }
     }
     else{
         if (this.$prevVal.hasOwnProperty($p_tabId)){
             delete this.$prevVal[$p_tabId];
+            $1.$bn.style.display = 'none';
         }
     }
 };
@@ -241,7 +248,9 @@ $Contacts.prototype.$_switchTo = function($p_tab){
 $Contacts.prototype.$fOnBnClicked = function(){
     var $widgets = this.$widgets,
         $self = this;
+    console.log('--------------');//
     return function($p_id){
+        console.log('--', $p_id);//
         var $0, $1, $2, $3,
             $4 = typeof $p_id === 'string',
             $type;
