@@ -50,13 +50,14 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     this.$eTileContainer;
     this.$tiles = {};
     this.$icons = {};
-    this.$target = $p_options.$target || '$mobile';
+    //this.$target = $p_options.$target || '$mobile';
+    this.$target = $p_options.$target || '$desktop';
     this.$tabsPosition = $p_options.$tabsPosition || '$top';
     //this.$eBns
     //this.$eTabs,
     var $fOnBnClicked, $0, $1;
 
-    var $content;
+    var $content, $cardWidth = 512;
     if (this.$target === '$mobile'){
         $content = $Traliva.$createElement(`
         <div style="width:100%;">
@@ -134,11 +135,115 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             }
         };})(this.$widgets);
     }
-    #USAGE_BEGIN#debug##
+    else if (this.$target === '$desktop'){
+        $content = $Traliva.$createElement(`
+            <div style="margin:auto" traliva="$eInnerContainer">
+                <div traliva="$eTabPhone" class="$card" m_type=="$phone">
+                    <div class="$card_icon" style="background:url(phone_64.png) #fca;"></div>
+                    <!--<p>Вкладка с телефоном</p>-->
+                    <div class="$card_inner" style="height:140px;">
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <p><strong>Телефон: </strong> +7 (123) 456-78-90</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="$bn">
+                                        Позвонить
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="$bn">
+                                        Заказать звонок
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div traliva="$eTabAddress" class="$card" m_type="$address">
+                    <!--<div class="$card-icon" style="background:url(phone_64.png) #fca;"></div>-->
+                    <!--<p>Вкладка с адресом</p>-->
+                    <div class="$card_icon" style="background:url(map_64.png) #ffa;"></div>
+                    <div class="$card_inner" style="height:140px;">
+                        <p>
+                        <strong>Адрес:</strong>
+                        Россия, 152300, Ярославская обл., г. Тутаев, ул. Волжская Набережная, д. 142
+                        </p>
+                        <div class="$bn" style="width:200px">
+                            Показать на карте
+                        </div>
+                    </div>
+                </div>
+                <div traliva="$eTabRequisites" class="$card" m_type="$requisites" style="height:260px;">
+                    <!--<div class="$card_icon" style="background:url(phone_64.png) #fca;"></div>
+                    <p>Вкладка с банковскими реквизитами</p>-->
+                    <div class="$card_icon" style="background:url(requisites_64.png) #ffa;"></div>
+                    <div class="$card_inner" style="height:260px;">
+                        <p>
+                        <strong>ОКПО:</strong> 577759532
+                        </p>
+                        <p>
+                        <strong>ИНН/КПП:</strong> 7611013528/761101001
+                        </p>
+                        <p>
+                        <strong>ОГРН:</strong> 1027601273952
+                        </p>
+                        <p>
+                        <strong>р/с:</strong> 40702810577030160235 в Северном банке СБ РФ г. Ярославль
+                        </p>
+                        <p>
+                        <strong>к/сч:</strong> 30101810500000000670
+                        </p>
+                        <p>
+                        <strong>БИК:</strong> 047888670
+                        </p>
+                    </div>
+                </div>
+                <div traliva="$eTabSocial" class="$card" m_type="$social">
+                    <div class="$card_icon" style="background:url(phone_64.png) #fca;"></div>
+                    <div class="$card_inner" style="height:260px;">
+                        <p>Вкладка с соц.сетями</p>
+                    </div>
+                </div>
+            </div>
+        `, this, '$traliva_kit__contacts');
+        $p_wContainer.$setContent($content);
+        this.$widgets = {
+            $phone:{
+                $tab: this.$eTabPhone
+            },
+            $address:{
+                $tab: this.$eTabAddress
+            },
+            $requisites:{
+                $tab: this.$eTabRequisites
+            },
+            $social:{
+                $tab: this.$eTabSocial
+            }
+        };
+        $p_wContainer.$_onResized = (function($1, $2, $pCardWidth, $eInnerContainer){return function($w, $h){
+            //$1.style.marginLeft = '50px';//
+            //$1.style.margin = 'auto';
+            var $3;
+            for ($3 in $2){
+                console.log('*', $3);
+                $2[$3].$tab.style.width = '' + $pCardWidth + 'px';
+            }
+            // ширина одной плитки с отступами: (512 + 20)px == 532 px.
+            $3 = 550;
+            $3 = parseInt($w / $3) * $3 + 1;
+            $eInnerContainer.style.width = '' + $3 + 'px';
+        };})($content, this.$widgets, $cardWidth, this.$eInnerContainer);
+    }
+    //#USAGE_BEGIN#debug##
     else{
         console.log('not implemented');
     }
-    #USAGE_END#debug##
+    //#USAGE_END#debug##
     console.log('Y^%$%$^&%$^&%$^&%$:', this.$prevVal);//
 };
 $Contacts.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
@@ -233,13 +338,15 @@ $Contacts.prototype.$_correctTabExisten = function($p_tabId, $p_ifExisten){
     if ($p_ifExisten){
         if (!this.$prevVal.hasOwnProperty($p_tabId)){
             this.$prevVal[$p_tabId] = JSON.parse(JSON.stringify($p_ifExisten));
-            $1.$bn.style.display = 'inline-block';
+            if (this.$target === '$mobile')
+                $1.$bn.style.display = 'inline-block';
         }
     }
     else{
         if (this.$prevVal.hasOwnProperty($p_tabId)){
             delete this.$prevVal[$p_tabId];
-            $1.$bn.style.display = 'none';
+            if (this.$target === '$mobile')
+                $1.$bn.style.display = 'none';
         }
     }
 };
@@ -247,7 +354,8 @@ $Contacts.prototype.$_switchTo = function($p_tab){
 };
 $Contacts.prototype.$fOnBnClicked = function(){
     var $widgets = this.$widgets,
-        $self = this;
+        $self = this,
+        $target = this.$target;
     console.log('--------------');//
     return function($p_id){
         console.log('--', $p_id);//
@@ -266,15 +374,17 @@ $Contacts.prototype.$fOnBnClicked = function(){
             }
         }
 
-        for ($1 in $widgets){
-            $0 = $widgets[$1];
-            if ($1 === $type){
-                $0.$bn.style.top = '20px';
-                $0.$tab.style.display = 'block';
-            }
-            else{
-                $0.$bn.style.top = '0';
-                $0.$tab.style.display = 'none';
+        if ($target === '$mobile'){
+            for ($1 in $widgets){
+                $0 = $widgets[$1];
+                if ($1 === $type){
+                    $0.$bn.style.top = '20px';
+                    $0.$tab.style.display = 'block';
+                }
+                else{
+                    $0.$bn.style.top = '0';
+                    $0.$tab.style.display = 'none';
+                }
             }
         }
         if (!$4){
