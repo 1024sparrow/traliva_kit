@@ -24,7 +24,8 @@
                     "bedsheet.js",
                     "contacts.js",
                     "90412_map_view.js",
-                    "90412_dialog_frame.js"
+                    "90412_dialog_frame.js",
+                    "yandex_api.js"
                 ]
             }
         }

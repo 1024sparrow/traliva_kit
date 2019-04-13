@@ -79,3 +79,7 @@
 #USAGE_BEGIN#TralivaKit__90412DialogFrame##
 {%% 90412_dialog_frame.css %%}
 #USAGE_END#TralivaKit__90412DialogFrame##
+
+#USAGE_BEGIN#TralivaKit__YandexApi##
+{%% yandex_api.css %%}
+#USAGE_END#TralivaKit__YandexApi##

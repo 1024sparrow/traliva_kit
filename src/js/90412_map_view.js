@@ -10,6 +10,7 @@ registerHelp('$90412MapView', {
     }
 });
 #USAGE_END#traliva_kit_debug##
+#u#YANDEX_MAPS_API##
 function $90412MapView($p_wContainer, $p_options, $p_widgets){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
     this.$dataVarName = $p_options.$dataVarName || '$data';

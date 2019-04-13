@@ -24,7 +24,8 @@
                     "bedsheet.css",
                     "contacts.css",
                     "90412_map_view.css",
-                    "90412_dialog_frame.css"
+                    "90412_dialog_frame.css",
+                    "yandex_api.css"
                 ]
             }
         }
