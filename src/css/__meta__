@@ -22,7 +22,9 @@
                     "roll_in.css",
                     "90223_nav_bar.css",
                     "bedsheet.css",
-                    "contacts.css"
+                    "contacts.css",
+                    "90412_map_view.css",
+                    "90412_dialog_frame.css"
                 ]
             }
         }
