@@ -9,9 +9,14 @@ registerHelp('$YandexApi', {
 
 #USAGE_BEGIN#YANDEX_MAPS_API##
 (function(){
-    var $1 = document.createElement('script');
-    $1.src = 'http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU';
-    document.head.appendChild($1);
+    if (typeof window !== 'undefined'){ // Проверка на NodeJS
+        var $1 = document.createElement('script');
+        $1.src = 'http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU';
+        document.head.appendChild($1);
+    }
+    else{
+        //
+    }
 })();
 #USAGE_END#YANDEX_MAPS_API##
 
