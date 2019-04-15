@@ -11,7 +11,7 @@ registerHelp('$YandexApi', {
 (function(){
     if (typeof window !== 'undefined'){ // Проверка на NodeJS
         var $1 = document.createElement('script');
-        $1.src = 'http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU';
+        $1.src = 'http://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU';
         document.head.appendChild($1);
     }
     else{

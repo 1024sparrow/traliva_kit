@@ -34,7 +34,7 @@ function $90412MapView($p_wContainer, $p_options, $p_widgets){
     ymaps.ready((function($1){return function(){
         $1.$myMap = new ymaps.Map($1.$eMap, {center: [57.873608,39.535165],zoom: 16, type: "yandex#map", behaviors: ["default", "scrollZoom"]});
         // Создаем метку и задаем изображение для ее иконки
-        $1.$myMap.controls.add("zoomControl").add("mapTools").add(new ymaps.control.TypeSelector(["yandex#map", "yandex#satellite", "yandex#hybrid", "yandex#publicMap"]));
+        /*$1.$myMap.controls.add("zoomControl").add("mapTools").add(new ymaps.control.TypeSelector(["yandex#map", "yandex#satellite", "yandex#hybrid", "yandex#publicMap"]));*/
     };})(this));
     $p_wContainer.$setContent($content);
 };
@@ -57,22 +57,26 @@ $90412MapView.prototype.$processStateChanges = function(s){
                 console.log('update...');
                 // update
                 // ...
-                //if (!this.$myMap)
-                //    return;
-                //this.$myMap.geoObjects.removeAll();
+                this.$myMap.geoObjects.removeAll();
+                // doc: https://tech.yandex.com/maps/doc/jsapi/2.1/ref/reference/Placemark-docpage/
                 $2 = new ymaps.Placemark(
                     [$1.$lat, $1.$lon],
                     {
-                        balloonContent: ''
+                        //hintContent: 'Тульма &lt;a href="traliva.ru"&gt;ss&lt;/a&gt;',
+                        hintContent: 'Тульма <img src="http://brezent-tulma.ru/data/template/images/bottomlogo.jpg"/><a href="https://traliva.ru">ss</a>',
+                        //balloonContent: 'qwertyu' // widget on click
                     },
                     {
                         //iconImageHref: "/data/template/images/pointer.png", // картинка иконки
                         //iconImageHref: "/static/pointer.gif", // картинка иконки
                         iconImageHref: "file:///home/maryanna/da/tmp/pointer.gif", // картинка иконки
                         iconImageSize: [128, 73], // размеры картинки
-                        iconImageOffset: [ -51,-63] // смещение картинки
+                        iconImageOffset: [ -51,-63], // смещение картинки
+                        iconColor: '#afa'
                     }
                 );
+                //this.$eMap.addEventListener($2.click, function(){console.log('bubble clicked');});
+                // https://yandex.ru/blog/mapsapi/14283 - обработка события клика по бабблу
                 this.$myMap.geoObjects.add($2);
                 // ...
                 this.$lat = $1.$lat;
