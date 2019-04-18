@@ -202,9 +202,9 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                         </p>
                     </div>
                 </div>
-                <div traliva="$eTabSocial" class="$card" m_type="$social">
+                <div traliva="$eTabSocial" class="$card" m_type="$social" style="height:180px">
                     <div class="$card_icon" style="background:url(phone_64.png) #fca;"></div>
-                    <div class="$card_inner" style="height:260px;">
+                    <div class="$card_inner" style="height:180px;">
                         <p>Вкладка с соц.сетями</p>
                     </div>
                 </div>
@@ -225,19 +225,50 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                 $tab: this.$eTabSocial
             }
         };
-        $p_wContainer.$_onResized = (function($1, $2, $pCardWidth, $eInnerContainer){return function($w, $h){
+        $p_wContainer.$_onResized = (function($1, $2, $pCardWidth, $eInnerContainer, $self){return function($w, $h){
             //$1.style.marginLeft = '50px';//
             //$1.style.margin = 'auto';
-            var $3;
+            var $3, $4, $5, $6, $n, $widgets = [];
             for ($3 in $2){
                 console.log('*', $3);
                 $2[$3].$tab.style.width = '' + $pCardWidth + 'px';
             }
-            // ширина одной плитки с отступами: (512 + 20)px == 532 px.
-            $3 = 550;
-            $3 = parseInt($w / $3) * $3 + 1;
+            // ширина одной плитки с отступами: (512 + 20 + 16)px == 532 px.
+            $3 = 548;
+            $n = parseInt($w / $3);
+            $3 = $n * $3;
             $eInnerContainer.style.width = '' + $3 + 'px';
-        };})($content, this.$widgets, $cardWidth, this.$eInnerContainer);
+            //$eInnerContainer.style.height = '256px';
+
+            $4 = 0; // кандидат на высоту виджета
+            $5 = 0; // кандидат на высоту строки
+            $6 = 0; // счётчик плиток
+            for ($3 in $2){
+                if ($6 === $n){
+                    while ($4 = $widgets.pop()){
+                        $6 = $5 - $4.clientHeight;
+                        $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
+                    }
+                    $5 = 0;
+                    $6 = 0;
+                }
+                $4 = $2[$3].$tab;
+                $widgets.push($4);
+                $4 = $4.clientHeight;
+                if ($4 > $5)
+                    $5 = $4;
+                ++$6;
+            }
+            while ($4 = $widgets.pop()){
+                $6 = $5 - $4.clientHeight;
+                $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
+            }
+
+            return {
+                $h: 2000//this.$_contentDiv.clientHeight
+                //$h: this.$_contentDiv.clientHeight
+            };
+        };})($content, this.$widgets, $cardWidth, this.$eInnerContainer, this);
     }
     //#USAGE_BEGIN#debug##
     else{

@@ -3,9 +3,9 @@
 .$traliva_kit__contacts{
     background: #040;
     height:100%;
-    overflow: auto;
+    /*overflow: auto;*/
     display:inline-block;
-    margin: auto;
+    /*margin: auto;*/
 }
 .$traliva_kit__contacts__tab{
     position:absolute;
@@ -19,7 +19,7 @@
 .$card{
     /*width: 512px;*/
     height: 160px;
-    background: #fff;
+    /*background: #fff;*/
     position:relative;
     display:inline-block;
     margin:10px;
@@ -39,7 +39,7 @@
     height:64px;
     border: 2px solid #000;
     border-radius: 32px;
-    position:fixed;
+    position:absolute;
     z-index:1;
 }
 .$card_icon_mobile{
