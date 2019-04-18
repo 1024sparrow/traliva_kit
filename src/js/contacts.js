@@ -154,7 +154,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                             </tr>
                             <tr>
                                 <td>
-                                    <a traliva="$eTabPhoneTelLink" href="">
+                                    <a traliva="$eTabPhoneTelLink" href="" style="color:inherit;text-decoration:none;">
                                         <div class="$bn">
                                             Позвонить
                                         </div>
@@ -176,7 +176,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                     <div class="$card_inner" style="height:140px;">
                         <p>
                         <strong>Адрес:</strong>
-                        Россия, 152300, Ярославская обл., г. Тутаев, ул. Волжская Набережная, д. 142
+                        <span traliva="$eTabAddressAddress">Россия, 152300, Ярославская обл., г. Тутаев, ул. Волжская Набережная, д. 142</span>
                         </p>
                         <div class="$bn" style="width:200px">
                             Показать на карте
@@ -386,6 +386,15 @@ $Contacts.prototype.$processStateChanges = function(s){
         }
     }
     if ($0.$address){
+        if (!this.$address)
+            this.$address = {};
+        $1 = $0.$address;
+        $2 = this.$address;
+        if ($1.$address !== $2.$address){
+            this.$eTabAddressAddress.innerHTML = $1.$address;
+            $2.$address = $1.$address;
+            $changed = true;
+        }
     }
     if ($0.$requisites){
     }
