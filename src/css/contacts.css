@@ -21,7 +21,8 @@
     height: 160px;
     /*background: #fff;*/
     position:relative;
-    display:inline-block;
+    /*display:inline-block;*/
+    display:none;
     margin:10px;
 }
 .$card_inner{

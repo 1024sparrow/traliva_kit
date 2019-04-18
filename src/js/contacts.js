@@ -104,19 +104,23 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         this.$widgets = {
             $phone:{
                 $bn: this.$eBnPhone,
-                $tab: this.$eTabPhone
+                $tab: this.$eTabPhone,
+                $isVisible: false
             },
             $address:{
                 $bn: this.$eBnAddress,
-                $tab: this.$eTabAddress
+                $tab: this.$eTabAddress,
+                $isVisible: false
             },
             $requisites:{
                 $bn: this.$eBnRequisites,
-                $tab: this.$eTabRequisites
+                $tab: this.$eTabRequisites,
+                $isVisible: false
             },
             $social:{
                 $bn: this.$eBnSocial,
-                $tab: this.$eTabSocial
+                $tab: this.$eTabSocial,
+                $isVisible: false
             }
         };
         $fOnBnClicked = this.$fOnBnClicked();
@@ -213,69 +217,28 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         $p_wContainer.$setContent($content);
         this.$widgets = {
             $phone:{
-                $tab: this.$eTabPhone
+                $tab: this.$eTabPhone,
+                $isVisible: false
             },
             $address:{
-                $tab: this.$eTabAddress
+                $tab: this.$eTabAddress,
+                $isVisible: false
             },
             $requisites:{
-                $tab: this.$eTabRequisites
+                $tab: this.$eTabRequisites,
+                $isVisible: false
             },
             $social:{
-                $tab: this.$eTabSocial
+                $tab: this.$eTabSocial,
+                $isVisible: false
             }
         };
-        $p_wContainer.$_onResized = (function($1){return function($w, $h){return $1.$_updateSizesDesktop($w, $h, this.$_contentDiv);};})(this);
-
-        /*$p_wContainer.$_onResized = (function($1, $2, $pCardWidth, $eInnerContainer, $self){return function($w, $h){
-            //$1.style.marginLeft = '50px';//
-            //$1.style.margin = 'auto';
-            var $3, $4, $5, $6, $7, $n, $widgets = [];
-            for ($3 in $2){
-                console.log('*', $3);
-                $2[$3].$tab.style.width = '' + $pCardWidth + 'px';
-            }
-            // ширина одной плитки с отступами: (512 + 20 + 16)px == 532 px.
-            $3 = 548;
-            $n = parseInt($w / $3);
-            $3 = $n * $3;
-            $eInnerContainer.style.width = '' + $3 + 'px';
-            //$eInnerContainer.style.height = '256px';
-
-            $4 = 0; // кандидат на высоту виджета
-            $5 = 0; // кандидат на высоту строки
-            $6 = 0; // счётчик плиток
-            $7 = 0;
-            for ($3 in $2){
-                if ($6 === $n){
-                    $7 += ($5 + 20); // 20 is margin
-                    while ($4 = $widgets.pop()){
-                        $6 = $5 - $4.clientHeight;
-                        $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
-                    }
-                    $5 = 0;
-                    $6 = 0;
-                }
-                $4 = $2[$3].$tab;
-                $widgets.push($4);
-                $4 = $4.clientHeight;
-                if ($4 > $5)
-                    $5 = $4;
-                ++$6;
-            }
-            $7 += ($5 + 40); // 20 is margin
-            while ($4 = $widgets.pop()){
-                $6 = $5 - $4.clientHeight;
-                $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
-            }
-
-            this.$_contentDiv.style.width = '' + $w + 'px';
-            return {
-                $h: $7//this.$_contentDiv.clientHeight
-                //$h: this.$_contentDiv.clientHeight
-            };
-        };})($content, this.$widgets, 512, this.$eInnerContainer, this);*/
-
+        this.$contentDiv = $p_wContainer.$_contentDiv;
+        $p_wContainer.$_onResized = (function($1){return function($w, $h){
+            $1.$w = $w;
+            $1.$h = $h;
+            return $1.$_updateSizesDesktop();//$w, $h, this.$_contentDiv);
+        };})(this);
     }
     //#USAGE_BEGIN#debug##
     else{
@@ -286,7 +249,8 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
 };
 $Contacts.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Contacts.prototype.constructor = $Contacts;
-$Contacts.prototype.$_updateSizesDesktop = function($p_w, $p_h, $p_contentDiv){
+$Contacts.prototype.$_updateSizesDesktop = function(){
+    var $p_w = this.$w, $p_h = this.$h, $p_contentDiv = this.$contentDiv;
     var $2 = this.$widgets,
         $pInnerContainer = this.$eInnerContainer,
         $cardWidth = 512,
@@ -307,6 +271,8 @@ $Contacts.prototype.$_updateSizesDesktop = function($p_w, $p_h, $p_contentDiv){
     $6 = 0; // счётчик плиток
     $7 = 0;
     for ($3 in $2){
+        if (!$2[$3].$isVisible)
+            continue;
         if ($6 === $n){
             $7 += ($5 + 20); // 20 is margin
             while ($4 = $widgets.pop()){
@@ -387,14 +353,22 @@ $Contacts.prototype.$processStateChanges = function(s){
         if (!this.$prevVal[$2] !== !$0[$2])
             this.$_correctTabExisten($2, $0[$2]);
     }
-    if (!this.$phone !== !$0.$phone)
+    if (!this.$phone !== !$0.$phone){
         this.$_correctTabExisten('$phone', $0.$phone);
-    else if (!this.$address !== !$0.$address)
+        $changed = true;
+    }
+    else if (!this.$address !== !$0.$address){
         this.$_correctTabExisten('$address', $0.$address);
-    else if (!this.$requisites !== !$0.$requisites)
+        $changed = true;
+    }
+    else if (!this.$requisites !== !$0.$requisites){
         this.$_correctTabExisten('$requisites', $0.$requisites);
-    else if (!this.$social !== !$0.$social)
+        $changed = true;
+    }
+    else if (!this.$social !== !$0.$social){
         this.$_correctTabExisten('$social', $0.$social);
+        $changed = true;
+    }
     // Обновление данных
     if ($0.$phone){
     }
@@ -404,6 +378,8 @@ $Contacts.prototype.$processStateChanges = function(s){
     }
     if ($0.$social){
     }
+    if (this.$target === '$desktop')
+        this.$_updateSizesDesktop();
     $0 = s[this.$curTabVarName] || '';
     if ($0 && !this.$prevVal[$0]){
         //#USAGE_BEGIN#debug##
@@ -426,6 +402,9 @@ $Contacts.prototype.$_correctTabExisten = function($p_tabId, $p_ifExisten){
             this.$prevVal[$p_tabId] = JSON.parse(JSON.stringify($p_ifExisten));
             if (this.$target === '$mobile')
                 $1.$bn.style.display = 'inline-block';
+            else if (this.$target === '$desktop')
+                $1.$tab.style.display = 'inline-block';
+            $1.$isVisible = true;
         }
     }
     else{
@@ -433,6 +412,9 @@ $Contacts.prototype.$_correctTabExisten = function($p_tabId, $p_ifExisten){
             delete this.$prevVal[$p_tabId];
             if (this.$target === '$mobile')
                 $1.$bn.style.display = 'none';
+            else if (this.$target === '$desktop')
+                $1.$tab.style.display = 'none';
+            $1.$isVisible = false;
         }
     }
 };
