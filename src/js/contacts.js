@@ -228,7 +228,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         $p_wContainer.$_onResized = (function($1, $2, $pCardWidth, $eInnerContainer, $self){return function($w, $h){
             //$1.style.marginLeft = '50px';//
             //$1.style.margin = 'auto';
-            var $3, $4, $5, $6, $n, $widgets = [];
+            var $3, $4, $5, $6, $7, $n, $widgets = [];
             for ($3 in $2){
                 console.log('*', $3);
                 $2[$3].$tab.style.width = '' + $pCardWidth + 'px';
@@ -243,8 +243,10 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             $4 = 0; // кандидат на высоту виджета
             $5 = 0; // кандидат на высоту строки
             $6 = 0; // счётчик плиток
+            $7 = 0;
             for ($3 in $2){
                 if ($6 === $n){
+                    $7 += ($5 + 20); // 20 is margin
                     while ($4 = $widgets.pop()){
                         $6 = $5 - $4.clientHeight;
                         $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
@@ -259,13 +261,15 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                     $5 = $4;
                 ++$6;
             }
+            $7 += ($5 + 40); // 20 is margin
             while ($4 = $widgets.pop()){
                 $6 = $5 - $4.clientHeight;
                 $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
             }
 
+            this.$_contentDiv.style.width = '' + $w + 'px';
             return {
-                $h: 2000//this.$_contentDiv.clientHeight
+                $h: $7//this.$_contentDiv.clientHeight
                 //$h: this.$_contentDiv.clientHeight
             };
         };})($content, this.$widgets, $cardWidth, this.$eInnerContainer, this);
