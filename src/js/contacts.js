@@ -149,14 +149,16 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                         <table>
                             <tr>
                                 <td colspan="2">
-                                    <p><strong>Телефон: </strong> +7 (123) 456-78-90</p>
+                                    <p><strong>Телефон: </strong> <span traliva="$eTabPhoneNumber">+7 (123) 456-78-90</span></p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <div class="$bn">
-                                        Позвонить
-                                    </div>
+                                    <a traliva="$eTabPhoneTelLink" href="">
+                                        <div class="$bn">
+                                            Позвонить
+                                        </div>
+                                    </a>
                                 </td>
                                 <td>
                                     <div class="$bn">
@@ -371,6 +373,17 @@ $Contacts.prototype.$processStateChanges = function(s){
     }
     // Обновление данных
     if ($0.$phone){
+        if ($0.$phone !== this.$phone){
+            $1 = '';
+            if ($0.$phone[0] === '+' && $0.$phone.length === 12)
+                $1 = '+' + $0.$phone[1] + ' ' + '(' + $0.$phone.substr(2,3) + ') ' + $0.$phone.substr(5,3) + '-' + $0.$phone.substr(8,2) + '-' + $0.$phone.substr(10,2);
+            else
+                $1 = $0.$phone;
+            this.$eTabPhoneNumber.innerHTML = $1;
+            this.$eTabPhoneTelLink.href = 'tel:' + $0.$phone;
+            this.$phone = $0.$phone;
+            $changed = true;
+        }
     }
     if ($0.$address){
     }
