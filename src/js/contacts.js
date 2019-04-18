@@ -57,7 +57,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     //this.$eTabs,
     var $fOnBnClicked, $0, $1;
 
-    var $content, $cardWidth = 512;
+    var $content;
     if (this.$target === '$mobile'){
         $content = $Traliva.$createElement(`
         <div style="width:100%;">
@@ -225,7 +225,9 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                 $tab: this.$eTabSocial
             }
         };
-        $p_wContainer.$_onResized = (function($1, $2, $pCardWidth, $eInnerContainer, $self){return function($w, $h){
+        $p_wContainer.$_onResized = (function($1){return function($w, $h){return $1.$_updateSizesDesktop($w, $h, this.$_contentDiv);};})(this);
+
+        /*$p_wContainer.$_onResized = (function($1, $2, $pCardWidth, $eInnerContainer, $self){return function($w, $h){
             //$1.style.marginLeft = '50px';//
             //$1.style.margin = 'auto';
             var $3, $4, $5, $6, $7, $n, $widgets = [];
@@ -272,7 +274,8 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                 $h: $7//this.$_contentDiv.clientHeight
                 //$h: this.$_contentDiv.clientHeight
             };
-        };})($content, this.$widgets, $cardWidth, this.$eInnerContainer, this);
+        };})($content, this.$widgets, 512, this.$eInnerContainer, this);*/
+
     }
     //#USAGE_BEGIN#debug##
     else{
@@ -283,6 +286,54 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
 };
 $Contacts.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Contacts.prototype.constructor = $Contacts;
+$Contacts.prototype.$_updateSizesDesktop = function($p_w, $p_h, $p_contentDiv){
+    var $2 = this.$widgets,
+        $pInnerContainer = this.$eInnerContainer,
+        $cardWidth = 512,
+        $3, $4, $5, $6, $7, $n, $widgets = [];
+    for ($3 in $2){
+        console.log('*', $3);
+        $2[$3].$tab.style.width = '' + $cardWidth + 'px';
+    }
+    // ширина одной плитки с отступами: (512 + 20 + 16)px == 532 px.
+    $3 = 548;
+    $n = parseInt($p_w / $3);
+    $3 = $n * $3;
+    $pInnerContainer.style.width = '' + $3 + 'px';
+    //$eInnerContainer.style.height = '256px';
+
+    $4 = 0; // кандидат на высоту виджета
+    $5 = 0; // кандидат на высоту строки
+    $6 = 0; // счётчик плиток
+    $7 = 0;
+    for ($3 in $2){
+        if ($6 === $n){
+            $7 += ($5 + 20); // 20 is margin
+            while ($4 = $widgets.pop()){
+                $6 = $5 - $4.clientHeight;
+                $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
+            }
+            $5 = 0;
+            $6 = 0;
+        }
+        $4 = $2[$3].$tab;
+        $widgets.push($4);
+        $4 = $4.clientHeight;
+        if ($4 > $5)
+            $5 = $4;
+        ++$6;
+    }
+    $7 += ($5 + 40); // 20 is margin
+    while ($4 = $widgets.pop()){
+        $6 = $5 - $4.clientHeight;
+        $4.style.top = $6 ? ('-' + $6 + 'px') : '0px';
+    }
+
+    $p_contentDiv.style.width = '' + $p_w + 'px';
+    return {
+        $h: $7
+    };
+};
 $Contacts.prototype.$processStateChanges = function(s){
     /*var cand, t1;
     if (!s){
@@ -336,14 +387,14 @@ $Contacts.prototype.$processStateChanges = function(s){
         if (!this.$prevVal[$2] !== !$0[$2])
             this.$_correctTabExisten($2, $0[$2]);
     }
-    /*if (!this.$phone !== !$0.$phone)
+    if (!this.$phone !== !$0.$phone)
         this.$_correctTabExisten('$phone', $0.$phone);
     else if (!this.$address !== !$0.$address)
         this.$_correctTabExisten('$address', $0.$address);
     else if (!this.$requisites !== !$0.$requisites)
         this.$_correctTabExisten('$requisites', $0.$requisites);
     else if (!this.$social !== !$0.$social)
-        this.$_correctTabExisten('$social', $0.$social);*/
+        this.$_correctTabExisten('$social', $0.$social);
     // Обновление данных
     if ($0.$phone){
     }
