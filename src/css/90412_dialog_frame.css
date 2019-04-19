@@ -1,0 +1,11 @@
+.$TralivaKit__90412DialogFrame{
+    width: 100%;
+    height:100%;
+    background: rgba(0,0,0,0.3);
+}
+.$TralivaKit__90412DialogFrame_cross{
+    position:fixed;
+    width:32px;
+    height:32px;
+    background: #f00;
+}
