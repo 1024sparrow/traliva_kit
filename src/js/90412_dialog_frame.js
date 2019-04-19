@@ -20,6 +20,7 @@ function $90412DialogFrame($p_wContainer, $p_options, $p_widgets){
             }]
         };
     }
+    $p_wContainer.$setVisible(false);
     $children = $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
     $content = $children.$content;
     #USAGE_BEGIN#traliva_kit_debug##if ($content)#USAGE_END#traliva_kit_debug##
