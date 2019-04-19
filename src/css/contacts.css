@@ -58,6 +58,7 @@
     border-radius: 20px;
     background: #fff;
     text-align: center;
+    cursor: pointer;
 }
 /*td > div:hover{*/
 .$bn:hover{
