@@ -23,7 +23,7 @@ function $90412DialogFrame($p_wContainer, $p_options, $p_widgets){
             }]
         };
     }
-    //$p_wContainer.$setVisible(false);
+    $p_wContainer.$setVisible(false);
     this.$wContainer = $p_wContainer;
     this.$visibleVarName = $p_options.$visibleVarName || '$visible';
     #USAGE_BEGIN#debug##
