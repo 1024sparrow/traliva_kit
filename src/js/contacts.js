@@ -54,6 +54,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     this.$icons = {};
     //this.$target = $p_options.$target || '$mobile';
     this.$target = $p_options.$target || '$desktop';
+    this.$mapCommandVarName = $p_options.$mapCommandVarName || '$mapCommand';
     this.$tabsPosition = $p_options.$tabsPosition || '$top';
     //this.$eBns
     //this.$eTabs,
@@ -180,7 +181,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                         <strong>Адрес:</strong>
                         <span traliva="$eTabAddressAddress">Россия, 152300, Ярославская обл., г. Тутаев, ул. Волжская Набережная, д. 142</span>
                         </p>
-                        <div class="$bn" style="width:200px">
+                        <div class="$bn" style="width:200px" traliva="$eBnShowOnMap">
                             Показать на карте
                         </div>
                     </div>
@@ -218,6 +219,10 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                 </div>
             </div>
         `, this, '$traliva_kit__contacts');
+        this.$eBnShowOnMap.addEventListener('click', (function($1){return function(){
+            $1.$_state[$1.$mapCommandVarName] = $1.$_state[$1.$dataVarName].$address.$coordinates;
+            $1.$_registerStateChanges();
+        };})(this));
         $p_wContainer.$setContent($content);
         this.$widgets = {
             $phone:{
