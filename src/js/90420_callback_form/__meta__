@@ -1,0 +1,13 @@
+{
+    "files":[
+        {
+            "target": "90420_callback_form.js",
+            "source":{
+                "template": "t.js",
+                "list":[
+                    "layout.js"
+                ]
+            }
+        }
+    ]
+}

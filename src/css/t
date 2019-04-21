@@ -83,3 +83,7 @@
 #USAGE_BEGIN#TralivaKit__YandexApi##
 {%% yandex_api.css %%}
 #USAGE_END#TralivaKit__YandexApi##
+
+#USAGE_BEGIN#TralivaKit__90420CallbackForm##
+{%% 90420_callback_form.css %%}
+#USAGE_END#TralivaKit__90420CallbackForm##
