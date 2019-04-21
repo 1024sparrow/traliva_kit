@@ -37,9 +37,13 @@ function $90420CallbackForm($p_wContainer, $p_options, $p_widgets){
         this.$widgetsScope = {},
         this.$statePublisher
     );
-    $p_wContainer.$_onResized = function($w, $h){
-        $wContent.$resize($w, $h);
-    };
+    console.log('555555555555555555555');
+    console.log(this.$widgetsScope);
+    {%% logics.js %%}
+    this.$statePublisher.$registerSubscriber(new $Logics());
+    $p_wContainer.$_onResized = (function($1){return function($w, $h){
+        $1.$resize($w, $h);
+    };})($wContent);
     $p_wContainer.$setContent($wContent.$_div);
 };
 $90420CallbackForm.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);

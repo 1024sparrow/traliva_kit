@@ -5,7 +5,8 @@
             "source":{
                 "template": "t.js",
                 "list":[
-                    "layout.js"
+                    "layout.js",
+                    "logics.js"
                 ]
             }
         }
