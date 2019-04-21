@@ -24,11 +24,22 @@ function $90420CallbackForm($p_wContainer, $p_options, $p_widgets){
     var $wContent;
     this.$widgetsScope = {};
     this.$oWidgets = {};
+    this.$statePublisher = new $Traliva.$StatePublisher();
+    this.$statePublisher.$setState({
+        $phoneNumber: ''
+    });
     // неизвестен defaultBackground
-    //$wContent = new $Traliva.$Widget();
-    //$wContent.$setContent(undefined, '#f00');
-    $wContent = $Traliva.$_constructLayout($p_wContainer, {%% layout.js %%}, undefined, this.$oWidgets, this.$widgetsScope);
-    //$wContent = new $TralivaKit.$Button($p_wContainer, {$title:'123'});
+    $wContent = $Traliva.$_constructLayout(
+        $p_wContainer,
+        {%% layout.js %%},
+        undefined,
+        this.$oWidgets = {},
+        this.$widgetsScope = {},
+        this.$statePublisher
+    );
+    $p_wContainer.$_onResized = function($w, $h){
+        $wContent.$resize($w, $h);
+    };
     $p_wContainer.$setContent($wContent.$_div);
 };
 $90420CallbackForm.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);

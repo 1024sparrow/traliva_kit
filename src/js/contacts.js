@@ -6,7 +6,8 @@ registerHelp('$Contacts', {
         target: 'enum TralivaKit__Contacts__Target: mobile_h, mobile_v, desktop.',
         dataVarName: 'по умолчанию \'data\'',
         currentTabVarName: 'имя переменной, в которой хранится идентификатор текущей вкладки. По умолчанию, \'currentTab\'.',
-        mapCommandVarName: 'имя переменной, в которую писать команду на отображение карты. По умолчанию \'mapCommand\''
+        mapCommandVarName: 'имя переменной, в которую писать команду на отображение карты. По умолчанию \'mapCommand\'',
+        callbackVarName: 'имя переменной, в которую писать команду на отображение формы обратного звонка. По умолочанию, \'callbackCommand\'.'
     },
     stateObj:{
         //phone: 'контактный номер телефона. Строка вида \'+71234567890\'. При отображении этот номер будет приведён к форме \'+7 (123) 456-78-90\'.',
@@ -55,6 +56,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     //this.$target = $p_options.$target || '$mobile';
     this.$target = $p_options.$target || '$desktop';
     this.$mapCommandVarName = $p_options.$mapCommandVarName || '$mapCommand';
+    this.$callbackVarName = $p_options.$callbackVarName ||'$callbackCommand';
     this.$tabsPosition = $p_options.$tabsPosition || '$top';
     //this.$eBns
     //this.$eTabs,
@@ -164,7 +166,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                                     </a>
                                 </td>
                                 <td>
-                                    <div class="$bn">
+                                    <div class="$bn" traliva="$eBnOrderCallback">
                                         Заказать звонок
                                     </div>
                                 </td>
@@ -221,6 +223,12 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         `, this, '$traliva_kit__contacts');
         this.$eBnShowOnMap.addEventListener('click', (function($1){return function(){
             $1.$_state[$1.$mapCommandVarName] = $1.$_state[$1.$dataVarName].$address.$coordinates;
+            $1.$_registerStateChanges();
+        };})(this));
+        this.$eBnOrderCallback.addEventListener('click', (function($1){return function(){
+            $1.$_state[$1.$callbackVarName] = {
+                $number: ''
+            };
             $1.$_registerStateChanges();
         };})(this));
         $p_wContainer.$setContent($content);
