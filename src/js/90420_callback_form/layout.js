@@ -40,9 +40,19 @@
                 },
                 {
                     $_widget:{
+                        $id: '$callbackButton',
                         $type: $TralivaKit.$Button,
-                        $title: 'Заказать звонок'
+                        $title: 'Заказать звонок',
+                        $activeVarName: '$clicked'
                     }
+                },
+                {
+                    $_widget:{
+                        $type: $TralivaKit.$StaticHtml,
+                        $htmlVarName: '$error',
+                        //$_visibleSubstate: '$error'
+                    },
+                    $size: '64px'
                 }
             ]
         }},

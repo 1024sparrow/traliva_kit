@@ -1,0 +1,14 @@
+.$90420CallbackForm_ok{
+    border: 1px solid #048;
+    color: #048;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 32px;
+}
+.$90420CallbackForm_fail{
+    border: 1px solid #f00;
+    color: #f00;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 32px;
+}

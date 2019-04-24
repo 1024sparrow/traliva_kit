@@ -25,22 +25,23 @@ function $90420CallbackForm($p_wContainer, $p_options, $p_widgets){
     this.$widgetsScope = {};
     this.$oWidgets = {};
     this.$statePublisher = new $Traliva.$StatePublisher();
-    this.$statePublisher.$setState({
-        $phoneNumber: ''
-    });
+    this.$prevVal = false;
     // неизвестен defaultBackground
     $wContent = $Traliva.$_constructLayout(
         $p_wContainer,
         {%% layout.js %%},
-        undefined,
+        $p_options.$bg,
         this.$oWidgets = {},
         this.$widgetsScope = {},
-        this.$statePublisher
+        this.$context = {
+            $statePublisher: this.$statePublisher,
+            $visibilityMap: this.visibilityMap = {},
+            $widgets: this.$widgets = {}
+        }
     );
-    console.log('555555555555555555555');
-    console.log(this.$widgetsScope);
     {%% logics.js %%}
     this.$statePublisher.$registerSubscriber(new $Logics());
+    console.log(this.$widgetsScope);
     $p_wContainer.$_onResized = (function($1){return function($w, $h){
         $1.$resize($w, $h);
     };})($wContent);
@@ -49,10 +50,13 @@ function $90420CallbackForm($p_wContainer, $p_options, $p_widgets){
 $90420CallbackForm.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $90420CallbackForm.prototype.constructor = $90420CallbackForm;
 $90420CallbackForm.prototype.$processStateChanges = function(s){
-    if (!s){
-        console.error('epic fail');
-        return;
+    if (this.$prevVal == !s){
+        if (!this.$prevVal)
+            this.$statePublisher.$setState({
+                $phoneNumber: '',
+                $error: ''
+            });
+        this.$prevVal = !this.$prevVal;
     }
-    // ...
 };
 //$90420CallbackForm.$widgetsFields = [];
