@@ -222,7 +222,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             </div>
         `, this, '$traliva_kit__contacts');
         this.$eBnShowOnMap.addEventListener('click', (function($1){return function(){
-            $1.$_state[$1.$mapCommandVarName] = $1.$_state[$1.$dataVarName].$address.$coordinates;
+            $1.$_state[$1.$mapCommandVarName] = [$1.$_state[$1.$dataVarName].$address.$coordinates];
             $1.$_registerStateChanges();
         };})(this));
         this.$eBnOrderCallback.addEventListener('click', (function($1){return function(){

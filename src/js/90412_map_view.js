@@ -1,11 +1,14 @@
 //State JSON: {"ss__data":[{"ss__lat":57.873608,"ss__lon":39.535165}]}
+//{"ss__data":[{"ss__lat":57.87855,"ss__lon":39.517897}]} -- corrected
 #USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$90412MapView', {
     title: 'Виджет карты (yandex maps)',
     //descr: '',
     options:{
         dataVarName: 'имя переменной, в которой хранятся данные по объектам',
-        mapVarName: 'имя переменной, в которой хранятся настройки самой карты'
+        //mapVarName: 'имя переменной, в которой хранятся настройки самой карты'
+        center: 'объект со свойствами lon, lat (в градусах) и popupHtml (html-код всплывающей подсказки). По умолчанию, координаты Тульмы в г.Тутаев Ярославской области.',
+        zoom: 'масштаб. По умолчанию, 16.'
     },
     stateObj:{
         data: 'список объектов.\n[{\n  pos:{\n    lat: широта в градусах,\n    lon: долгота в градусах\n  },\n  ...\n}]',
@@ -19,8 +22,11 @@ function $90412MapView($p_wContainer, $p_options, $p_widgets){
     this.$dataVarName = $p_options.$dataVarName || '$data';
     //this.$lat;
     //this.$lon;
+    //$popupHtml
 
-    var $content, $1 = this;
+    var $content, $1 = this,
+        $zoom = $p_options.$zoom || 8,
+        $center = $p_options.$center || {$lat:57.87855,$lon:39.517897};
     $content = $Traliva.$createElement(`
         <!--<script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU"></script>-->
         <div traliva="$eMap" style="width: 100%; height: 100%; background: #888;">
@@ -32,7 +38,8 @@ function $90412MapView($p_wContainer, $p_options, $p_widgets){
     };
 
     ymaps.ready((function($1){return function(){
-        $1.$myMap = new ymaps.Map($1.$eMap, {center: [57.873608,39.535165],zoom: 16, type: "yandex#map", behaviors: ["default", "scrollZoom"]});
+        //$1.$myMap = new ymaps.Map($1.$eMap, {center: [57.873608,39.535165],zoom: 16, type: "yandex#map", behaviors: ["default", "scrollZoom"]});
+        $1.$myMap = new ymaps.Map($1.$eMap, {center: [$center.$lat,$center.$lon],zoom: $zoom, type: "yandex#map"});
         // Создаем метку и задаем изображение для ее иконки
         /*$1.$myMap.controls.add("zoomControl").add("mapTools").add(new ymaps.control.TypeSelector(["yandex#map", "yandex#satellite", "yandex#hybrid", "yandex#publicMap"]));*/
     };})(this));
@@ -53,7 +60,7 @@ $90412MapView.prototype.$processStateChanges = function(s){
     if ($1){
         if ($1.length === 1){
             $1 = $1[0];
-            if ($1.$lat !== this.$lat || $1.$lon !== this.$lon){
+            if ($1.$lat !== this.$lat || $1.$lon !== this.$lon || $1.$popupHtml != this.$popupHtml){
                 console.log('update...');
                 // update
                 // ...
@@ -62,17 +69,12 @@ $90412MapView.prototype.$processStateChanges = function(s){
                 $2 = new ymaps.Placemark(
                     [$1.$lat, $1.$lon],
                     {
-                        //hintContent: 'Тульма &lt;a href="traliva.ru"&gt;ss&lt;/a&gt;',
-                        hintContent: 'Тульма <img src="http://brezent-tulma.ru/data/template/images/bottomlogo.jpg"/><a href="https://traliva.ru">ss</a>',
-                        //balloonContent: 'qwertyu' // widget on click
+                        //hintContent: 'Тульма <img src="http://brezent-tulma.ru/data/template/images/bottomlogo.jpg"/><a href="https://traliva.ru">ss</a>',
+                        hintContent: $1.$popupHtml,
+                        //balloonContent: $1.$popupHtml // Для мобильной версии - это виджет, отображаемый по клику на бабле
                     },
                     {
-                        //iconImageHref: "/data/template/images/pointer.png", // картинка иконки
-                        //iconImageHref: "/static/pointer.gif", // картинка иконки
-                        iconImageHref: "file:///home/maryanna/da/tmp/pointer.gif", // картинка иконки
-                        iconImageSize: [128, 73], // размеры картинки
-                        iconImageOffset: [ -51,-63], // смещение картинки
-                        iconColor: '#afa'
+                        //iconColor: '#afa'
                     }
                 );
                 //this.$eMap.addEventListener($2.click, function(){console.log('bubble clicked');});
@@ -81,6 +83,7 @@ $90412MapView.prototype.$processStateChanges = function(s){
                 // ...
                 this.$lat = $1.$lat;
                 this.$lon = $1.$lon;
+                this.$popupHtml = $1.$popupHtml;
             }
         }
         else{
