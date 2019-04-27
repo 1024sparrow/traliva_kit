@@ -25,14 +25,15 @@ registerHelp('$Contacts', {
             lat: <широта (float, градусы)>,
             lon: <долгота (float, градусы)>
         },
-    }
+    },
     requisites:{ // ОКПО, ИНН/КПП, ОГРН, р/с, к/сч, БИК
         ИНН: <ИНН (строка)>,
         КПП: <КПП (строка)>,
         ОКПО: <ОКПО (строка)>,
         ОГРН: <ОГРН (строка)>
 
-    }
+    },
+    email: <строка с адресом электронной почты. Например, 'user@company.com'>
         `,
         mapCommand: 'объект, описывающий задание на отображение карты. См. документацию по компоненту \'90412MapView\''
     }
@@ -48,7 +49,8 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         '$phone',
         '$address',
         '$requisites',
-        '$social'
+        '$social',
+        '$email'
     ];
     //this.$currentTab;
 
@@ -68,36 +70,19 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     if (this.$target === '$mobile'){
         $content = $Traliva.$createElement(`
         <div>
-            <div traliva="$eBnPhone" m_type="$phone" class="$card_icon_mobile" style="background:url(phone_64.png) #ffa;"></div>
-            <div traliva="$eBnAddress" m_type="$address" class="$card_icon_mobile" style="background:url(map_64.png) #ffa;top:20px;"></div>
+            <div traliva="$eBnPhone" m_type="$phone" class="$card_icon_mobile" style="background: url(/static/root_app/res/_traliva_kit/contact_icons/phone_64.png) rgb(255,255,204);"></div>
+            <div traliva="$eBnAddress" m_type="$address" class="$card_icon_mobile" style="background: url(/static/root_app/res/_traliva_kit/contact_icons/address_64.png) rgb(255,255,204);"></div>
             <div traliva="$eBnRequisites" m_type="$requisites" class="$card_icon_mobile" style="background:url(requisites_64.png) #ffa;"></div>
             <div traliva="$eBnSocial" m_type="$social" class="$card_icon_mobile" style="background:url(social_64.png) #ffa;"></div>
+            <div traliva="$eBnEmail" m_type="$email" class="$card_icon_mobile" style="background: url(/static/root_app/res/_traliva_kit/contact_icons/email_64.png) rgb(255,255,204);"></div>
         </div>
         <div style="position:relative">
             <div traliva="$eTabPhone" class="$traliva_kit__contacts__tab">
-                <!--<table>
-                    <tr>
-                        <td colspan="2">
-                            <p><strong>Телефон: </strong> +7 (123) 456-78-90</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="$bn">
-                                Позвонить
-                            </div>
-                        </td>
-                        <td>
-                            <div class="$bn">
-                                Заказать звонок
-                            </div>
-                        </td>
-                    </tr>
-                </table>-->
                 <table>
                     <tr>
                         <td colspan="2">
-                            <p><strong>Телефон: </strong> <span traliva="$eTabPhoneNumber">+7 (123) 456-78-90</span></p>
+                            <h3>Телефон: </h3>
+                            <p traliva="$eTabPhoneNumber"/>
                         </td>
                     </tr>
                     <tr>
@@ -118,10 +103,8 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             </div>
             <div traliva="$eTabAddress" class="$traliva_kit__contacts__tab">
                 <!--<p>Вкладка с адресом</p>-->
-                <p>
-                <strong>Адрес:</strong>
-                <span traliva="$eTabAddressAddress">Россия, 152300, Ярославская обл., г. Тутаев, ул. Волжская Набережная, д. 142</span>
-                </p>
+                <h3>Адрес: </h3>
+                <p traliva="$eTabAddressAddress"/>
                 <div class="$bn" style="width:200px" traliva="$eBnShowOnMap">
                     Показать на карте
                 </div>
@@ -131,6 +114,10 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             </div>
             <div traliva="$eTabSocial" class="$traliva_kit__contacts__tab">
                 <p>Вкладка с соц.сетями</p>
+            </div>
+            <div traliva="$eTabEmail" class="$traliva_kit__contacts__tab">
+                <h3>Электронная почта: </h3>
+                <a traliva="$eTabEmailEmail"></a>
             </div>
         </div>
 
@@ -155,6 +142,11 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             $social:{
                 $bn: this.$eBnSocial,
                 $tab: this.$eTabSocial,
+                $isVisible: false
+            },
+            $email:{
+                $bn: this.$eBnEmail,
+                $tab: this.$eTabEmail,
                 $isVisible: false
             }
         };
@@ -182,7 +174,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         $content = $Traliva.$createElement(`
             <div style="margin:auto" traliva="$eInnerContainer">
                 <div traliva="$eTabPhone" class="$card" m_type=="$phone">
-                    <div class="$card_icon" style="background:url(phone_64.png) #fca;"></div>
+                    <div class="$card_icon" style="background:url(/static/root_app/res/_traliva_kit/contact_icons/phone_64.png) rgb(255,255,204);"></div>
                     <!--<p>Вкладка с телефоном</p>-->
                     <div class="$card_inner" style="height:140px;">
                         <table>
@@ -192,13 +184,6 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <a traliva="$eTabPhoneTelLink" href="" style="color:inherit;text-decoration:none;">
-                                        <div class="$bn">
-                                            Позвонить
-                                        </div>
-                                    </a>
-                                </td>
                                 <td>
                                     <div class="$bn" traliva="$eBnOrderCallback">
                                         Заказать звонок
@@ -211,7 +196,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                 <div traliva="$eTabAddress" class="$card" m_type="$address">
                     <!--<div class="$card-icon" style="background:url(phone_64.png) #fca;"></div>-->
                     <!--<p>Вкладка с адресом</p>-->
-                    <div class="$card_icon" style="background:url(map_64.png) #ffa;"></div>
+                    <div class="$card_icon" style="background:url(/static/root_app/res/_traliva_kit/contact_icons/address_64.png) rgb(255,255,204);"></div>
                     <div class="$card_inner" style="height:140px;">
                         <p>
                         <strong>Адрес:</strong>
@@ -223,7 +208,6 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                     </div>
                 </div>
                 <div traliva="$eTabRequisites" class="$card" m_type="$requisites" style="height:260px;">
-                    <!--<div class="$card_icon" style="background:url(phone_64.png) #fca;"></div>
                     <p>Вкладка с банковскими реквизитами</p>-->
                     <div class="$card_icon" style="background:url(requisites_64.png) #ffa;"></div>
                     <div class="$card_inner" style="height:260px;">
@@ -253,6 +237,13 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                         <p>Вкладка с соц.сетями</p>
                     </div>
                 </div>
+                <div traliva="$eTabEmail" class="$card" m_type="$email" style="height:140px">
+                    <div class="$card_icon" style="background:url(/static/root_app/res/_traliva_kit/contact_icons/email_64.png) rgb(255,255,204);"></div>
+                    <div class="$card_inner" style="height:140px;">
+                        <h3>Электронная почта: </h3>
+                        <a traliva="$eTabEmailEmail"></a>
+                    </div>
+                </div>
             </div>
         `, this, '$traliva_kit__contacts');
         $p_wContainer.$setContent($content);
@@ -271,6 +262,10 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             },
             $social:{
                 $tab: this.$eTabSocial,
+                $isVisible: false
+            },
+            $email:{
+                $tab: this.$eTabEmail,
                 $isVisible: false
             }
         };
@@ -414,6 +409,10 @@ $Contacts.prototype.$processStateChanges = function(s){
         this.$_correctTabExisten('$social', $0.$social);
         $changed = true;
     }
+    else if (!this.$email !== !$0.$email){
+        this.$_correctTabExisten('$email', $0.$email);
+        $changed = true;
+    }
     // Обновление данных
     if ($0.$phone){
         if ($0.$phone !== this.$phone){
@@ -423,7 +422,8 @@ $Contacts.prototype.$processStateChanges = function(s){
             else
                 $1 = $0.$phone;
             this.$eTabPhoneNumber.innerHTML = $1;
-            this.$eTabPhoneTelLink.href = 'tel:' + $0.$phone;
+            if (this.$eTabPhoneTelLink)
+                this.$eTabPhoneTelLink.href = 'tel:' + $0.$phone;
             this.$phone = $0.$phone;
             $changed = true;
         }
@@ -436,6 +436,14 @@ $Contacts.prototype.$processStateChanges = function(s){
         if ($1.$address !== $2.$address){
             this.$eTabAddressAddress.innerHTML = $1.$address;
             $2.$address = $1.$address;
+            $changed = true;
+        }
+    }
+    if ($0.$email){
+        if ($0.$email !== this.$email){
+            this.$eTabEmailEmail.innerHTML = $0.$email;
+            this.$eTabEmailEmail.href = 'mailto:' + $0.$email;
+            this.$email - $0.$email;
             $changed = true;
         }
     }
