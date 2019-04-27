@@ -20,23 +20,35 @@
                         ]
                     }
                 },*/
-                {
+                /*{
                     $_widget:{
+                        $id: '$wValidTimeNote',
                         $type: $TralivaKit.$StaticHtml,
                         $html:`
-<div style="margin:10px">
+<div style="margin:10px" class="$validTimeNote">
 <h2>По какому номеру вам позвонить?</h2>
 <p>Наш специалист свяжется с вами в ближайшее время с 8:00 до 20:00</p>
 </div>
                         `
-                    }
+                    },
+                    $size: '256px'
+                },*/
+                {
+                    $_widget:{
+                        $id: '$wValidTimeNote',
+                        $type: $TralivaKit.$Label,
+                        $text: 'Наш специалист свяжется с вами в ближайшее время с 8:00 до 20:00.'
+                    },
+                    $size: '80px'
                 },
                 {
                     $_widget:{
                         $type: $TralivaKit.$LineEdit,
                         $placeholder: 'На какой номер перезвонить',
-                        $textVarName: '$phoneNumber'
-                    }
+                        $textVarName: '$phoneNumber',
+                        $datatype: 'tel'
+                    },
+                    $size: '64px'
                 },
                 {
                     $_widget:{
@@ -44,7 +56,8 @@
                         $type: $TralivaKit.$Button,
                         $title: 'Заказать звонок',
                         $activeVarName: '$clicked'
-                    }
+                    },
+                    $size: '86px'
                 },
                 {
                     $_widget:{
@@ -52,7 +65,7 @@
                         $htmlVarName: '$error',
                         //$_visibleSubstate: '$error'
                     },
-                    $size: '64px'
+                    //$size: '80px'
                 }
             ]
         }},

@@ -41,11 +41,17 @@ function $90420CallbackForm($p_wContainer, $p_options, $p_widgets){
     );
     {%% logics.js %%}
     this.$statePublisher.$registerSubscriber(new $Logics());
-    console.log(this.$widgetsScope);
-    $p_wContainer.$_onResized = (function($1){return function($w, $h){
+    /*$p_wContainer.$_onResized = (function($1){return function($w, $h){
         $1.$resize($w, $h);
-    };})($wContent);
-    $p_wContainer.$setContent($wContent.$_div);
+    };})($wContent);*/
+    console.log(this.$widgetsScope);
+    $p_wContainer.$_onResized = (function($1, $2){return function($w, $h){
+        $2.$wValidTimeNote.$setVisible($h > 256);
+        //$1.$_content.className = '$TralivaKit__90420CallbackForm';//
+        //$2.$_content.className = ($w > 512) ? '$TralivaKit__90420CallbackForm_bigTimeValidNote' : '$TralivaKit__90420CallbackForm_smallTimeValidNote';
+        $1.$resize($w, $h);
+    };})($wContent, this.$context.$widgets);
+    $p_wContainer.$setContent($wContent);
 };
 $90420CallbackForm.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $90420CallbackForm.prototype.constructor = $90420CallbackForm;
