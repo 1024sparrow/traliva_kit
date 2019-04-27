@@ -1,3 +1,5 @@
+//{"ss__data":{"ss__phone":"+71234567890","ss__address":{"ss__address":"Тутаев, ул. Розы Люксембург.","ss__coordinates":{"ss__lat":57.87855,"ss__lon":39.517897,"ss__popupHtml":"Льнокомбинат Тульма"}}},"ss__callbackCommand":{"ss__number":""},"ss__currentTab":"ss__phone"}
+
 #USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$Contacts', {
     title: 'Виджет отображения контактов организации',
@@ -53,8 +55,8 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     this.$eTileContainer;
     this.$tiles = {};
     this.$icons = {};
-    //this.$target = $p_options.$target || '$mobile';
-    this.$target = $p_options.$target || '$desktop';
+    this.$target = $p_options.$target || '$mobile';
+    //this.$target = $p_options.$target || '$desktop';
     this.$mapCommandVarName = $p_options.$mapCommandVarName || '$mapCommand';
     this.$callbackVarName = $p_options.$callbackVarName ||'$callbackCommand';
     this.$tabsPosition = $p_options.$tabsPosition || '$top';
@@ -65,7 +67,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
     var $content;
     if (this.$target === '$mobile'){
         $content = $Traliva.$createElement(`
-        <div style="width:100%;">
+        <div>
             <div traliva="$eBnPhone" m_type="$phone" class="$card_icon_mobile" style="background:url(phone_64.png) #ffa;"></div>
             <div traliva="$eBnAddress" m_type="$address" class="$card_icon_mobile" style="background:url(map_64.png) #ffa;top:20px;"></div>
             <div traliva="$eBnRequisites" m_type="$requisites" class="$card_icon_mobile" style="background:url(requisites_64.png) #ffa;"></div>
@@ -73,7 +75,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         </div>
         <div style="position:relative">
             <div traliva="$eTabPhone" class="$traliva_kit__contacts__tab">
-                <table>
+                <!--<table>
                     <tr>
                         <td colspan="2">
                             <p><strong>Телефон: </strong> +7 (123) 456-78-90</p>
@@ -91,10 +93,38 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                             </div>
                         </td>
                     </tr>
+                </table>-->
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <p><strong>Телефон: </strong> <span traliva="$eTabPhoneNumber">+7 (123) 456-78-90</span></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a traliva="$eTabPhoneTelLink" href="" style="color:inherit;text-decoration:none;">
+                                <div class="$bn">
+                                    Позвонить
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <div class="$bn" traliva="$eBnOrderCallback">
+                                Заказать звонок
+                            </div>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div traliva="$eTabAddress" class="$traliva_kit__contacts__tab">
-                <p>Вкладка с адресом</p>
+                <!--<p>Вкладка с адресом</p>-->
+                <p>
+                <strong>Адрес:</strong>
+                <span traliva="$eTabAddressAddress">Россия, 152300, Ярославская обл., г. Тутаев, ул. Волжская Набережная, д. 142</span>
+                </p>
+                <div class="$bn" style="width:200px" traliva="$eBnShowOnMap">
+                    Показать на карте
+                </div>
             </div>
             <div traliva="$eTabRequisites" class="$traliva_kit__contacts__tab">
                 <p>Вкладка с банковскими реквизитами</p>
@@ -135,13 +165,17 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         }
         $p_wContainer.$_onResized = (function($1){return function($w, $h){
             var $2,
-                $3 = '' + ($h - 76 - 34) + 'px',
-                $4 = '' + ($w - 34) + 'px'
+                $3 = $h - 130,
+                $4 = $w - 40
             ;
             for ($2 in $1){
-                $1[$2].$tab.style.height = $3;
-                $1[$2].$tab.style.width = $4;
+                $1[$2].$tab.style.height = $3 + 'px';
+                $1[$2].$tab.style.width = $4 + 'px';
             }
+            return {
+                $w: $4,
+                $h: $h - 20
+            };
         };})(this.$widgets);
     }
     else if (this.$target === '$desktop'){
@@ -221,16 +255,6 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
                 </div>
             </div>
         `, this, '$traliva_kit__contacts');
-        this.$eBnShowOnMap.addEventListener('click', (function($1){return function(){
-            $1.$_state[$1.$mapCommandVarName] = [$1.$_state[$1.$dataVarName].$address.$coordinates];
-            $1.$_registerStateChanges();
-        };})(this));
-        this.$eBnOrderCallback.addEventListener('click', (function($1){return function(){
-            $1.$_state[$1.$callbackVarName] = {
-                $number: ''
-            };
-            $1.$_registerStateChanges();
-        };})(this));
         $p_wContainer.$setContent($content);
         this.$widgets = {
             $phone:{
@@ -257,12 +281,16 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
             return $1.$_updateSizesDesktop();//$w, $h, this.$_contentDiv);
         };})(this);
     }
-    //#USAGE_BEGIN#debug##
-    else{
-        console.log('not implemented');
-    }
-    //#USAGE_END#debug##
-    console.log('Y^%$%$^&%$^&%$^&%$:', this.$prevVal);//
+    this.$eBnOrderCallback.addEventListener('click', (function($1){return function(){
+        $1.$_state[$1.$callbackVarName] = {
+            $number: ''
+        };
+        $1.$_registerStateChanges();
+    };})(this));
+    this.$eBnShowOnMap.addEventListener('click', (function($1){return function(){
+        $1.$_state[$1.$mapCommandVarName] = [$1.$_state[$1.$dataVarName].$address.$coordinates];
+        $1.$_registerStateChanges();
+    };})(this));
 };
 $Contacts.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Contacts.prototype.constructor = $Contacts;

@@ -60,7 +60,7 @@ function $Bedsheet($p_wContainer, $p_options, $p_widgets){
         }
         $0.style.width = '' + $2 + 'px';
         console.log('content: ', $1);//
-        $1.$_widget.$resize($2, 0);
+        $1.$_widget.$resize($2, $h); // $h может быть "перебито". Раньше вместо $h передавался нуль.
     };})($2.$1, $content, $p_options);
     $2.$1.appendChild($content.$_widget.$_div);
     $p_wContainer.$setContent($1);

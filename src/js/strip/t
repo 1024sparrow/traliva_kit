@@ -27,7 +27,7 @@ function $Strip($p_wContainer, $p_options, $p_descr){
 		this.$_eRowSingle = this.$_eTable.insertRow(0);
 	}
     $p_wContainer.$setContent(this.$_eTable);
-    (function(self){
+    (function(self, $p_wContainer){
     $p_wContainer.$_onResized = function($w, $h){
         self.$__w = $w;
         self.$__h = $h;
@@ -36,7 +36,7 @@ function $Strip($p_wContainer, $p_options, $p_descr){
     $p_wContainer.$_onChildVisibilityChanged = function($wChild){
         self.$__updateSizes();
     };
-    })(this);
+    })(this, $p_wContainer);
     console.log('strip constructor parameters: ', $p_wContainer, $p_options, $p_descr);
     //this.$_updateItems($p_options.$_children.$items);
     console.log('strip constructor children: ', $children);
