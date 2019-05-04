@@ -37,6 +37,7 @@ function $90223NavBar($p_wContainer, $p_options, $p_widgets){
     this.$_buttons = {};
     if ($target === '$desktop'){
         $eTable = document.createElement('table');
+        $eTable.className="$TralivaKit__90223NavBar__desktop";
         $eTable.style.height = '100%';
         $eRow = $eTable.insertRow(-1);
         //this.$_current;
@@ -64,6 +65,7 @@ function $90223NavBar($p_wContainer, $p_options, $p_widgets){
     }
     else if ($target === '$mobile'){
         $eTable = document.createElement('div');
+        $eTable.className="$TralivaKit__90223NavBar__mobile";
         $p_wContainer.$_div.style.overflow = 'auto';
         for ($1 = 0 ; $1 < $variants.length ; ++$1){
             $0 = $variants[$1];

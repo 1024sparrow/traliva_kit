@@ -62,7 +62,7 @@ $StaticHtml.prototype.$processStateChanges = function(s){
     this.$_e = $Traliva.$createElement($0, undefined, '$traliva_kit__static_html');
     console.log('----------------------\n', this.$_options);//
     if (this.$_options.$processor)
-        this.$_options.$processor(this.$_e);
+        this.$_e = this.$_options.$processor(this.$_e) || this.$_e;
     this.$_wContainer.$setContent(this.$_e);
     this.$_prevVal = $0;
 };
