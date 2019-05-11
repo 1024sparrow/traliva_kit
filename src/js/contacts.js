@@ -68,7 +68,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
 
     var $content;
     if (this.$target === '$mobile'){
-        $content = $Traliva.$createElement(`
+        $content = $Traliva.$createElement(3`
         <div>
             <div traliva="$eBnPhone" m_type="$phone" class="$card_icon_mobile" style="background: url(/static/root_app/res/_traliva_kit/contact_icons/phone_64.png) rgb(255,255,204);"></div>
             <div traliva="$eBnAddress" m_type="$address" class="$card_icon_mobile" style="background: url(/static/root_app/res/_traliva_kit/contact_icons/address_64.png) rgb(255,255,204);"></div>
@@ -171,7 +171,7 @@ function $Contacts($p_wContainer, $p_options, $p_widgets){
         };})(this.$widgets);
     }
     else if (this.$target === '$desktop'){
-        $content = $Traliva.$createElement(`
+        $content = $Traliva.$createElement(3`
             <div style="margin:auto" traliva="$eInnerContainer">
                 <div traliva="$eTabPhone" class="$card" m_type=="$phone">
                     <div class="$card_icon" style="background:url(/static/root_app/res/_traliva_kit/contact_icons/phone_64.png) rgb(255,255,204);"></div>

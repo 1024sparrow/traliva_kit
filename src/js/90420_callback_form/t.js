@@ -8,7 +8,7 @@ registerHelp('$90420CallbackForm', {
         dataVarName: 'имя переменной, в которой будет храниться информация, введённая пользователем'
     },
     stateObj:{
-        data: `{
+        data: 3`{
     number: '+71234567890'
 }`
     }

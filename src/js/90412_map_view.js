@@ -27,7 +27,7 @@ function $90412MapView($p_wContainer, $p_options, $p_widgets){
     var $content, $1 = this,
         $zoom = $p_options.$zoom || 8,
         $center = $p_options.$center || {$lat:57.87855,$lon:39.517897};
-    $content = $Traliva.$createElement(`
+    $content = $Traliva.$createElement(3`
         <!--<script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU"></script>-->
         <div traliva="$eMap" style="width: 100%; height: 100%; background: #888;">
     `, this);
