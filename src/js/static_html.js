@@ -34,7 +34,7 @@ function $StaticHtml($p_wContainer, $p_options){
     //else
     //    console.log('22 облом');//
     //var $1 = this.$_e;
-    (function($p_self, $p_e){
+    (function($p_self){
         $p_wContainer.$_onResized = function(w, h){
             //if ($1)
             //    $1.style.margin = 'auto';
@@ -44,12 +44,12 @@ function $StaticHtml($p_wContainer, $p_options){
             this.$_contentDiv.style.width = '' + w + 'px';
             //this.$_contentDiv.style.height = '' + h + 'px';
             if ($p_self.$_fOnResized)
-                $p_self.$_fOnResized($p_e, w, h);
+                $p_self.$_fOnResized($p_self.$_e, w, h);
             return {
                 $h: this.$_contentDiv.clientHeight
             };
         };
-    })(this, this.$_e);
+    })(this);
 };
 $StaticHtml.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $StaticHtml.prototype.constructor = $StaticHtml;
