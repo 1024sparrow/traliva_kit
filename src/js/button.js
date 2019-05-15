@@ -83,6 +83,7 @@ function $Button($p_wContainer, $p_options){
     this.e.addEventListener('click', function($self){return function(){
         $self.$_onClicked();
     };}(this));
+    $1.style.cursor = 'pointer';
     $p_wContainer.$setContent($1);
 };
 $Button.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
