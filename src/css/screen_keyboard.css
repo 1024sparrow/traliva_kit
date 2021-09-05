@@ -1,0 +1,18 @@
+.$TralivaKit__ScreenKeyboard__Container {
+    /*background: rgba(0, 0, 0, 0.5);*/
+}
+
+
+
+.$TralivaKit__ScreenKeyboard {
+    width: 48px;
+    height: 48px;
+    /*background: red;*/
+    background: url("#RES#/123.png");
+
+/*
+    opacity: .4;
+    background-size: 96px;
+    backround-position-x: -48px;
+*
+}

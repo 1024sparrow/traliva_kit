@@ -21,3 +21,4 @@ Contacts contacts.js
 90412MapView 90412_map_view.js
 90412DialogFrame 90412_dialog_frame.js
 90420CallbackForm 90420_callback_form.js
+ScreenKeyboard screen_keyboard.js

@@ -87,3 +87,7 @@
 #USAGE_BEGIN#TralivaKit__90420CallbackForm##
 {%% 90420_callback_form.css %%}
 #USAGE_END#TralivaKit__90420CallbackForm##
+
+#USAGE_BEGIN#TralivaKit__ScreenKeyboard##
+{%% screen_keyboard.css %%}
+#USAGE_END#TralivaKit__ScreenKeyboard##

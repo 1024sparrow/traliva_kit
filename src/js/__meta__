@@ -26,7 +26,8 @@
                     "90412_map_view.js",
                     "90412_dialog_frame.js",
                     "yandex_api.js",
-                    "90420_callback_form.js"
+                    "90420_callback_form.js",
+                    "screen_keyboard.js"
                 ]
             }
         }
