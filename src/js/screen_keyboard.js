@@ -81,7 +81,7 @@ $ScreenKeyboard.prototype.$_updateLayout = function($p_layout){
     if (!this.$_width || !this.$_height)
         return;
 
-    console.log(this.$_width, '--', this.$_height);
+    //console.log(this.$_width, '--', this.$_height);
 
     var
         $ratio = this.$_width / this.$_height,
@@ -92,23 +92,23 @@ $ScreenKeyboard.prototype.$_updateLayout = function($p_layout){
 
     for ($1 of this.$_options.$layouts[this.$_curLayout]){
         $2 = this.$_width * $1.$height / $1.$width;
-        console.log($2, this.$_height);
+        //console.log($2, this.$_height);
         if (this.$_height > $2){
             $height = $2;
-            console.log('**', $height);
+            //console.log('**', $height);
         }
     }
 
     if ($height){
-        this.$_eLayout.style.height = '256px'
-        this.$_eLayout.style.width = '100%'
+        this.$_eLayout.style.height = $height + 'px';
+        this.$_eLayout.style.width = '100%';
+        this.$_eLayout.style.backgroundSize=this.$_width + 'px';
         //this.$_eLayout.style.background = 'green';
         $1 = parseInt(this.$_height - $height);
         this.$_eLayout.style.marginTop = $1 + 'px';
 
-        // boris here 1: подогнать масштаб вставляемого спрайта (средствами CSS)
-        // boris here 2: сделать переключение между раскладками
-        // boris here 3: сделать реакцию на нажатие клавиш
+        // boris here 1: сделать переключение между раскладками
+        // boris here 2: сделать реакцию на нажатие клавиш
 
         // boris notes:
         // прозрачности пока нет, как и поддержки жестов.
