@@ -9,11 +9,19 @@
     height: 48px;
     /*background: red;*/
     /*background: url("#RES#/123.png");*/
-    background: url("#RES#/screen_keyboard/qwerty.png");
+    /*background: url("#RES#/screen_keyboard/classic.png");*/
 
 /*
     opacity: .4;
     background-size: 96px;
     backround-position-x: -48px;
-*
+*/
+}
+
+.$TralivaKit__ScreenKeyboard.$classic {
+    background: url("#RES#/screen_keyboard/classic.png");
+}
+
+.$TralivaKit__ScreenKeyboard.$phone {
+    background: url("#RES#/screen_keyboard/phone.png");
 }
