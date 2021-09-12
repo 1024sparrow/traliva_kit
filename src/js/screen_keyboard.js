@@ -44,6 +44,12 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
                 $width: 541,
                 $height: 143
                 // а также могут быть переопределения клавиш
+            },
+            {
+                $orient: '$v',
+                $layouts: ['$en', '$ru'],
+                $width: 159,
+                $height: 143
             }
         ],
         $phone: [
@@ -97,7 +103,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     if (!this.$_width || !this.$_height)
         return;
 
-    console.log(JSON.stringify($p_type, undefined, '\t'));
+    //console.log(JSON.stringify($p_type, undefined, '\t'));
 
     //console.log(this.$_width, '--', this.$_height);
 
@@ -105,6 +111,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         $ratio = this.$_width / this.$_height,
         $1,
         $2,
+        $3,
         $height
     ;
 
@@ -115,15 +122,20 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     }
 
     this.$_eLayout.className = '$TralivaKit__ScreenKeyboard ' + $p_type;
-    console.log('className: ', '$TralivaKit__ScreenKeyboard ' + $p_type);
+    this.$_curTypeVariant = undefined;
+    $3 = 0;
     for ($1 of this.$_types[$p_type]){
         $2 = this.$_width * $1.$height / $1.$width;
+        console.log('boris debug 10912.1: ', $2); // boris here: почему не выбирается второй вариант?!
         //console.log($2, this.$_height);
         if (this.$_height > $2){
             $height = $2;
+            this.$_curTypeVariant = $3;
             //console.log('**', $height);
         }
+        ++$3;
     }
+    console.log('current type variant: ', this.$_curTypeVariant);
 
     if ($height){
         this.$_eLayout.style.height = $height + 'px';
@@ -132,6 +144,8 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         //this.$_eLayout.style.background = 'green';
         $1 = parseInt(this.$_height - $height);
         this.$_eLayout.style.marginTop = $1 + 'px';
+
+        this.$_updateLayout(this.$_curLayout);
 
         // boris here 1: сделать переключение между раскладками
         // boris here 2: сделать реакцию на нажатие клавиш
