@@ -1,9 +1,14 @@
 #USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$ScreenKeyboard', {
-    title: 'краткого описания нет',
-    //descr: '',
-    //options:{},
-    //stateObj:{}
+    title: 'Экранная клавиатура.',
+    descr: 'Тип клавиатуры - classic, name, phone. Раскладки клавиатуры: русская, английская, китайская. Для каждого типа клавиатуры используется свой спрайт.',
+    options:{
+        $layouts: 'объект со списками описателей раскладок, сгруппированными по идентификатору типа клавиатуры. Описатель раскладки - объект со следующими свойствами: $orient($v,$h), список раскладок $layouts ($ru,$en,$ch), $width, $height(размеры в спрайте, используются также при подборе оптимального варианта для того или иного соотношения сторон экрана у пользователя)'
+    },
+    stateObj:{
+        $type: 'тип клавиатуры ($classic, $name, $phone)',
+        $layout: 'раскладув клавиатуры ($ru,$en,$ch)'
+    }
 });
 #USAGE_END#traliva_kit_debug##
 function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
@@ -55,6 +60,8 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
     window.boris = this.$_eLayout;//
     this.$_options = $options;//$p_options;
     this.$_eLayout.className = '$TralivaKit__ScreenKeyboard';
+    this.$_curLayout = '$ru';
+    this.$_curType = '$classic';
 
     $p_wContainer.$_onResized = (function($1, $2){return function($p_width, $p_height){
         $1.$_width = $p_width;
@@ -72,14 +79,19 @@ $ScreenKeyboard.prototype.$processStateChanges = function(s){
         return;
     }
     // ...
-    //if (this.$_curLayout !== s.$layout){
+    if (this.$_curType !== s.$type){
+        // boris here
+    }
+    if (this.$_curLayout !== s.$layout){
         this.$_curLayout = '$qwerty';//s.$layout;
         this.$_updateLayout(s.$layout);
-    //}
+    }
 };
 $ScreenKeyboard.prototype.$_updateLayout = function($p_layout){
     if (!this.$_width || !this.$_height)
         return;
+
+    console.log(JSON.stringify($p_layout, undefined, '\t'));
 
     //console.log(this.$_width, '--', this.$_height);
 
