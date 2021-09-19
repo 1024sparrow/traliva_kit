@@ -72,17 +72,9 @@
 {%% contacts.css %%}
 #USAGE_END#TralivaKit__Contacts##
 
-#USAGE_BEGIN#TralivaKit__90412MapView##
-{%% 90412_map_view.css %%}
-#USAGE_END#TralivaKit__90412MapView##
-
 #USAGE_BEGIN#TralivaKit__90412DialogFrame##
 {%% 90412_dialog_frame.css %%}
 #USAGE_END#TralivaKit__90412DialogFrame##
-
-#USAGE_BEGIN#TralivaKit__YandexApi##
-{%% yandex_api.css %%}
-#USAGE_END#TralivaKit__YandexApi##
 
 #USAGE_BEGIN#TralivaKit__90420CallbackForm##
 {%% 90420_callback_form.css %%}
