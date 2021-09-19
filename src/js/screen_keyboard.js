@@ -116,7 +116,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     ;
 
     if (!$p_type || !this.$_types.hasOwnProperty($p_type)){
-        console.log('oops...');
+        console.log('oops...', $p_type, JSON.stringify(this.$_types, undefined, 4));
         this.$_eLayout.className = '$TralivaKit__ScreenKeyboard';
         return;
     }
@@ -126,7 +126,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     $3 = 0;
     for ($1 of this.$_types[$p_type]){
         $2 = this.$_width * $1.$height / $1.$width;
-        console.log('boris debug 10912.1: ', $2); // boris here: почему не выбирается второй вариант?!
+        console.log('boris debug 10912.1: ', $2, 'boris here: почему не выбирается второй вариант?!'); // boris here: почему не выбирается второй вариант?!
         //console.log($2, this.$_height);
         if (this.$_height > $2){
             $height = $2;
