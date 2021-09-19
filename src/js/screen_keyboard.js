@@ -100,6 +100,9 @@ $ScreenKeyboard.prototype.$processStateChanges = function(s){
     }
 };
 $ScreenKeyboard.prototype.$_updateType = function($p_type){
+    console.log('==== $ScreenKeyboard.prototype.$_updateType(', $p_type, ') ====');//
+    console.log('this._width: ', this.$_width);
+    console.log('this._height: ', this.$_height);
     if (!this.$_width || !this.$_height)
         return;
 
@@ -122,16 +125,17 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     }
 
     this.$_eLayout.className = '$TralivaKit__ScreenKeyboard ' + $p_type;
-    this.$_curTypeVariant = undefined;
-    $3 = 0;
+    this.$_curTypeVariant = 0; // если ни один вариант не подходит, то первый вариант
+    $3 = undefined;
+    console.log('22222222222222');
     for ($1 of this.$_types[$p_type]){
         $2 = this.$_width * $1.$height / $1.$width;
         console.log('boris debug 10912.1: ', $2, 'boris here: почему не выбирается второй вариант?!'); // boris here: почему не выбирается второй вариант?!
         //console.log($2, this.$_height);
-        if (this.$_height > $2){
+        if (this.$_height >= $2){
             $height = $2;
             this.$_curTypeVariant = $3;
-            //console.log('**', $height);
+            console.log('**', $height);//
         }
         ++$3;
     }
@@ -139,11 +143,20 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
 
     if ($height){
         this.$_eLayout.style.height = $height + 'px';
-        this.$_eLayout.style.width = '100%';
+        this.$_eLayout.style.width = '100%';//
         this.$_eLayout.style.backgroundSize=this.$_width + 'px';
         //this.$_eLayout.style.background = 'green';
         $1 = parseInt(this.$_height - $height);
         this.$_eLayout.style.marginTop = $1 + 'px';
+        //this.$_eLayout.style.background = 'yellow';
+
+        /*$1 = 0;
+        console.log('111111111', this.$_curTypeVariant, JSON.stringify(this.$_types, undefined, 4));//
+        if ($1 = this.$_types[this.$_curTypeVariant]){
+            $1 = parseInt(height * $1.$width / $1.$height);
+            console.log('--------------', $1, '---------------');
+        }
+        this.$_eLayout.style.width = $1 + 'px';*/
 
         this.$_updateLayout(this.$_curLayout);
 
@@ -156,6 +169,23 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         // Пока клавиатура тупая: если может, отображается. Отображается исключительно предзаданные раскладки клавиатуры.
         //
         // Нажатия клавиш пишутся в объект состояния. Флаг в опциях: при каждом нажатии писать в объект состояния, или по нажатии на Enter.
+    }
+    else{ // real width is too much
+        $1 = this.$_eLayout.style;
+        $1.minHeight=$1.maxHeight=$1.height = this.$_height + 'px';
+        //this.$_eLayout.style.background = 'green';
+
+        //$1 = parseInt(this.$_height - $height);
+        //this.$_eLayout.style.marginLeft = $1 + 'px';
+        $1 = 0;
+        if ($1 = this.$_types[this.$_curType]){
+            $1 = $1[this.$_curTypeVariant];
+            $1 = parseInt(this.$_height * $1.$width / $1.$height);
+        }
+        this.$_eLayout.style.width = $1 + 'px';
+        this.$_eLayout.style.backgroundSize=$1 + 'px';
+
+        this.$_updateLayout(this.$_curLayout);
     }
 };
 $ScreenKeyboard.prototype.$_updateLayout = function($p_layout){
