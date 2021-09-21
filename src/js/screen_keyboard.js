@@ -112,9 +112,13 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
 
     var
         $ratio = this.$_width / this.$_height,
+        $0,
         $1,
         $2,
         $3,
+        $4,
+        $5,
+        $6, // current type variant (object)
         $height
     ;
 
@@ -126,13 +130,13 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
 
     this.$_eLayout.className = '$TralivaKit__ScreenKeyboard ' + $p_type;
     this.$_curTypeVariant = 0; // если ни один вариант не подходит, то первый вариант
-    $3 = undefined;
-    console.log('22222222222222');
+    $3 = 0;
     for ($1 of this.$_types[$p_type]){
         $2 = this.$_width * $1.$height / $1.$width;
         console.log('boris debug 10912.1: ', $2, 'boris here: почему не выбирается второй вариант?!'); // boris here: почему не выбирается второй вариант?!
         //console.log($2, this.$_height);
-        if (this.$_height >= $2){
+        //if (this.$_height >= $2){
+        if ($3 === 1){//boris stub
             $height = $2;
             this.$_curTypeVariant = $3;
             console.log('**', $height);//
@@ -141,24 +145,50 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     }
     console.log('current type variant: ', this.$_curTypeVariant);
 
-    if ($height){
-        this.$_eLayout.style.height = $height + 'px';
-        this.$_eLayout.style.width = '100%';//
-        this.$_eLayout.style.backgroundSize=this.$_width + 'px';
+    if ($height < this.$_height){
         //this.$_eLayout.style.background = 'green';
         $1 = parseInt(this.$_height - $height);
-        this.$_eLayout.style.marginTop = $1 + 'px';
-        //this.$_eLayout.style.background = 'yellow';
-
-        /*$1 = 0;
-        console.log('111111111', this.$_curTypeVariant, JSON.stringify(this.$_types, undefined, 4));//
-        if ($1 = this.$_types[this.$_curTypeVariant]){
-            $1 = parseInt(height * $1.$width / $1.$height);
-            console.log('--------------', $1, '---------------');
+        //this.$_eLayout.style.marginTop = $1 + 'px';
+        if ($1 = this.$_types[this.$_curType]){
+            $0 = 0; // type variant index
+            $2 = 0; // total width
+            $4 = 0; // total height (already scaled)
+            $5 = 0; // horizontal shift
+            for ($1 of $1){
+                if ($1.$orient === '$v'){
+                    //
+                    $2 += $1.$width;
+                    $3 = 1;//$1.$layouts.length; // какую часть занимает по высоте одна раскладка
+                }
+                else if ($1.$orient === '$h'){
+                    $2 += $1.$width * $1.layouts.length;
+                    $3 = 1;
+                }
+                else{
+                    console.log('ScreenKeyboard: unexpected orient value: ', $1[$0].$orient);
+                }
+                if ($3 > $4)
+                    $4 = $3;
+                if ($0 < this.$_curTypeVariant){
+                    $5 = -$2;
+                }
+                else if ($0 === this.$_curTypeVariant){
+                    $6 = $1;
+                    $height = $1.$height;
+                }
+                ++$0;
+            }
+            $6 = $4 * this.$_width / $6.$width;
+            $5 = parseInt($5 * $6);
+            $2 = parseInt($2 * $6);
+            $height = parseInt($height * $6);
+            $6 = this.$_eLayout.style;
+            $6.minHeight=$6.maxHeight=$6.height = $height + 'px';
+            $6.backgroundSize = $2 + 'px';
+            $6.backgroundPositionX = $5 + 'px';
+            $6.width = '100%';
+            $6.marginTop = (this.$_height - $height) + 'px';
         }
-        this.$_eLayout.style.width = $1 + 'px';*/
-
-        this.$_updateLayout(this.$_curLayout);
 
         // boris here 1: сделать переключение между раскладками
         // boris here 2: сделать реакцию на нажатие клавиш
@@ -171,22 +201,47 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         // Нажатия клавиш пишутся в объект состояния. Флаг в опциях: при каждом нажатии писать в объект состояния, или по нажатии на Enter.
     }
     else{ // real width is too much
-        $1 = this.$_eLayout.style;
-        $1.minHeight=$1.maxHeight=$1.height = this.$_height + 'px';
-        //this.$_eLayout.style.background = 'green';
-
-        //$1 = parseInt(this.$_height - $height);
-        //this.$_eLayout.style.marginLeft = $1 + 'px';
-        $1 = 0;
         if ($1 = this.$_types[this.$_curType]){
-            $1 = $1[this.$_curTypeVariant];
-            $1 = parseInt(this.$_height * $1.$width / $1.$height);
+            $0 = 0; // type variant index
+            $2 = 0; // total width
+            $4 = 0; // total height (already scaled)
+            $5 = 0; // horizontal shift
+            for ($1 of $1){
+                if ($1.$orient === '$v'){
+                    //
+                    $2 += $1.$width;
+                    $3 = 1;//$1.$layouts.length; // какую часть занимает по высоте одна раскладка
+                }
+                else if ($1.$orient === '$h'){
+                    $2 += $1.$width * $1.layouts.length;
+                    $3 = 1;
+                }
+                else{
+                    console.log('ScreenKeyboard: unexpected orient value: ', $1[$0].$orient);
+                }
+                if ($3 > $4)
+                    $4 = $3;
+                if ($0 < this.$_curTypeVariant){
+                    $5 = -$2;
+                }
+                else if ($0 === this.$_curTypeVariant){
+                    $6 = $1;
+                    $height = $1.$width;
+                }
+                ++$0;
+            }
+            $6 = $4 * this.$_height / $6.$height;
+            $5 = parseInt($5 * $6);
+            $2 = parseInt($2 * $6);
+            $height = parseInt($height * $6);
+            $6 = this.$_eLayout.style;
+            $6.minHeight=$6.maxHeight=$6.height = this.$_height + 'px';
+            $6.backgroundSize = $2 + 'px';
+            $6.backgroundPositionX = $5 + 'px';
+            $6.width = $height + 'px';
         }
-        this.$_eLayout.style.width = $1 + 'px';
-        this.$_eLayout.style.backgroundSize=$1 + 'px';
-
-        this.$_updateLayout(this.$_curLayout);
     }
+    this.$_updateLayout(this.$_curLayout);
 };
 $ScreenKeyboard.prototype.$_updateLayout = function($p_layout){
 };
