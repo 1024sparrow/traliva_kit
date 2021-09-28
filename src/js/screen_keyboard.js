@@ -119,6 +119,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         $4,
         $5,
         $6, // current type variant (object)
+        $7 = 0, // x-positon
         $height
     ;
 
@@ -133,19 +134,21 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     $3 = 0;
     for ($1 of this.$_types[$p_type]){
         $2 = this.$_width * $1.$height / $1.$width;
-        console.log('boris debug 10912.1: ', $2, 'boris here: почему не выбирается второй вариант?!'); // boris here: почему не выбирается второй вариант?!
-        //console.log($2, this.$_height);
-        //if (this.$_height >= $2){
-        if ($3 === 1){//boris stub
+        if (this.$_height >= $2){
+        //if ($3 === 1){//boris stub
             $height = $2;
             this.$_curTypeVariant = $3;
             console.log('**', $height);//
         }
+        $7 += $1.$width; // boris e: учитывать $orient ещё надо . Boris here: масштабирование и применение полученного $7.
         ++$3;
     }
     console.log('current type variant: ', this.$_curTypeVariant);
 
+    console.log('10927.3 %%%%%%%%%%%%% ', $height, '%%%%%%', this.$_height);//
     if ($height < this.$_height){
+        // boris here ...
+        console.log('+++++++++++++++++++');
         //this.$_eLayout.style.background = 'green';
         $1 = parseInt(this.$_height - $height);
         //this.$_eLayout.style.marginTop = $1 + 'px';
@@ -154,6 +157,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
             $2 = 0; // total width
             $4 = 0; // total height (already scaled)
             $5 = 0; // horizontal shift
+            $7 = 0; // vertical shift (layout)
             for ($1 of $1){
                 if ($1.$orient === '$v'){
                     //
@@ -170,22 +174,33 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
                 if ($3 > $4)
                     $4 = $3;
                 if ($0 < this.$_curTypeVariant){
-                    $5 = -$2;
+                    $5 += $2;
                 }
                 else if ($0 === this.$_curTypeVariant){
                     $6 = $1;
                     $height = $1.$height;
+                    if ($1.$orient === '$v'){
+                        $7 = $1.$layouts.indexOf(this.$_curLayout) * $1.$height; // boris here: не таходит такого индекса
+                    }
+                    else{
+                        console.error('boris here: not realized!!!!');
+                    }
                 }
                 ++$0;
             }
             $6 = $4 * this.$_width / $6.$width;
             $5 = parseInt($5 * $6);
             $2 = parseInt($2 * $6);
+            $7 = parseInt($7 * $6);
             $height = parseInt($height * $6);
             $6 = this.$_eLayout.style;
             $6.minHeight=$6.maxHeight=$6.height = $height + 'px';
             $6.backgroundSize = $2 + 'px';
-            $6.backgroundPositionX = $5 + 'px';
+            //$6.backgroundPosition = -$5 + 'px,-' + $7 + 'px'; // boris here: negative value!!!
+            console.log('b10928.1:', $7);
+            $6.backgroundPosition = -$5 + 'px,0';
+            //$6.backgroundPositionX= $5 + 'px 0';
+            //$6.with = $5 + 'px';
             $6.width = '100%';
             $6.marginTop = (this.$_height - $height) + 'px';
         }
@@ -201,6 +216,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         // Нажатия клавиш пишутся в объект состояния. Флаг в опциях: при каждом нажатии писать в объект состояния, или по нажатии на Enter.
     }
     else{ // real width is too much
+        console.log('----------------------------');
         if ($1 = this.$_types[this.$_curType]){
             $0 = 0; // type variant index
             $2 = 0; // total width
