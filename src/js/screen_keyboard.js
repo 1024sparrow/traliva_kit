@@ -92,6 +92,7 @@ $ScreenKeyboard.prototype.$processStateChanges = function(s){
     }
     if (this.$_curType !== s.$type){
         this.$_curType = s.$type;
+        this.$_curLayout = s.$layout;
         this.$_updateType(s.$type);
     }
     else if (this.$_curLayout !== s.$layout){
@@ -119,7 +120,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         $4,
         $5,
         $6, // current type variant (object)
-        $7 = 0, // x-positon
+        $7 = 0,
         $height
     ;
 
@@ -180,6 +181,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
                     $6 = $1;
                     $height = $1.$height;
                     if ($1.$orient === '$v'){
+                        console.log('b10928.1: ', JSON.stringify($1.$layouts, undefined, 4), this.$_curLayout);//
                         $7 = $1.$layouts.indexOf(this.$_curLayout) * $1.$height; // boris here: не таходит такого индекса
                     }
                     else{
@@ -196,9 +198,9 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
             $6 = this.$_eLayout.style;
             $6.minHeight=$6.maxHeight=$6.height = $height + 'px';
             $6.backgroundSize = $2 + 'px';
-            //$6.backgroundPosition = -$5 + 'px,-' + $7 + 'px'; // boris here: negative value!!!
+            $6.backgroundPosition = -$5 + 'px -' + $7 + 'px'; // boris here: negative value!!!
             console.log('b10928.1:', $7);
-            $6.backgroundPosition = -$5 + 'px,0';
+            //$6.backgroundPosition = -$5 + 'px,0';
             //$6.backgroundPositionX= $5 + 'px 0';
             //$6.with = $5 + 'px';
             $6.width = '100%';
@@ -260,5 +262,6 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     this.$_updateLayout(this.$_curLayout);
 };
 $ScreenKeyboard.prototype.$_updateLayout = function($p_layout){
+    //this.$_
 };
 //$ScreenKeyboard.$widgetsFields = [];
