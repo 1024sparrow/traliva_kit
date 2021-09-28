@@ -90,26 +90,17 @@ $ScreenKeyboard.prototype.$processStateChanges = function(s){
         console.error('epic fail');
         return;
     }
-    if (this.$_curType !== s.$type){
+    var $needUpdate = false;
+    if (this.$_curType !== s.$type || this.$_curLayout !== s.$layout){
         this.$_curType = s.$type;
         this.$_curLayout = s.$layout;
         this.$_updateType(s.$type);
     }
-    else if (this.$_curLayout !== s.$layout){
-        this.$_curLayout = s.$layout;
-        this.$_updateLayout(s.$layout);
-    }
 };
 $ScreenKeyboard.prototype.$_updateType = function($p_type){
     console.log('==== $ScreenKeyboard.prototype.$_updateType(', $p_type, ') ====');//
-    console.log('this._width: ', this.$_width);
-    console.log('this._height: ', this.$_height);
     if (!this.$_width || !this.$_height)
         return;
-
-    //console.log(JSON.stringify($p_type, undefined, '\t'));
-
-    //console.log(this.$_width, '--', this.$_height);
 
     var
         $ratio = this.$_width / this.$_height,
@@ -139,20 +130,15 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         //if ($3 === 1){//boris stub
             $height = $2;
             this.$_curTypeVariant = $3;
-            console.log('**', $height);//
         }
         $7 += $1.$width; // boris e: учитывать $orient ещё надо . Boris here: масштабирование и применение полученного $7.
         ++$3;
     }
     console.log('current type variant: ', this.$_curTypeVariant);
 
-    console.log('10927.3 %%%%%%%%%%%%% ', $height, '%%%%%%', this.$_height);//
     if ($height < this.$_height){
-        // boris here ...
-        console.log('+++++++++++++++++++');
         //this.$_eLayout.style.background = 'green';
         $1 = parseInt(this.$_height - $height);
-        //this.$_eLayout.style.marginTop = $1 + 'px';
         if ($1 = this.$_types[this.$_curType]){
             $0 = 0; // type variant index
             $2 = 0; // total width
@@ -181,11 +167,10 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
                     $6 = $1;
                     $height = $1.$height;
                     if ($1.$orient === '$v'){
-                        console.log('b10928.1: ', JSON.stringify($1.$layouts, undefined, 4), this.$_curLayout);//
-                        $7 = $1.$layouts.indexOf(this.$_curLayout) * $1.$height; // boris here: не таходит такого индекса
+                        $7 = $1.$layouts.indexOf(this.$_curLayout) * $1.$height;
                     }
                     else{
-                        console.error('boris here: not realized!!!!');
+                        console.error('not realized!!');
                     }
                 }
                 ++$0;
@@ -198,11 +183,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
             $6 = this.$_eLayout.style;
             $6.minHeight=$6.maxHeight=$6.height = $height + 'px';
             $6.backgroundSize = $2 + 'px';
-            $6.backgroundPosition = -$5 + 'px -' + $7 + 'px'; // boris here: negative value!!!
-            console.log('b10928.1:', $7);
-            //$6.backgroundPosition = -$5 + 'px,0';
-            //$6.backgroundPositionX= $5 + 'px 0';
-            //$6.with = $5 + 'px';
+            $6.backgroundPosition = -$5 + 'px -' + $7 + 'px';
             $6.width = '100%';
             $6.marginTop = (this.$_height - $height) + 'px';
         }
@@ -218,7 +199,6 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         // Нажатия клавиш пишутся в объект состояния. Флаг в опциях: при каждом нажатии писать в объект состояния, или по нажатии на Enter.
     }
     else{ // real width is too much
-        console.log('----------------------------');
         if ($1 = this.$_types[this.$_curType]){
             $0 = 0; // type variant index
             $2 = 0; // total width
@@ -259,9 +239,5 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
             $6.width = $height + 'px';
         }
     }
-    this.$_updateLayout(this.$_curLayout);
-};
-$ScreenKeyboard.prototype.$_updateLayout = function($p_layout){
-    //this.$_
 };
 //$ScreenKeyboard.$widgetsFields = [];
