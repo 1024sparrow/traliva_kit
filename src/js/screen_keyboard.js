@@ -170,7 +170,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
                         $7 = $1.$layouts.indexOf(this.$_curLayout) * $1.$height;
                     }
                     else{
-                        console.error('not realized!!');
+                        console.error('boris not realized!!');
                     }
                 }
                 ++$0;
