@@ -34,34 +34,6 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
         └───────┴─────┴─────┘
         
     */
-    this.$_types = { // для копирования текста отсюда в окно отладки (опции). Реально эта переменная здесь не нужна.
-        $classic: [
-            // в порядке убывания соотношения сторон width/height
-            // при отрисовке прижимаем к нижнему краю, background не выставляем
-            {
-                $orient: '$v',
-                $layouts: ['$en','$ru'],
-                $width: 541,
-                $height: 143
-                // а также могут быть переопределения клавиш
-            },
-            {
-                $orient: '$v',
-                $layouts: ['$en', '$ru'],
-                $width: 159,
-                $height: 143
-            }
-        ],
-        $phone: [
-            {
-                $orient: '$v',
-                $layouts: ['$ru'],
-                $width: 331,
-                $height: 241
-            }
-        ]
-    };
-
     var
         $state = { // для копирования текста отсюда в окно отладки (состояние). Реально эта переменная здесь не нужна
             $layout: 'ru'
@@ -69,6 +41,21 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
         //$1 = $Traliva.$createElement('<div class="$TralivaKit__ScreenKeyboard">', undefined, '$TralivaKit__ScreenKeyboard__Container')
         $1 = $Traliva.$createElement('<div traliva="$_eLayout">', this, '$TralivaKit__ScreenKeyboard__Container')
     ;
+	if ('ontouchstart' in window){
+        //this.$_eLayout.addEventListener('click', function(p){console.log('-----11011-----', JSON.stringify(p, undefined, 4), p.clientX);});
+        //this.$_eLayout.addEventListener('click', function(p){console.log('-----11011-----', JSON.stringify(p, undefined, 4), p.clientX);});
+        this.$_eLayout.addEventListener('touchstart', (function($1){return function($2){
+            var $3 = $2.changedTouches[0];
+            $1.$_onClick($3.pageX, $3.pageY);
+            $2.preventDefault(); // we block gestures! Ura!
+        };})(this));
+    }
+    else {
+        this.$_eLayout.addEventListener('click', (function($1){return function($2){
+            $1.$_onClick($2.clientX, $2.clientY);
+            $2.preventDefault();
+        };})(this));
+    }
     window.boris = this.$_eLayout;//
     //this.$_options = $options;//$p_options;
     this.$_eLayout.className = '$TralivaKit__ScreenKeyboard';
@@ -82,6 +69,7 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
             $1.$_updateType($1.$_curType);
     };})(this, $p_options.$layouts);
     $p_wContainer.$setContent($1);
+    this.$_catchEvents = false;
 };
 $ScreenKeyboard.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $ScreenKeyboard.prototype.constructor = $ScreenKeyboard;
@@ -96,6 +84,10 @@ $ScreenKeyboard.prototype.$processStateChanges = function(s){
         this.$_curLayout = s.$layout;
         this.$_updateType(s.$type);
     }
+};
+$ScreenKeyboard.prototype.$_types = function(){
+    console.error('it is virtual method. You have to reimplement this.');
+    return {%% layouts.js %%};
 };
 $ScreenKeyboard.prototype.$_updateType = function($p_type){
     console.log('==== $ScreenKeyboard.prototype.$_updateType(', $p_type, ') ====');//
@@ -115,8 +107,9 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         $height
     ;
 
-    if (!$p_type || !this.$_types.hasOwnProperty($p_type)){
-        console.log('oops...', $p_type, JSON.stringify(this.$_types, undefined, 4));
+    var $types = this.$_types()
+    if (!$p_type || !$types.hasOwnProperty($p_type)){
+        console.log('oops...', $p_type, JSON.stringify($types, undefined, 4));
         this.$_eLayout.className = '$TralivaKit__ScreenKeyboard';
         return;
     }
@@ -124,7 +117,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     this.$_eLayout.className = '$TralivaKit__ScreenKeyboard ' + $p_type;
     this.$_curTypeVariant = 0; // если ни один вариант не подходит, то первый вариант
     $3 = 0;
-    for ($1 of this.$_types[$p_type]){
+    for ($1 of $types[$p_type]){
         $2 = this.$_width * $1.$height / $1.$width;
         if (this.$_height >= $2){
         //if ($3 === 1){//boris stub
@@ -139,7 +132,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     if ($height < this.$_height){
         //this.$_eLayout.style.background = 'green';
         $1 = parseInt(this.$_height - $height);
-        if ($1 = this.$_types[this.$_curType]){
+        if ($1 = $types[this.$_curType]){
             $0 = 0; // type variant index
             $2 = 0; // total width
             $4 = 0; // total height (already scaled)
@@ -199,7 +192,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         // Нажатия клавиш пишутся в объект состояния. Флаг в опциях: при каждом нажатии писать в объект состояния, или по нажатии на Enter.
     }
     else{ // real width is too much
-        if ($1 = this.$_types[this.$_curType]){
+        if ($1 = $types[this.$_curType]){
             $0 = 0; // type variant index
             $2 = 0; // total width
             $4 = 0; // total height (already scaled)
@@ -239,5 +232,8 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
             $6.width = $height + 'px';
         }
     }
+};
+$ScreenKeyboard.prototype.$_onClick = function($p_x, $p_y){
+    console.log('debug b11011.1: ', $p_x, $p_x, this.$_eLayout);
 };
 //$ScreenKeyboard.$widgetsFields = [];
