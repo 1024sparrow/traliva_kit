@@ -6,7 +6,21 @@
                 $orient: '$v',
                 $layouts: ['$en','$ru'],
                 $width: 541,
-                $height: 143,
+                $height: 143
+            },
+            {
+                $orient: '$v',
+                $layouts: ['$en', '$ru'],
+                $width: 159,
+                $height: 143
+            }
+        ],
+        $phone: [
+            {
+                $orient: '$v',
+                $layouts: ['$ru'],
+                $width: 331,
+                $height: 241,
                 // а также могут быть переопределения клавиш
                 $buttons:{
                     $width: 3,
@@ -82,20 +96,6 @@
                         }
                     ]
                 }
-            },
-            {
-                $orient: '$v',
-                $layouts: ['$en', '$ru'],
-                $width: 159,
-                $height: 143
-            }
-        ],
-        $phone: [
-            {
-                $orient: '$v',
-                $layouts: ['$ru'],
-                $width: 331,
-                $height: 241
             }
         ]
 }

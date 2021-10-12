@@ -61,6 +61,7 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
     this.$_eLayout.className = '$TralivaKit__ScreenKeyboard';
     //this.$_curLayout = undefined; // '$ru';
     //this.$_curType = undefined; // '$classic';
+    //this.$_schema = undefined; // pointer to current variant of current type
 
     $p_wContainer.$_onResized = (function($1, $2){return function($p_width, $p_height){
         $1.$_width = $p_width;
@@ -104,10 +105,11 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         $5,
         $6, // current type variant (object)
         $7 = 0,
+        $width,
         $height
     ;
 
-    var $types = this.$_types()
+    var $types = this.$_types();
     if (!$p_type || !$types.hasOwnProperty($p_type)){
         console.log('oops...', $p_type, JSON.stringify($types, undefined, 4));
         this.$_eLayout.className = '$TralivaKit__ScreenKeyboard';
@@ -172,6 +174,7 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
             $5 = parseInt($5 * $6);
             $2 = parseInt($2 * $6);
             $7 = parseInt($7 * $6);
+            $width = this.$_width;
             $height = parseInt($height * $6);
             $6 = this.$_eLayout.style;
             $6.minHeight=$6.maxHeight=$6.height = $height + 'px';
@@ -217,23 +220,37 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
                 }
                 else if ($0 === this.$_curTypeVariant){
                     $6 = $1;
-                    $height = $1.$width;
+                    $width = $1.$width;
                 }
                 ++$0;
             }
             $6 = $4 * this.$_height / $6.$height;
             $5 = parseInt($5 * $6);
             $2 = parseInt($2 * $6);
-            $height = parseInt($height * $6);
+            $width = parseInt($width * $6);
+            $height = this.$_height;
             $6 = this.$_eLayout.style;
             $6.minHeight=$6.maxHeight=$6.height = this.$_height + 'px';
             $6.backgroundSize = $2 + 'px';
             $6.backgroundPositionX = $5 + 'px';
-            $6.width = $height + 'px';
+            $6.width = $width + 'px';
+        }
+    }
+    this.$_schema = $1 = $types[this.$_curType][this.$_curTypeVariant];
+    console.log('debug b11012.2', $1.$orient);
+    $1.$realWidth = $width;
+    $1.$realHeight = $height;
+    $1 = $1.$buttons;
+    for ($2 of $1.$rows){
+        $2.$realHeight = parseInt($2.$height * $height / $1.$height);
+        for ($3 of $2.$buttons){
+            $3.$realWidth = parseInt($3.$width * $width / $1.$width);
         }
     }
 };
 $ScreenKeyboard.prototype.$_onClick = function($p_x, $p_y){
     console.log('debug b11011.1: ', $p_x, $p_x, this.$_eLayout);
+    // boris here
+    console.log('debug b11012.3', JSON.stringify(this.$_schema, undefined, 4));
 };
 //$ScreenKeyboard.$widgetsFields = [];
