@@ -184,9 +184,6 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
             $6.marginTop = (this.$_height - $height) + 'px';
         }
 
-        // boris here 1: сделать переключение между раскладками
-        // boris here 2: сделать реакцию на нажатие клавиш
-
         // boris notes:
         // прозрачности пока нет, как и поддержки жестов.
         // через объект состояния подмены изображений клавиш тоже нет. Как и переопределения поведения.
@@ -241,12 +238,13 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     $1.$realWidth = $width;
     $1.$realHeight = $height;
     $1 = $1.$buttons;
-    $4 = $5 = 0;
+    $4 = 0;
     for ($2 of $1.$rows){
         $4 += ($2.$height * $height / $1.$height);
         $2.$realY = parseInt($4);
+        $5 = 0;
         for ($3 of $2.$buttons){
-            $5 += $3.$width * $width / $1.$width;
+            $5 += ($3.$width * $width / $1.$width);
             $3.$realX = parseInt($5);
         }
     }
@@ -256,21 +254,25 @@ $ScreenKeyboard.prototype.$_onClick = function($p_x, $p_y){
     //console.log('debug b11012.3', JSON.stringify(this.$_schema, undefined, 4));
     var
         $1,
+        $2 = '',
         $x = 0,
         $y = 0,
-        $rcViewport = this.$_eLayout.getBoundingClientRect(),
-        $current = undefined
+        $rcViewport = this.$_eLayout.getBoundingClientRect()
     ;
     for ($1 of this.$_schema.$buttons.$rows){
         //console.log('debug b11012.4:', $p_y, $1.$realY + $rcViewport.top);
-        if ($p_y < ($1.$realY + $rcViewport)){
-            current = $1;
+        if ($p_y < ($1.$realY + $rcViewport.top)){
             for ($1 of $1.$buttons){
-                // boris here
+                console.log('debug b11012.5:', $p_x, $1.$realX, $1.$realX + $rcViewport.left);
+                if ($p_x < ($1.$realX + $rcViewport.left)){
+                    $2 = $1.$id;
+                    break;
+                }
             }
             break;
         }
         //console.log('debug b11012.4:', $p_y, $1.$realY + $rcViewport.top);
     }
+    console.log('debug b11013.1 clicked button id: ', $2);
 };
 //$ScreenKeyboard.$widgetsFields = [];
