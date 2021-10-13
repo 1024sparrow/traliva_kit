@@ -241,16 +241,36 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
     $1.$realWidth = $width;
     $1.$realHeight = $height;
     $1 = $1.$buttons;
+    $4 = $5 = 0;
     for ($2 of $1.$rows){
-        $2.$realHeight = parseInt($2.$height * $height / $1.$height);
+        $4 += ($2.$height * $height / $1.$height);
+        $2.$realY = parseInt($4);
         for ($3 of $2.$buttons){
-            $3.$realWidth = parseInt($3.$width * $width / $1.$width);
+            $5 += $3.$width * $width / $1.$width;
+            $3.$realX = parseInt($5);
         }
     }
 };
 $ScreenKeyboard.prototype.$_onClick = function($p_x, $p_y){
-    console.log('debug b11011.1: ', $p_x, $p_x, this.$_eLayout);
-    // boris here
-    console.log('debug b11012.3', JSON.stringify(this.$_schema, undefined, 4));
+    console.log('debug b11011.1: ', $p_x, $p_y, this.$_eLayout);
+    //console.log('debug b11012.3', JSON.stringify(this.$_schema, undefined, 4));
+    var
+        $1,
+        $x = 0,
+        $y = 0,
+        $rcViewport = this.$_eLayout.getBoundingClientRect(),
+        $current = undefined
+    ;
+    for ($1 of this.$_schema.$buttons.$rows){
+        //console.log('debug b11012.4:', $p_y, $1.$realY + $rcViewport.top);
+        if ($p_y < ($1.$realY + $rcViewport)){
+            current = $1;
+            for ($1 of $1.$buttons){
+                // boris here
+            }
+            break;
+        }
+        //console.log('debug b11012.4:', $p_y, $1.$realY + $rcViewport.top);
+    }
 };
 //$ScreenKeyboard.$widgetsFields = [];
