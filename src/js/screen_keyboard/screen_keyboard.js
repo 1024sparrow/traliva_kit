@@ -45,14 +45,32 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
         //this.$_eLayout.addEventListener('click', function(p){console.log('-----11011-----', JSON.stringify(p, undefined, 4), p.clientX);});
         //this.$_eLayout.addEventListener('click', function(p){console.log('-----11011-----', JSON.stringify(p, undefined, 4), p.clientX);});
         this.$_eLayout.addEventListener('touchstart', (function($1){return function($2){
-            var $3 = $2.changedTouches[0];
-            $1.$_onClick($3.pageX, $3.pageY);
+            var
+                $3 = $2.changedTouches,
+                $4,
+                $5 = []
+            ;
+            for ($4 of $3){
+                $5.push({
+                    $x: $4.pageX,
+                    $y: $4.pageY
+                });
+            }
+            $1.$_hitButton($3.pageX, $3.pageY);
+            $1.$__processEvent(1, $5, true);
             $2.preventDefault(); // we block gestures! Ura!
         };})(this));
     }
     else {
-        this.$_eLayout.addEventListener('click', (function($1){return function($2){
-            $1.$_onClick($2.clientX, $2.clientY);
+        this.$_eLayout.addEventListener('mousedown', (function($1){return function($2){
+            $1.$_hitButton($2.clientX, $2.clientY);
+            $1.$__processEvent(
+                1,
+                [
+                    {$x:$2.clientX, $y:$2.clientY}
+                ]
+                false
+            );
             $2.preventDefault();
         };})(this));
     }
@@ -234,7 +252,6 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         }
     }
     this.$_schema = $1 = $types[this.$_curType][this.$_curTypeVariant];
-    console.log('debug b11012.2', $1.$orient);
     $1.$realWidth = $width;
     $1.$realHeight = $height;
     $1 = $1.$buttons;
@@ -249,21 +266,15 @@ $ScreenKeyboard.prototype.$_updateType = function($p_type){
         }
     }
 };
-$ScreenKeyboard.prototype.$_onClick = function($p_x, $p_y){
-    console.log('debug b11011.1: ', $p_x, $p_y, this.$_eLayout);
-    //console.log('debug b11012.3', JSON.stringify(this.$_schema, undefined, 4));
+$ScreenKeyboard.prototype.$_hitButton = function($p_x, $p_y){
     var
         $1,
         $2 = '',
-        $x = 0,
-        $y = 0,
         $rcViewport = this.$_eLayout.getBoundingClientRect()
     ;
     for ($1 of this.$_schema.$buttons.$rows){
-        //console.log('debug b11012.4:', $p_y, $1.$realY + $rcViewport.top);
         if ($p_y < ($1.$realY + $rcViewport.top)){
             for ($1 of $1.$buttons){
-                console.log('debug b11012.5:', $p_x, $1.$realX, $1.$realX + $rcViewport.left);
                 if ($p_x < ($1.$realX + $rcViewport.left)){
                     $2 = $1.$id;
                     break;
@@ -271,8 +282,23 @@ $ScreenKeyboard.prototype.$_onClick = function($p_x, $p_y){
             }
             break;
         }
-        //console.log('debug b11012.4:', $p_y, $1.$realY + $rcViewport.top);
     }
     console.log('debug b11013.1 clicked button id: ', $2);
+    return $2;
+};
+$ScreenKeyboard.prototype.$__processEvent = function($p_eventType, $p, $p_takenFromSensorScreen){
+    // eventType: 1 - down, 2 - move, 3 - up
+    // p: list of {x:3, y:4}
+    // takenFromSensorScreen - boolean
+
+    var $1;
+    for ($1 of $p){
+        $1.$buttonId = this.$_hitButton($1.$x, $1.$y);
+    }
+    this.$_processEvent($p_eventType, $p, $p_takenFromSensorScreen);
+};
+$ScreenKeyboard.prototype.$_processEvent = function($p_eventType, $p, $p_takenFromSensorScreen){
+    // boris here: it s virtual method. Must be reimplemented.
+    console.log('debug b11014.1: ', $p_eventType, JSON.stringify($p, undefined, 4), $p_takenFromSensorScreen);
 };
 //$ScreenKeyboard.$widgetsFields = [];
