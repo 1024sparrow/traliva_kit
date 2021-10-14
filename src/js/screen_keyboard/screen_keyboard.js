@@ -39,12 +39,33 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
             $layout: 'ru'
         },
         //$1 = $Traliva.$createElement('<div class="$TralivaKit__ScreenKeyboard">', undefined, '$TralivaKit__ScreenKeyboard__Container')
-        $1 = $Traliva.$createElement('<div traliva="$_eLayout">', this, '$TralivaKit__ScreenKeyboard__Container')
+        $1 = $Traliva.$createElement('<div traliva="$_eLayout">', this, '$TralivaKit__ScreenKeyboard__Container'),
+        $2
     ;
 	if ('ontouchstart' in window){
-        //this.$_eLayout.addEventListener('click', function(p){console.log('-----11011-----', JSON.stringify(p, undefined, 4), p.clientX);});
-        //this.$_eLayout.addEventListener('click', function(p){console.log('-----11011-----', JSON.stringify(p, undefined, 4), p.clientX);});
-        this.$_eLayout.addEventListener('touchstart', (function($1){return function($2){
+        $2 = function($1, $p_eventType){
+            return function($2){
+                var
+                    $3 = $2.changedTouches,
+                    $4,
+                    $5 = []
+                ;
+                for ($4 of $3){
+                    $5.push({
+                        $x: $4.pageX,
+                        $y: $4.pageY
+                    });
+                }
+                //$1.$_hitButton($3.pageX, $3.pageY);
+                $1.$__processEvent($p_eventType, $5, true);
+                $2.preventDefault(); // we block gestures! Ura!
+            };
+        };
+        this.$_eLayout.addEventListener('touchstart', $2(this, 1));
+        this.$_eLayout.addEventListener('touchmove', $2(this, 2));
+        this.$_eLayout.addEventListener('touchend', $2(this, 3));
+
+        /*this.$_eLayout.addEventListener('touchstart', (function($1){return function($2){
             var
                 $3 = $2.changedTouches,
                 $4,
@@ -56,23 +77,40 @@ function $ScreenKeyboard($p_wContainer, $p_options, $p_widgets){
                     $y: $4.pageY
                 });
             }
-            $1.$_hitButton($3.pageX, $3.pageY);
+            //$1.$_hitButton($3.pageX, $3.pageY);
             $1.$__processEvent(1, $5, true);
             $2.preventDefault(); // we block gestures! Ura!
-        };})(this));
+        };})(this));*/
     }
     else {
-        this.$_eLayout.addEventListener('mousedown', (function($1){return function($2){
-            $1.$_hitButton($2.clientX, $2.clientY);
+        $2 = function($1, $p_eventType){
+            return function($2){
+                //$1.$_hitButton($2.clientX, $2.clientY);
+                $1.$__processEvent(
+                    $p_eventType,
+                    [
+                        {$x:$2.clientX, $y:$2.clientY}
+                    ],
+                    false
+                );
+                $2.preventDefault();
+            };
+        };
+        this.$_eLayout.addEventListener('mousedown', $2(this, 1));
+        this.$_eLayout.addEventListener('mousemove', $2(this, 2));
+        this.$_eLayout.addEventListener('mouseup', $2(this, 3));
+
+        /*this.$_eLayout.addEventListener('mousedown', (function($1){return function($2){
+            //$1.$_hitButton($2.clientX, $2.clientY);
             $1.$__processEvent(
                 1,
                 [
                     {$x:$2.clientX, $y:$2.clientY}
-                ]
+                ],
                 false
             );
             $2.preventDefault();
-        };})(this));
+        };})(this));*/
     }
     window.boris = this.$_eLayout;//
     //this.$_options = $options;//$p_options;
@@ -298,7 +336,13 @@ $ScreenKeyboard.prototype.$__processEvent = function($p_eventType, $p, $p_takenF
     this.$_processEvent($p_eventType, $p, $p_takenFromSensorScreen);
 };
 $ScreenKeyboard.prototype.$_processEvent = function($p_eventType, $p, $p_takenFromSensorScreen){
-    // boris here: it s virtual method. Must be reimplemented.
-    console.log('debug b11014.1: ', $p_eventType, JSON.stringify($p, undefined, 4), $p_takenFromSensorScreen);
+    console.error('it is virtual method. You have to reimplement this.');
+
+    // boris here
+    if ($p_eventType === 2){
+    }
+    else{
+        console.log('debug b11014.1: ', $p_eventType, JSON.stringify($p, undefined, 4), $p_takenFromSensorScreen);
+    }
 };
 //$ScreenKeyboard.$widgetsFields = [];
