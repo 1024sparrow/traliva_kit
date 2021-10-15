@@ -91,3 +91,7 @@
 #USAGE_BEGIN#TralivaKit__ScreenKeyboard##
 {%% screen_keyboard.css %%}
 #USAGE_END#TralivaKit__ScreenKeyboard##
+
+#USAGE_BEGIN#TralivaKit__ScreenKeyboardParqr##
+{%% screen_keyboard_parqr.css %%}
+#USAGE_END#TralivaKit__ScreenKeyboardParqr##

@@ -321,7 +321,6 @@ $ScreenKeyboard.prototype.$_hitButton = function($p_x, $p_y){
             break;
         }
     }
-    console.log('debug b11013.1 clicked button id: ', $2);
     return $2;
 };
 $ScreenKeyboard.prototype.$__processEvent = function($p_eventType, $p, $p_takenFromSensorScreen){
@@ -336,7 +335,8 @@ $ScreenKeyboard.prototype.$__processEvent = function($p_eventType, $p, $p_takenF
     this.$_processEvent($p_eventType, $p, $p_takenFromSensorScreen);
 };
 $ScreenKeyboard.prototype.$_processEvent = function($p_eventType, $p, $p_takenFromSensorScreen){
-    console.error('it is virtual method. You have to reimplement this.');
+    if ($p_eventType !== 2)
+        console.error('it is virtual method. You have to reimplement this.'); // boris stub commented
 
     // boris here
     if ($p_eventType === 2){
