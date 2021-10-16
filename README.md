@@ -20,4 +20,5 @@ $ compile src/traliva_kit.pro
 ## Лицензия
 
 Copyright © 2018-2021 [Васильев Борис](https://github.com/1024sparrow)
+
 Публикуется под лицензией [MIT license](https://github.com/1024sparrow/traliva/blob/master/LICENSE).
