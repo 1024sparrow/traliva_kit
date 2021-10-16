@@ -1,0 +1,13 @@
+{
+    "files":[
+        {
+            "target": "screen_keyboard.js",
+            "source":{
+                "template": "screen_keyboard.js",
+                "list":[
+                    "layouts.js"
+                ]
+            }
+        }
+    ]
+}

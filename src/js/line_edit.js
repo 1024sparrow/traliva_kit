@@ -2,11 +2,12 @@
 registerHelp('$LineEdit', {
             title: 'Виджет строка ввода',
             options:{
-                $placeholder:'строка подсказки вроде "введите ..(что-то)"',
-                $requireVarName: 'имя свойства(boolean), true которого означает, что нужно записать в объект состояния значение этого текстового поля. Если не задано, в объекте состояния значения будет обновляться при каждом изменении текста',
+                placeholder:'строка подсказки вроде "введите ..(что-то)"',
+                requireVarName: 'имя свойства(boolean), true которого означает, что нужно записать в объект состояния значение этого текстового поля. Если не задано, в объекте состояния значения будет обновляться при каждом изменении текста',
                 textVarName:'текст в поле редактирования. Это значение как для задания предустановленного значения, так и для считывания другими компонентами введённого пользователем текста',
-                $color:'цвет текста и рамочки',
-                $hover_color:'цвет фона при наведении мышью'
+                datatype: 'тип элемента ввода (см. документацию по свойству type HTML5-элемента <input>). По умолчанию, \'text\'.',
+                color:'цвет текста и рамочки',
+                hover_color:'цвет фона при наведении мышью'
             }
         });
 #USAGE_END#traliva_kit_debug##
@@ -14,7 +15,8 @@ function $LineEdit($p_wContainer, $p_options){
     $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
     this.$requireVarName;
 
-    $p_wContainer.$setContent($Traliva.$createElement('<input type="text" traliva="e" class="$traliva_kit__lineedit"></input>', this));
+    var $datatype = $p_options.$datatype || 'text';
+    $p_wContainer.$setContent($Traliva.$createElement('<input type="' + $datatype + '" traliva="e" class="$traliva_kit__lineedit"></input>', this));
     $p_wContainer.$_onResized = (function($self){
         return function(w,h){
             $$self.e.style.width = (w - 32) + 'px';

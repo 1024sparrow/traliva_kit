@@ -5,6 +5,7 @@ registerHelp('$Button', {
                 $icon: 'если задано (формат задания - см. $Traliva.$background()), будет установлена иконка. Текст кнопки будет отображаться как тултип (опция $title). Размер картинки - фиксированный по размеру картинки.',
                 $title:'если задано, этот текст будет отображаться, а свойство $titleVarName будет проигнорировано. По умолч. - не задано (опирается на объект состояния)',
                 $titleVarName:'имя свойства, в котором записан текст кнопки (если изменится значение такого свойства у объекта состояния, кнопка изменит свой текст). По умолч. \'$title\'',
+                $autoremoveActiveProperty: 'boolean(строго). записывать ли свойство о \'нажатости\' кнопки в changeFlags. По умолчанию, true.',
                 $activeVarName:'имя свойства(boolean), значение которого будет меняться при нажатии на кнопку. По умолч. \'$active\'',
                 $color: 'цвет текста',
                 $bgColor: 'цвет фона кнопки (в отличие от "bg", относится не ко всей прямоугольной области, а лишь к нажимаемой части)',
@@ -24,7 +25,14 @@ registerHelp('$Button', {
         });
 #USAGE_END#traliva_kit_debug##
 function $Button($p_wContainer, $p_options){
-    $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options);
+    var $1;
+    this.$activeVarName = $p_options.$activeVarName || '$active';
+    if ($p_options.$autoremoveActiveProperty !== false){
+        $1 = {};
+        $1[this.$activeVarName] = true;
+        this.$notFixed = true;
+    }
+    $Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $1);
     this.$options = $p_options;
     if ($p_options.hasOwnProperty('$icon')){
         this.$icon = true;
@@ -37,10 +45,9 @@ function $Button($p_wContainer, $p_options){
         this.$titleVarName = ($p_options.hasOwnProperty('$titleVarName')) ? $p_options.$titleVarName : '$title';
         this.$title = '';
     }
-    this.$activeVarName = ($p_options.hasOwnProperty('$activeVarName')) ? $p_options.$activeVarName : '$active';
     this.$active = false;
     this.$hovered = false;
-    var e = $Traliva.$createElement('<div traliva="e"></div>', this);
+    $1 = $Traliva.$createElement('<div traliva="e"></div>', this);
     if (this.$icon){
         this.e.style.border = 'none';
         $Traliva.$background(this.e, $p_options.$icon);
@@ -76,7 +83,8 @@ function $Button($p_wContainer, $p_options){
     this.e.addEventListener('click', function($self){return function(){
         $self.$_onClicked();
     };}(this));
-    $p_wContainer.$setContent(e);
+    $1.style.cursor = 'pointer';
+    $p_wContainer.$setContent($1);
 };
 $Button.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $Button.prototype.constructor = $Button;
@@ -101,9 +109,13 @@ $Button.prototype.$processStateChanges = function(s){
     this.$_updateGui();
 };
 $Button.prototype.$_onClicked = function(){
-    this.$active = !this.$active;
-    this.$_state[this.$activeVarName] = this.$active;
-    this.$_updateGui();
+    if (this.$notFixed)
+        this.$_state[this.$activeVarName] = true;
+    else{
+        this.$active = !this.$active;
+        this.$_state[this.$activeVarName] = this.$active;
+        this.$_updateGui();
+    }
     this.$_registerStateChanges();
 };
 $Button.prototype.$_updateGui = function(){

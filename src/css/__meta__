@@ -25,7 +25,9 @@
                     "contacts.css",
                     "90412_map_view.css",
                     "90412_dialog_frame.css",
-                    "yandex_api.css"
+                    "yandex_api.css",
+                    "90420_callback_form.css",
+                    "screen_keyboard.css"
                 ]
             }
         }
