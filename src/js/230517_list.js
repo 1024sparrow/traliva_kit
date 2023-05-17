@@ -1,8 +1,10 @@
 #USAGE_BEGIN#traliva_kit_debug##
 registerHelp('$230517List', {
-	title: 'краткого описания нет',
-	//descr: '',
-	//options:{},
+	title: 'Виджет списка элементов с возможностью выбора. Элмент - строка теста.',
+	descr: '',
+	options:{
+		selectable: 'none, single, multiple'
+	},
 	//stateObj:{}
 });
 #USAGE_END#traliva_kit_debug##
@@ -20,6 +22,7 @@ function $230517List($p_wContainer, $p_options, $p_widgets){
 	this.$w = 0;
 	this.$h = 0;
 	this.$scrollPos = 0;
+	this.$options = $p_options;
 
 	$p_wContainer.$_onResized = (function($self){
 		return function($w, $h){
@@ -45,6 +48,7 @@ function $230517List($p_wContainer, $p_options, $p_widgets){
 			}
 		})(this)
 	);
+	this.$_tt.className = '$traliva_kit__230517List';
 	$p_wContainer.$setContent(this.$_tt);
 };
 $230517List.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
@@ -73,9 +77,8 @@ $230517List.prototype.$_update = function(){
 	$1 = this.$h / this.$constItemHeight + 1;
 	for ($2 = this.$containers.length ; $2 < $1 ; ++$2){
 		$3 = document.createElement('div');
-		$3.style.width = '32px';
+		$3.className = '$1';
 		$3.style.height = '24px';
-		$3.style.background = '#ffa';
 		$3.innerHTML = 'qwe';
 		this.$containers.push($3);
 		this.$_tt.appendChild($3);
@@ -83,20 +86,16 @@ $230517List.prototype.$_update = function(){
 	for ($2 = 0 ; $2 < this.$containers.length ; ++$2){
 		this.$containers[$2].style.width = '' + this.$w + 'px';
 	}
-	//this.$_tt.style.background = '#afa';
 
-	//$1 = this.$_state.$scroll; // boris test: this._$scrollPos
-	for ($1 = 0 ; $1 < this.$_state.$list.length ; ++$1){
-		//
-	}
 	for (
 		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
 		$1 < this.$containers.length;
 		++$1, ++$2
 	){
-		this.$containers[$1].innerHTML = $2 < this.$_state.$list.length ?
-			this.$_state.$list[$2] :
-			''
+		this.$containers[$1].innerHTML =
+			$2 < this.$_state.$list.length ?
+				this.$_state.$list[$2] :
+				''
 		;
 	}
 	this.$_tt.style.marginTop = '-' + this.$scrollPos%24 + 'px';
