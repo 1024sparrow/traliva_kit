@@ -33,7 +33,14 @@ function $230517List($p_wContainer, $p_options, $p_widgets){
 		'wheel',
 		(function($self){
 			return function($event) {
-				$self.$scrollPos += $event.deltaY/5;
+				var
+					$1 = $self.$scrollPos + $event.deltaY/5,
+					$2 = $self.$_state.$list.length * $self.$constItemHeight,
+					$3 = $2 - $self.$h
+				;
+				if ($1 < $2){
+					$self.$scrollPos = ($1 < $3) ? $1 : $3;
+				}
 				$self.$_update();
 			}
 		})(this)
@@ -58,9 +65,9 @@ $230517List.prototype.$_update = function(){
 	if (this.$scrollPos < 0){
 		this.$scrollPos = 0;
 	}
-	if (this.$_state.$list.length * this.$constItemHeight < this.$h){
+	/*if (this.$_state.$list.length * this.$constItemHeight < this.$h){
 		this.$scrollPos = 0;
-	}
+	}*/
 
 	//$1 = this.$h / this.$_state.$list.length;
 	$1 = this.$h / this.$constItemHeight + 1;
@@ -76,7 +83,7 @@ $230517List.prototype.$_update = function(){
 	for ($2 = 0 ; $2 < this.$containers.length ; ++$2){
 		this.$containers[$2].style.width = '' + this.$w + 'px';
 	}
-	this.$_tt.style.background = '#afa';
+	//this.$_tt.style.background = '#afa';
 
 	//$1 = this.$_state.$scroll; // boris test: this._$scrollPos
 	for ($1 = 0 ; $1 < this.$_state.$list.length ; ++$1){
