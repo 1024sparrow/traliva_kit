@@ -84,10 +84,13 @@ $230517List.prototype.$_update = function(){
 	}
 	for (
 		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
-		$1 < this.$containers.length && $2 < this.$_state.$list.length;
+		$1 < this.$containers.length;
 		++$1, ++$2
 	){
-		this.$containers[$1].innerHTML = this.$_state.$list[$2];
+		this.$containers[$1].innerHTML = $2 < this.$_state.$list.length ?
+			this.$_state.$list[$2] :
+			''
+		;
 	}
 	this.$_tt.style.marginTop = '-' + this.$scrollPos%24 + 'px';
 };
