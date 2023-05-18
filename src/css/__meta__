@@ -28,7 +28,8 @@
                     "yandex_api.css",
                     "90420_callback_form.css",
                     "screen_keyboard.css",
-                    "230517_list.css"
+                    "230517_list.css",
+                    "230522_group.css"
                 ]
             }
         }
