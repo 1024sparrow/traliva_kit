@@ -3,9 +3,13 @@ registerHelp('$230517List', {
 	title: 'Виджет списка элементов с возможностью выбора. Элмент - строка теста.',
 	descr: '',
 	options:{
-		selectionMode: '0 - без выбора, 1 - одиночный выбор, 2 - множественный выбор; побитовое или с 4 - только чтение (выбрано, но поменять нельзя)'
 	},
-	//stateObj:{}
+	stateObj:{
+		//selectionMode: '0 - без выбора, 1 - одиночный выбор, 2 - множественный выбор; побитовое или с 4 - только чтение (выбрано, но поменять нельзя)',
+		selectionMultiple: '(bool) - возможно ли выбрать несколько. По умолчанию true - можно выбрать несколько',
+		selected: 'список индексов выбранных элементов',
+		list: 'список строк с текстами'
+	}
 });
 #USAGE_END#traliva_kit_debug##
 function $230517List($p_wContainer, $p_options, $p_widgets){
@@ -26,7 +30,6 @@ function $230517List($p_wContainer, $p_options, $p_widgets){
 
 	$p_wContainer.$_onResized = (function($self){
 		return function($w, $h){
-			//$self.$_onResized($w, $h);
 			$self.$w = $w;
 			$self.$h = $h;
 			$self.$_update();
@@ -72,32 +75,29 @@ $230517List.prototype.$_update = function(){
 
 	$1 = this.$h / this.$constItemHeight + 1;
 	for ($2 = this.$containers.length ; $2 < $1 ; ++$2){
-		$3 = {
-			$selected: false
-		};
+		$3 = {};
 		$3.$root = $Traliva.$createElement('<table cellspacing="0"><tr><td traliva="$1" class="$1 $off"></td><td traliva="$2" class="$2"></td></tr></table>', $3, '$item');
 		$3.$1.descr = $3;
 		$3.$root.addEventListener(
 			'click',
-			(function($1, $p_self, $p_index){
+			(function($1, $p_self){
 				return function($event){
-					if ($1.descr.$selected = !$1.descr.$selected){
-						$p_self.$_state.$selected.add($p_index);
+					var $2;
+					if ($1.hasOwnProperty('index')){
+						$2 = $p_self.$_state.$selected.lastIndexOf($1.index);
+						if ($2 < 0){
+							$1.$1.className = '$1 $on';
+							$p_self.$_state.$selected.push($1.index);
+						}
+						else {
+							$1.$1.className = '$1 $off';
+							$p_self.$_state.$selected.splice($2, 1);
+						}
+						$p_self.$_registerStateChanges();
 					}
-					else{
-						$p_self.$_state.$selected.delete($p_index);
-					}
-					$p_self.$_state.selectedDebug = Array.from($p_self.$_state.$selected); // boris debug
-					$p_self.$_registerStateChanges();
-					$1.className = $1.descr.$selected ?
-						'$1 $on' :
-						'$1 $off'
-					;
 				}
-			})($3.$1, this, $2)
+			})($3, this)
 		);
-		//$3.$1.className = '$1 $off';
-
 		this.$containers.push($3);
 		this.$_tt.appendChild($3.$root);
 	}
@@ -110,6 +110,12 @@ $230517List.prototype.$_update = function(){
 		$1 < this.$containers.length;
 		++$1, ++$2
 	){
+		this.$containers[$1].index = $2;
+		this.$containers[$1].$1.className =
+			this.$_state.$selected.lastIndexOf($2) >= 0 ?
+				'$1 $on' :
+				'$1 $off'
+		;
 		this.$containers[$1].$2.innerHTML =
 			$2 < this.$_state.$list.length ?
 				this.$_state.$list[$2] :
