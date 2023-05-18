@@ -3,7 +3,7 @@ registerHelp('$230517List', {
 	title: 'Виджет списка элементов с возможностью выбора. Элмент - строка теста.',
 	descr: '',
 	options:{
-		selectable: 'none, single, multiple'
+		selectionMode: '0 - без выбора, 1 - одиночный выбор, 2 - множественный выбор; побитовое или с 4 - только чтение (выбрано, но поменять нельзя)'
 	},
 	//stateObj:{}
 });
@@ -61,7 +61,7 @@ $230517List.prototype.$processStateChanges = function(s){
 	this.$_update();
 };
 $230517List.prototype.$_update = function(){
-	var $1, $2, $3;
+	var $1, $2, $3, $4, $5;
 
 	if (this.$scrollPos > this.$_state.$list.length * this.$constItemHeight){
 		this.$scrollPos = this.$_state.$list.length * this.$constItemHeight - this.$h;
@@ -69,22 +69,40 @@ $230517List.prototype.$_update = function(){
 	if (this.$scrollPos < 0){
 		this.$scrollPos = 0;
 	}
-	/*if (this.$_state.$list.length * this.$constItemHeight < this.$h){
-		this.$scrollPos = 0;
-	}*/
 
-	//$1 = this.$h / this.$_state.$list.length;
 	$1 = this.$h / this.$constItemHeight + 1;
 	for ($2 = this.$containers.length ; $2 < $1 ; ++$2){
-		$3 = document.createElement('div');
-		$3.className = '$1';
-		$3.style.height = '24px';
-		$3.innerHTML = 'qwe';
+		$3 = {
+			$selected: false
+		};
+		$3.$root = $Traliva.$createElement('<table cellspacing="0"><tr><td traliva="$1" class="$1 $off"></td><td traliva="$2" class="$2"></td></tr></table>', $3, '$item');
+		$3.$1.descr = $3;
+		$3.$root.addEventListener(
+			'click',
+			(function($1, $p_self, $p_index){
+				return function($event){
+					if ($1.descr.$selected = !$1.descr.$selected){
+						$p_self.$_state.$selected.add($p_index);
+					}
+					else{
+						$p_self.$_state.$selected.delete($p_index);
+					}
+					$p_self.$_state.selectedDebug = Array.from($p_self.$_state.$selected); // boris debug
+					$p_self.$_registerStateChanges();
+					$1.className = $1.descr.$selected ?
+						'$1 $on' :
+						'$1 $off'
+					;
+				}
+			})($3.$1, this, $2)
+		);
+		//$3.$1.className = '$1 $off';
+
 		this.$containers.push($3);
-		this.$_tt.appendChild($3);
+		this.$_tt.appendChild($3.$root);
 	}
 	for ($2 = 0 ; $2 < this.$containers.length ; ++$2){
-		this.$containers[$2].style.width = '' + this.$w + 'px';
+		this.$containers[$2].$root.style.width = '' + this.$w + 'px';
 	}
 
 	for (
@@ -92,7 +110,7 @@ $230517List.prototype.$_update = function(){
 		$1 < this.$containers.length;
 		++$1, ++$2
 	){
-		this.$containers[$1].innerHTML =
+		this.$containers[$1].$2.innerHTML =
 			$2 < this.$_state.$list.length ?
 				this.$_state.$list[$2] :
 				''

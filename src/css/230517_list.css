@@ -1,7 +1,25 @@
 .$traliva_kit__230517List div:hover{
-	background: #48f
+	background: rgba(0,0,0,.1)
 }
 
-.$traliva_kit__230517List .$1{
-	color: #ffa /*boris here: иконка чекбокса*/
+.$traliva_kit__230517List .$item{
+	color: #400;
+	height: 24px;
+}
+
+.$traliva_kit__230517List .$item .$1{
+	float: left;
+	width: 24px;
+	height: 24px;
+}
+
+.$traliva_kit__230517List .$item .$off{
+	background: url("#RES#/230517List/cb0.png");
+}
+
+.$traliva_kit__230517List .$item .$on{
+	background: url("#RES#/230517List/cb1.png");
+}
+
+.$traliva_kit__230517List .$item .$2{
 }
