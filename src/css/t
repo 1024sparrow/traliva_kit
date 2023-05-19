@@ -99,3 +99,7 @@
 #USAGE_BEGIN#TralivaKit__230522Group##
 {%% 230522_group.css %%}
 #USAGE_END#TralivaKit__230522Group##
+
+#USAGE_BEGIN#TralivaKit__230525Chart##
+{%% 230525_chart.css %%}
+#USAGE_END#TralivaKit__230525Chart##

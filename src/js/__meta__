@@ -29,7 +29,8 @@
                     "90420_callback_form.js",
                     "screen_keyboard.js",
                     "230517_list.js",
-                    "230522_group.js"
+                    "230522_group.js",
+                    "230525_chart.js"
                 ]
             }
         }
