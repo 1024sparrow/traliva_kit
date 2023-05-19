@@ -1,0 +1,20 @@
+.$TralivaKit__230522Group{
+	border: solid #400 1px;
+	border-radius: 20px;
+	background: #eee;
+}
+
+.$TralivaKit__230522Group__content{
+	border: solid #ddd 1px;
+	border-radius: 20px;
+	position: relative;
+	display: inline-block;
+	padding: 0 10px;
+	left: 6px;
+	top: 2px;
+	background: #fff;
+
+
+	/*border-radius: 10px;
+	background: red*/
+}
