@@ -4,8 +4,8 @@ $Strip.prototype.$__updateSizes = function(){
 		return;
 	var $totalParts = 0;
 	for (var $0 = 0 ; $0 < this.$__items.length ; $0++){
-        if (!this.$__items[$0].$isVisible())
-            continue;
+		if (!this.$__items[$0].$isVisible())
+			continue;
 		if (this.$__sizes[$0].$unit == 'px'){
 			$totalForParts -= this.$__sizes[$0].$value;
 		}
@@ -14,8 +14,8 @@ $Strip.prototype.$__updateSizes = function(){
 		}
 	}
 	for (var $0 = 0 ; $0 < this.$__items.length ; $0++){
-        if (!this.$__items[$0].$isVisible())
-            continue;
+		if (!this.$__items[$0].$isVisible())
+			continue;
 		var $tmpSize = undefined;
 		if (this.$__sizes[$0].$unit == 'px'){
 			$tmpSize = this.$__sizes[$0].$value;
