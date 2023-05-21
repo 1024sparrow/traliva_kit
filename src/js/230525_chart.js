@@ -33,7 +33,8 @@ function $230525Chart($p_wContainer, $p_options, $p_widgets){
 
 	this.$chart = new Chart(this.$e, {
 		type: $p_options.$type,
-		options: $p_options.$options
+		options: $p_options.$options,
+		plugins: $p_options.$plugins
 	});
 };
 $230525Chart.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
