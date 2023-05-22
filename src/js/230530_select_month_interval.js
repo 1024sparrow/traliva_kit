@@ -16,11 +16,11 @@ function $230530SelectMonthInterval($p_wContainer, $p_options, $p_widgets){
 	);
 
 	this.$1.addEventListener('input', (function($self){return function(){
-		$self.$_state.dateStart = this.value;
+		$self.$_state.$dateStart = this.value;
 		$self.$_registerStateChanges();
 	}})(this));
 	this.$2.addEventListener('input', (function($self){return function(){
-		$self.$_state.dateEnd = this.value;
+		$self.$_state.$dateEnd = this.value;
 		$self.$_registerStateChanges();
 	}})(this));
 
