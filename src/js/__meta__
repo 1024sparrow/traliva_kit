@@ -31,7 +31,8 @@
                     "230517_list.js",
                     "230522_group.js",
                     "230525_chart.js",
-                    "230530_select_month_interval.js"
+                    "230530_select_month_interval.js",
+                    "230531_waiting.js"
                 ]
             }
         }

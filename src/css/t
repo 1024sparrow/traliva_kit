@@ -107,3 +107,7 @@
 #USAGE_BEGIN#TralivaKit__230530SelectMonthInterval##
 {%% 230530_select_month_interval.css %%}
 #USAGE_END#TralivaKit__230530SelectMonthInterval##
+
+#USAGE_BEGIN#TralivaKit__230531Waiting##
+{%% 230531_waiting.css %%}
+#USAGE_END#TralivaKit__230531Waiting##

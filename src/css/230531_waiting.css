@@ -1,0 +1,8 @@
+.$230531Waiting{
+	background: rgba(0,0,0,0.5);
+}
+.$230531WaitingContent{
+	background: url("#RES#/230531Waiting/waiting-ru.gif");
+	width: 512px;
+	height: 100%;
+}
