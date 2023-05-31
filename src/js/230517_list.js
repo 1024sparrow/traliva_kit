@@ -83,17 +83,19 @@ $230517List.prototype.$_update = function(){
 			(function($1, $p_self){
 				return function($event){
 					var $2;
-					if ($1.hasOwnProperty('index')){
-						$2 = $p_self.$_state.$selected.lastIndexOf($1.index);
-						if ($2 < 0){
-							$1.$1.className = '$1 $on';
-							$p_self.$_state.$selected.push($1.index);
+					if ($1.index < $p_self.$_state.$list.length){
+						if ($1.hasOwnProperty('index')){
+							$2 = $p_self.$_state.$selected.lastIndexOf($1.index);
+							if ($2 < 0){
+								$1.$1.className = '$1 $on';
+								$p_self.$_state.$selected.push($1.index);
+							}
+							else {
+								$1.$1.className = '$1 $off';
+								$p_self.$_state.$selected.splice($2, 1);
+							}
+							$p_self.$_registerStateChanges();
 						}
-						else {
-							$1.$1.className = '$1 $off';
-							$p_self.$_state.$selected.splice($2, 1);
-						}
-						$p_self.$_registerStateChanges();
 					}
 				}
 			})($3, this)
@@ -113,9 +115,10 @@ $230517List.prototype.$_update = function(){
 		this.$containers[$1].index = $2;
 		this.$containers[$1].$1.className =
 			this.$_state.$selected.lastIndexOf($2) >= 0 ?
-				'$1 $on' :
-				'$1 $off'
+				($2 < this.$_state.$list.length ? '$1 $on' : '$1') :
+				($2 < this.$_state.$list.length ? '$1 $off' : '$1')
 		;
+		this.$containers[$1].$root.className = ($2 < this.$_state.$list.length ? '$item $used' : '$item');
 		this.$containers[$1].$2.innerHTML =
 			$2 < this.$_state.$list.length ?
 				this.$_state.$list[$2] :
