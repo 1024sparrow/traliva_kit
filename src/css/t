@@ -111,3 +111,11 @@
 #USAGE_BEGIN#TralivaKit__230531Waiting##
 {%% 230531_waiting.css %%}
 #USAGE_END#TralivaKit__230531Waiting##
+
+#USAGE_BEGIN#TralivaKit__230606Table##
+{%% 230606_table.css %%}
+#USAGE_END#TralivaKit__230606Table##
+
+#USAGE_BEGIN#TralivaKit__Stub##
+{%% stub.css %%}
+#USAGE_END#TralivaKit__Stub##

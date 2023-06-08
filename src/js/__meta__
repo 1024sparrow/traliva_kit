@@ -32,7 +32,9 @@
                     "230522_group.js",
                     "230525_chart.js",
                     "230530_select_month_interval.js",
-                    "230531_waiting.js"
+                    "230531_waiting.js",
+                    "230606_table.js",
+                    "stub.js"
                 ]
             }
         }

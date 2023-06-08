@@ -32,7 +32,9 @@
                     "230522_group.css",
                     "230525_chart.css",
                     "230530_select_month_interval.css",
-                    "230531_waiting.css"
+                    "230531_waiting.css",
+                    "230606_table.css",
+                    "stub.css"
                 ]
             }
         }

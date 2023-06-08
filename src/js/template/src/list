@@ -27,3 +27,5 @@ ScreenKeyboard screen_keyboard.js
 230525Chart 230525_chart.js
 230530SelectMonthInterval 230530_select_month_interval.js
 230531Waiting 230531_waiting.js
+230606Table 230606_table.js
+Stub stub.js
