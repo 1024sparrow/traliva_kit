@@ -18,7 +18,7 @@ VH - vertical header
 
 //-----------------------------------------------
 
-var $230606Table_TableViewWidget__maxColumnWidth = 200;//pixels
+var $230606Table_TableViewWidget__maxColumnWidth = 60;//pixels
 function $230606Table_TableViewWidget(p_parentWidget){
 	this.__w;
 	this.__h;
@@ -26,7 +26,7 @@ function $230606Table_TableViewWidget(p_parentWidget){
 	this._eHHTable;
 	this._eBodyTable
 	$Traliva.$_WidgetBase.call(this, p_parentWidget, true);
-}
+};
 $230606Table_TableViewWidget.prototype = Object.create($Traliva.$_WidgetBase.prototype);
 $230606Table_TableViewWidget.prototype.constructor = $230606Table_TableViewWidget;
 $230606Table_TableViewWidget.prototype.$_createContentElem = function(){
@@ -64,7 +64,7 @@ $230606Table_TableViewWidget.prototype.$_createContentElem = function(){
 	eDiv.appendChild(this._eTable);
 
 	return eDiv;
-}
+};
 $230606Table_TableViewWidget.prototype.$_onResized = function(w,h){
 	this.__w = w;
 	this.__h = h;
@@ -87,7 +87,7 @@ $230606Table_TableViewWidget.prototype.$_onResized = function(w,h){
 		this._eHH.style.minWidth = tmpW;
 		this._eHH.style.maxWidth = tmpW;
 	}
-}
+};
 function removeColItemsFromTable(eTable){
 	var itemsToRemove = [];
 	var list = eTable.childNodes;
@@ -117,7 +117,7 @@ function removeColItemsFromTable(eTable){
 		eTable.removeChild(e);
 		console.log(1);//
 	}
-}
+};
 $230606Table_TableViewWidget.prototype.$_updateSizes = function(){
 	//synchronize headers and body (header and body cell sizes)
 	//здесь должны убрать предыдущие элементы "col" из "table"-ов
@@ -152,7 +152,8 @@ $230606Table_TableViewWidget.prototype.$_updateSizes = function(){
 	var totalWidth = 0;
 	var totalHeight = 0;
 	var h = this._eBodyTable.offsetHeight;
-	var w = this._eBodyTable.offsetWidth;
+	//var w = this._eBodyTable.offsetWidth - this._eBody.offsetWidth;
+	var w = this._eHHTable.offsetWidth;
 	totalWidth += w;
 	totalHeight += h;
 	h = h + 'px';
@@ -175,8 +176,8 @@ $230606Table_TableViewWidget.prototype.$_updateSizes = function(){
 	w = this._eHHTable.offsetWidth;
 	totalWidth += w;
 	totalHeight += h;
-	h = h + 'px';
-	w = w + 'px';
+	h = '' + h + 'px';
+	w = '' + w + 'px';
 	this._eHH.style.height = h;
 	this._eHH.style.minHeight = h;
 	this._eHH.style.maxHeight = h;
@@ -190,7 +191,7 @@ $230606Table_TableViewWidget.prototype.$_updateSizes = function(){
 	this._eHHTable.style.width = w;
 	this._eHHTable.style.minWidth = w;
 	this._eHHTable.style.maxWidth = w;
-}
+};
 $230606Table_TableViewWidget.prototype.$_reset = function(table_data){
 	this._tableData = table_data;
 	this._hhElements = [];
@@ -204,7 +205,7 @@ $230606Table_TableViewWidget.prototype.$_reset = function(table_data){
 		this._eHHTable = document.createElement('table');
 		this._eHHTable.style.borderCollapse = 'collapse';	
 		this._eHHTable.style.background = '#ccc';
-		this._eHHTable.style.color = '#048';
+		this._eHHTable.style.color = '#1d2435';
 		this._eHH.style.width = tableWidthMaxLimit + 'px';
 		this._eHH.style.minWidth = tableWidthMaxLimit + 'px';
 		this._eHH.style.maxWidth = tableWidthMaxLimit + 'px';
@@ -255,7 +256,7 @@ $230606Table_TableViewWidget.prototype.$_reset = function(table_data){
 						this._hhElements[columnCounter] = cell;
 						
 						cell.style.margin = '0';
-						cell.style.border = '1px solid #48a';
+						cell.style.border = '1px solid #313438';
 						var contentDiv = document.createElement('div');
 						contentDiv.setAttribute('style', 'font-weight:bold; text-align:center;');
 						contentDiv.innerHTML = currentText;
@@ -274,7 +275,7 @@ $230606Table_TableViewWidget.prototype.$_reset = function(table_data){
 		this._eHH.appendChild(this._eHHTable);
 	}
 	this.$_resetBody(table_data);
-}
+};
 $230606Table_TableViewWidget.prototype.$_resetBody = function(table_data){
 	if (this._eBodyTable)
 		this._eBody.removeChild(this._eBodyTable);
@@ -303,7 +304,7 @@ $230606Table_TableViewWidget.prototype.$_resetBody = function(table_data){
 			for (var colCounter = 0 ; colCounter < rowData.d.length ; colCounter++){
 				var eCell = eRow.insertCell();
 				eCell.style.margin = '0';
-				eCell.style.border = '1px solid #48a';
+				eCell.style.border = '1px solid #313438';
 				var cellData = rowData.d[colCounter];
 				if (cellData.hasOwnProperty('t')){
 					eCell.innerHTML = cellData.t;
@@ -317,19 +318,19 @@ $230606Table_TableViewWidget.prototype.$_resetBody = function(table_data){
 			self._eHH.scrollLeft = self._eBody.scrollLeft;
 		});
 	})(this);
-}
+};
 $230606Table_TableViewWidget.prototype.$_updateCols = function(table_data, changes){
 	this._tableData = table_data;
 	console.log('not implemented');
-}
+};
 $230606Table_TableViewWidget.prototype.$_updateRows = function(table_data, changes){
 	this._tableData = table_data;
 	console.log('not implemented');
-}
+};
 $230606Table_TableViewWidget.prototype.$_updateCells = function(table_data, changes){
 	this._tableData = table_data;
 	console.log('not implemented');
-}
+};
 
 function $230606Table($p_wContainer, $p_options, $p_widgets){
 	$Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
