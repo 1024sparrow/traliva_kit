@@ -34,7 +34,8 @@
                     "230530_select_month_interval.css",
                     "230531_waiting.css",
                     "230606_table.css",
-                    "stub.css"
+                    "stub.css",
+                    "230614_multi_hor_bar_chart.css"
                 ]
             }
         }

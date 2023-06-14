@@ -34,7 +34,8 @@
                     "230530_select_month_interval.js",
                     "230531_waiting.js",
                     "230606_table.js",
-                    "stub.js"
+                    "stub.js",
+                    "230614_multi_hor_bar_chart.js"
                 ]
             }
         }
