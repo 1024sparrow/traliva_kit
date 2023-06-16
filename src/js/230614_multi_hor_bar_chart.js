@@ -13,6 +13,7 @@ function $230614MultiHorBarChart($p_wContainer, $p_options, $p_widgets){
 	var $1, $2;
 	this.$constItemHeight = 24;
 	this.$_tt = document.createElement('table');
+	this.$_tt.style.margin = '0px';
 	this.$containers = [];
 	this.$w = 0;
 	this.$h = 0;
@@ -52,10 +53,12 @@ $230614MultiHorBarChart.prototype.$processStateChanges = function(s){
 		console.error('epic fail');
 		return;
 	}
-	// ...
+	if (s.$needUpdate){
+		this.$_update();
+	}
 };
 $230614MultiHorBarChart.prototype.$_update = function(){
-	var $1, $2, $3, $4, $5;
+	var $1, $2, $3, $4, $5, $6, $7;
 
 	if (this.$scrollPos > this.$_state.$list.length * this.$constItemHeight){
 		this.$scrollPos = this.$_state.$list.length * this.$constItemHeight - this.$h;
@@ -67,11 +70,21 @@ $230614MultiHorBarChart.prototype.$_update = function(){
 	$1 = this.$h / this.$constItemHeight + 1;
 	for ($2 = this.$containers.length ; $2 < $1 ; ++$2){
 		$3 = this.$_tt.insertRow();
+		//$3.height = '64px';
 		$4 = $3.insertCell();
 		$4.innerHTML = '1111';//
 		$5 = $3.insertCell();
-		$5.innerHTML = '2222';//
+		$6 = document.createElement('canvas');
+		$6.height = 64;
+		$4.style.borderRight = '1px solid #808284';
+		$5.appendChild($6);
 		this.$containers.push({$eRow: $3, $eTitle: $4, $eDiagram: $5});
+	}
+
+
+
+	for ($2 = 0 ; $2 < this.$containers.length ; ++$2){
+		//this.$containers[$2].$root.style.width = '' + this.$w + 'px';
 	}
 
 
@@ -99,5 +112,7 @@ $230614MultiHorBarChart.prototype.$_update = function(){
 		;
 	}
 	this.$_tt.style.marginTop = '-' + this.$scrollPos%24 + 'px';*/
+};
+$230614MultiHorBarChart.prototype.$_updatelistItem = function($a_element, $a_descriptor){
 };
 //$230614MultiHorBarChart.$widgetsFields = [];

@@ -1,4 +1,5 @@
-$traliva_kit__230614MultiHorBarChart tr{
-	border: 1px solid red;
-	border-radius: 4px;
+.$traliva_kit__230614MultiHorBarChart {
+	margin: 0;
+	border-spacing: 0;
+	border-collapse: collapse;
 }
