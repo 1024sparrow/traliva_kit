@@ -65,7 +65,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 
 		// подбираем шрифт для шкалы
 		$3 = Math.sqrt($w * $w + $scaleHeight * $scaleHeight);
-		for ($fontSize = $constMaxFontSize ; $fontSize >= $constMinFontSize ; --$fontSize){
+		for ($fontSize = $constMaxFontSize ; $fontSize > $constMinFontSize ; --$fontSize){
 			$context.font = '' + $fontSize + 'px arial';
 			$2 = $3 - 2 * $fontSize * $sinAlpha / $cosAlpha;
 			$ok = true;
@@ -80,7 +80,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			}
 		}
 		// уже минимальный шрифт, а текст так и не помещается. Выкидываем по слову до тех пор, пока не станет помещаться.
-		if ($fontSize <= $constMinFontSize){
+		if ($fontSize === $constMinFontSize){
 			for ($1 = 0 ; $1 < $labels.length ; ++$1){
 				while ($context.measureText($labels[$1]).width >= $2){
 					if ($labels[$1].length === 0){
