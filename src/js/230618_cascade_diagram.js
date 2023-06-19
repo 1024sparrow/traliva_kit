@@ -30,8 +30,9 @@ $230618CascadeDiagram.prototype.$processStateChanges = function(s){
 $230618CascadeDiagram.prototype.$_update = function(){
 	var
 		$1, $2, $3,
-		$constMinFontSize = 7,
-		$constMaxFontSize = 12,
+		$accumulator = 0,
+		$constMinFontSize = 10,
+		$constMaxFontSize = 16,
 		$context = this.$e.getContext('2d'),
 		$w,
 		$fontSize,
@@ -42,7 +43,9 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		// sin ⍺ = 0.5
 		$cosAlpha = 0.866,
 		$sinAlpha = 0.5,
-		$scaleHeight = this.$h / 3;
+		$scaleHeight = this.$h / 3,
+		$barScaleIndent = 5,
+		$barTopIndent = 20
 	;
 	this.$e.width = this.$w;
 	this.$e.height = this.$h;
@@ -67,7 +70,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$3 = $scaleHeight / $sinAlpha;
 		for ($fontSize = $constMaxFontSize ; $fontSize > $constMinFontSize ; --$fontSize){
 			$context.font = '' + $fontSize + 'px arial';
-			$2 = $3 - $fontSize * $sinAlpha / $cosAlpha;
+			$2 = $3 - 2 * $fontSize * $sinAlpha / $cosAlpha;
 			$ok = true;
 			for ($1 of $labels){
 				if ($context.measureText($1).width >= $2){
@@ -95,19 +98,51 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			}
 		}
 
+		$2 = this.$h - $scaleHeight - $barScaleIndent - $barTopIndent;
 		for ($1 = 0 ; $1 <= this.$_state.$parts.length ; ++$1){
+			$context.beginPath();
 			$context.moveTo($1 * $w,0); //
 			$context.lineTo($1 * $w,this.$h); //
 			$context.stroke();
 
 			$context.save();
+			$context.fillStyle = '#000';
 			$context.translate($1 * $w + $w / 2, this.$h - $scaleHeight);
 			$context.rotate(-Math.PI/6);
 			$context.textAlign = "right";
 			$context.textBaseline = 'top';
 			$context.fillText($labels[$1], 0, 0);
 			$context.restore();
+
+			if ($1){
+				$3 = $2 * this.$_state.$parts[$1 - 1].$value /100.;
+			}
+			else{
+				$3 = $2;
+			}
+			$context.beginPath();
+			$context.fillStyle = $1 ? '#1d2435' : '#670000';
+			$context.fillRect(
+				$1 * $w + $barScaleIndent,
+				this.$h - $scaleHeight - $barScaleIndent - $3 - $accumulator,
+				$w - 2 * $barScaleIndent,
+				$3
+			);
+			$context.stroke();
+			if ($1){
+				$accumulator += $3;
+			}
 		}
 	}
+	$context.fillStyle = '#000';
+	$context.beginPath();
+	$context.moveTo(0, this.$h - $scaleHeight - $barScaleIndent);
+	$context.lineTo(this.$w, this.$h - $scaleHeight - $barScaleIndent);
+	$context.stroke();
+
+	$context.beginPath();
+	$context.moveTo(0, $barTopIndent);
+	$context.lineTo(this.$w, $barTopIndent);
+	$context.stroke();
 };
 //$230618CascadeDiagram.$widgetsFields = [];
