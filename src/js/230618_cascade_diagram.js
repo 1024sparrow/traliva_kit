@@ -37,11 +37,11 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$fontSize,
 		$labels = [],
 		$ok = true,
-		// Угол наклона: 60°
-		// sin ⍺ = 0.866
-		// cos ⍺ = 0.5
-		$cosAlpha = 0.5,
-		$sinAlpha = 0.866,
+		// Угол наклона: 30°
+		// cos ⍺ = 0.866
+		// sin ⍺ = 0.5
+		$cosAlpha = 0.866,
+		$sinAlpha = 0.5,
 		$scaleHeight = this.$h / 3;
 	;
 	this.$e.width = this.$w;
@@ -64,10 +64,10 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$w = this.$w / (this.$_state.$parts.length + 1);
 
 		// подбираем шрифт для шкалы
-		$3 = Math.sqrt($w * $w + $scaleHeight * $scaleHeight);
+		$3 = $scaleHeight / $sinAlpha;
 		for ($fontSize = $constMaxFontSize ; $fontSize > $constMinFontSize ; --$fontSize){
 			$context.font = '' + $fontSize + 'px arial';
-			$2 = $3 - 2 * $fontSize * $sinAlpha / $cosAlpha;
+			$2 = $3 - $fontSize * $sinAlpha / $cosAlpha;
 			$ok = true;
 			for ($1 of $labels){
 				if ($context.measureText($1).width >= $2){
@@ -80,6 +80,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			}
 		}
 		// уже минимальный шрифт, а текст так и не помещается. Выкидываем по слову до тех пор, пока не станет помещаться.
+		$context.font = '' + $fontSize + 'px arial';//
 		if ($fontSize === $constMinFontSize){
 			for ($1 = 0 ; $1 < $labels.length ; ++$1){
 				while ($context.measureText($labels[$1]).width >= $2){
@@ -101,7 +102,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 
 			$context.save();
 			$context.translate($1 * $w + $w / 2, this.$h - $scaleHeight);
-			$context.rotate(-Math.PI/3);
+			$context.rotate(-Math.PI/6);
 			$context.textAlign = "right";
 			$context.textBaseline = 'top';
 			$context.fillText($labels[$1], 0, 0);
