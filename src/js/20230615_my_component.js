@@ -48,7 +48,8 @@ $20230615MyComponent.prototype.$processStateChanges = function(s){
 
 };
 $20230615MyComponent.prototype.$_update = function(){
-	this.$e.style.width = '' + this.$w + 'px';
+	this.$e.width = this.$w;
+	this.$e.height = this.$h;
 
 	const ctx = this.$e.getContext('2d');
 	const barHeight = 40;

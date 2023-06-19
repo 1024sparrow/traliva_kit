@@ -135,3 +135,7 @@
 #USAGE_BEGIN#TralivaKit__230616LineChart##
 {%% 230616_line_chart.css %%}
 #USAGE_END#TralivaKit__230616LineChart##
+
+#USAGE_BEGIN#TralivaKit__230619HRightBar##
+{%% 230619_h_right_bar.css %%}
+#USAGE_END#TralivaKit__230619HRightBar##
