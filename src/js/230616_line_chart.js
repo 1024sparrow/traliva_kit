@@ -53,7 +53,8 @@ $230616LineChart.prototype.$processStateChanges = function(s){
 	}
 };
 $230616LineChart.prototype.$_update = function(){
-	this.$e.style.width = '' + this.$w + 'px';
+	this.$e.width = this.$w;
+	this.$e.height = this.$h;
 	const ctx = this.$e.getContext('2d');
 	ctx.clearRect(0, 0, this.$e.width, this.$e.height);
 	ctx.beginPath();
