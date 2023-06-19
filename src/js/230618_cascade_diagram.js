@@ -33,6 +33,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$accumulator = 0,
 		$constMinFontSize = 10,
 		$constMaxFontSize = 16,
+		$constMinBarHeight = 4,
 		$context = this.$e.getContext('2d'),
 		$w,
 		$fontSize,
@@ -120,15 +121,41 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			else{
 				$3 = $2;
 			}
-			$context.beginPath();
 			$context.fillStyle = $1 ? '#1d2435' : '#670000';
-			$context.fillRect(
-				$1 * $w + $barScaleIndent,
-				this.$h - $scaleHeight - $barScaleIndent - $3 - $accumulator,
-				$w - 2 * $barScaleIndent,
-				$3
-			);
-			$context.stroke();
+			if ($3 > $constMinBarHeight){ // ненулевой столбец (ненулевой высоты)
+				$context.fillRect(
+					$1 * $w + $barScaleIndent,
+					this.$h - $scaleHeight - $barScaleIndent - $3 - $accumulator,
+					$w - 2 * $barScaleIndent,
+					$3
+				);
+			}
+			else{
+				if ($accumulator <= $constMinBarHeight){ // нулевой столбец у нижней границы
+					$context.fillRect(
+						$1 * $w + $barScaleIndent,
+						this.$h - $scaleHeight - $barScaleIndent - $constMinBarHeight,
+						$w - 2 * $barScaleIndent,
+						$constMinBarHeight
+					);
+				}
+				else if ($accumulator >= ($2 - $constMinBarHeight)){ // нулевой столбец у верхней границы
+					$context.fillRect(
+						$1 * $w + $barScaleIndent,
+						$barTopIndent,
+						$w - 2 * $barScaleIndent,
+						$constMinBarHeight
+					);
+				}
+				else{ // нулевой столбце не у границы
+					$context.fillRect(
+						$1 * $w + $barScaleIndent,
+						this.$h - $scaleHeight - $barScaleIndent - $3 - $accumulator,
+						$w - 2 * $barScaleIndent,
+						$constMinBarHeight
+					);
+				}
+			}
 			if ($1){
 				$accumulator += $3;
 			}
