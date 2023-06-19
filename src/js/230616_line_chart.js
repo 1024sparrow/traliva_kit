@@ -24,8 +24,6 @@ function $230616LineChart($p_wContainer, $p_options, $p_widgets){
 
 	$p_wContainer.$setContent(this.$e = document.createElement('canvas'));
 
-	//	this.$e.width += 100; // Место для текста справа
-
 	this.$e.height=200;
 	this.$e.width+=200;
 	this.$chartHeight = 200; // Высота графика
@@ -43,9 +41,7 @@ $230616LineChart.prototype.$processStateChanges = function(s){
 	}
 	console.log('230616 1: ', s);
 	if (s.$needUpdate){
-		//		this.$_update();
-
-		//		this.$chart.data = s.$data;
+		this.$_update();
 		$1 = false; // признак того, что данные хоть какие-то есть
 		for (const o of s.$data.datasets){
 			if (o.data.length){
@@ -58,26 +54,13 @@ $230616LineChart.prototype.$processStateChanges = function(s){
 };
 $230616LineChart.prototype.$_update = function(){
 	this.$e.style.width = '' + this.$w + 'px';
-
 	const ctx = this.$e.getContext('2d');
-	// Определяем параметры графика
-
-	// Очищаем canvas
 	ctx.clearRect(0, 0, this.$e.width, this.$e.height);
-
-	// Рисуем оси координат
 	ctx.beginPath();
-	/*ctx.moveTo(chartPadding, canvas.height - chartPadding);
-	  ctx.lineTo(chartPadding, chartPadding);
-	  ctx.lineTo(canvas.width - chartPadding, chartPadding);
-	  ctx.strokeStyle = '#000';
-	  ctx.stroke();*/
 
-
-	// Рисуем подписи
+	// Подписи
 	const labelY = this.$e.height - this.$chartPadding / 2;
 	ctx.fillStyle = '#000';
-	//ctx.textAlign = 'center';
 	const size = this.$_state.$data.labels.length-1;
 	for(const [i, label] of this.$_state.$data.labels.entries()){
 
@@ -107,40 +90,32 @@ $230616LineChart.prototype.$_update = function(){
 		}
 	};
 
-	// Рисуем точки и значения на графике
 	for (const [i, dataset] of this.$_state.$data.datasets.entries()){
 		const points = dataset.data;
 		const maxValue = Math.max(...points);
 		const minValue = Math.min(...points);
 		const valueRange = maxValue - minValue;
-		console.log('max:'+maxValue+'\tmin:'+minValue+'\trange:'+valueRange);
 
 		ctx.beginPath();
 		ctx.fillStyle = dataset.backgroundColor;
 		ctx.strokeStyle = dataset.borderColor;
 
 		for (const [i, value] of points.entries()){
-			//	  const pointX = this$.chartPadding + (this.$e.width - this.$chartPadding * 2) * (i / (points.length - 1));
 			const pointX = this.$chartPadding + (this.$e.width - this.$chartPadding * 2) * (i / (points.length - 1));
-			// const pointY = this.$chartHeight-value/100*this.$chartHeight;
 			const pointY = this.$chartPadding + (this.$chartHeight - this.$chartPadding * 2) * (1 - (value - minH) / (maxH-minH));
-			//const pointY = chartPadding + (this.$chartHeight - chartPadding * 2) * (1 - (value - minValue) / (valueRange));
-			console.log('i:'+i+'\tX:'+pointX+'\tY:'+pointY+'\tval:'+value);
-			// Рисуем точку
+			// Точка
 			ctx.moveTo(pointX, pointY);
 			ctx.arc(pointX, pointY, 3, 0, Math.PI * 2);
 
 			// Выводим значение точки над ней
-		//	ctx.fillText(value, pointX, pointY - 10);
 		};
 
 		ctx.fill();
 
-		// Соединяем точки линиями
+		// Соединение точек линиями
 		ctx.beginPath();
 		for (const [i, value] of points.entries()){
 			const pointX = this.$chartPadding + (this.$e.width - 2 * this.$chartPadding) * (i / (points.length - 1));
-			//	  const pointY = this.$chartHeight-value/100*this.$chartHeight;
 
 			const pointY = this.$chartPadding + (this.$chartHeight - this.$chartPadding * 2) * (1 - (value - minH) / (maxH-minH));
 			if (i === 0) {
@@ -150,35 +125,16 @@ $230616LineChart.prototype.$_update = function(){
 			}
 		};
 
-		//ctx.fill();
 
 		for (const [i, value] of points.entries()){
-			//	  const pointX = this$.chartPadding + (this.$e.width - this.$chartPadding * 2) * (i / (points.length - 1));
 			const pointX = this.$chartPadding + (this.$e.width - this.$chartPadding * 2) * (i / (points.length - 1));
-			// const pointY = this.$chartHeight-value/100*this.$chartHeight;
 			const pointY = this.$chartPadding + (this.$chartHeight - this.$chartPadding * 2) * (1 - (value - minH) / (maxH-minH));
-			//const pointY = chartPadding + (this.$chartHeight - chartPadding * 2) * (1 - (value - minValue) / (valueRange));
-			console.log('i:'+i+'\tX:'+pointX+'\tY:'+pointY+'\tval:'+value);
-			// Рисуем точку
-		//	ctx.moveTo(pointX, pointY);
-		//	ctx.arc(pointX, pointY, 3, 0, Math.PI * 2);
 
-			// Выводим значение точки над ней
+			// Вывод значение точки над ней
 			ctx.fillText(value, pointX, pointY - 10);
 		};
 
-		//ctx.fill();
 
-/*
-		//
-		// Рисуем информацию о графике
-		ctx.fillStyle = dataset.borderColor;
-		//ctx.fillRect(i*150, 5, 20, 5.1);
-		ctx.moveTo((i+1)*100, 6);
-		ctx.lineTo((i+1)*100+20, 6);
-		ctx.fillStyle = '#000';
-		ctx.textAlign = 'start';
-		ctx.fillText(dataset.label, 120*(i+1), 10);
-*/		ctx.stroke();
+		ctx.stroke();
 	};
 };
