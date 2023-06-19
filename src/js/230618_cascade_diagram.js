@@ -30,6 +30,8 @@ $230618CascadeDiagram.prototype.$processStateChanges = function(s){
 $230618CascadeDiagram.prototype.$_update = function(){
 	var
 		$1, $2, $3,
+		$constMinFontSize = 7,
+		$constMaxFontSize = 12,
 		$context = this.$e.getContext('2d'),
 		$w,
 		$fontSize,
@@ -64,7 +66,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 
 		// подбираем шрифт для шкалы
 		$3 = Math.sqrt($w * $w + $scaleHeight * $scaleHeight);
-		for ($fontSize = 12 ; $fontSize >= 7 ; --$fontSize){
+		for ($fontSize = $constMaxFontSize ; $fontSize >= $constMinFontSize ; --$fontSize){
 			$context.font = '' + $fontSize + 'px arial';
 			$2 = $3 - $fontSize * $sinAlpha / $cosAlpha;
 			$ok = true;
