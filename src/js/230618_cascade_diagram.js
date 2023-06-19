@@ -63,7 +63,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$w = this.$w / (this.$_state.$parts.length + 1);
 
 		// подбираем шрифт для шкалы
-		for ($fontSize = 12 ; $fontSize >= 7 ; --$fontSize){
+		/*for ($fontSize = 12 ; $fontSize >= 7 ; --$fontSize){
 			$context.font = '' + $fontSize + 'px arial';
 			$ok = true;
 			for ($1 of $labels){
@@ -78,14 +78,26 @@ $230618CascadeDiagram.prototype.$_update = function(){
 				break;
 			}
 		}
-		console.log('230619 result font size: ', $fontSize);
+		console.log('230619 result font size: ', $fontSize);*/
+		$fontSize = 12;//
+
+		$context.font = '' + $fontSize + 'px arial';
 
 		for ($1 = 0 ; $1 <= this.$_state.$parts.length ; ++$1){
+			$context.moveTo($1 * $w,0); //
+			$context.lineTo($1 * $w,this.$h); //
+			$context.stroke();
+		}
+		if (true){//
 			$context.save();
-			$context.translate($1 * $w + $w / 2, this.$h);
+			//$context.translate($1 * $w + $w / 2, this.$h);
+			$context.translate(2 * $w - $fontSize * $sinAlpha, this.$h - $scaleHeight);
 			$context.rotate(-Math.PI/3);
 			$context.textAlign = "right";
-			$context.fillText($1 ? this.$_state.$parts[$1 - 1].$title : this.$_state.$title, $w / $cosAlpha, 0);
+			$context.textBaseline = 'top';
+			//$context.fillText($1 ? this.$_state.$parts[$1 - 1].$title : this.$_state.$title, $w / $cosAlpha, 0);
+
+			$context.fillText('avyrvalg', 0,0);
 			$context.restore();
 		}
 	}
