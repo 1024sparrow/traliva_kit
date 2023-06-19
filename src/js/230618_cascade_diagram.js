@@ -37,6 +37,9 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$fontSize,
 		$labels = [],
 		$ok = true,
+		// Угол наклона: 60°
+		// sin ⍺ = 0.866
+		// cos ⍺ = 0.5
 		$cosAlpha = 0.5,
 		$sinAlpha = 0.866,
 		$scaleHeight = this.$h / 3;
@@ -52,10 +55,6 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$context.lineTo(this.$w, this.$h - $scaleHeight);
 		$context.stroke();
 
-		// Угол наклона: 60°
-		// sin ⍺ = 0.866
-		// cos ⍺ = 0.5
-
 		$labels = [this.$_state.$title];
 		for ($1 of this.$_state.$parts){
 			$labels.push($1.$title);
@@ -66,19 +65,31 @@ $230618CascadeDiagram.prototype.$_update = function(){
 
 		// подбираем шрифт для шкалы
 		$3 = Math.sqrt($w * $w + $scaleHeight * $scaleHeight);
-		if (!$ok){
-			for ($fontSize = $constMaxFontSize ; $fontSize >= $constMinFontSize ; --$fontSize){
-				$context.font = '' + $fontSize + 'px arial';
-				$2 = $3 - $fontSize * $sinAlpha / $cosAlpha;
-				$ok = true;
-				for ($1 of $labels){
-					if ($context.measureText($1).width >= $2){
-						$ok = false;
+		for ($fontSize = $constMaxFontSize ; $fontSize >= $constMinFontSize ; --$fontSize){
+			$context.font = '' + $fontSize + 'px arial';
+			$2 = $3 - 2 * $fontSize * $sinAlpha / $cosAlpha;
+			$ok = true;
+			for ($1 of $labels){
+				if ($context.measureText($1).width >= $2){
+					$ok = false;
+					break;
+				}
+			}
+			if ($ok){
+				break;
+			}
+		}
+		// уже минимальный шрифт, а текст так и не помещается. Выкидываем по слову до тех пор, пока не станет помещаться.
+		if ($fontSize <= $constMinFontSize){
+			for ($1 = 0 ; $1 < $labels.length ; ++$1){
+				while ($context.measureText($labels[$1]).width >= $2){
+					if ($labels[$1].length === 0){
 						break;
 					}
-				}
-				if ($ok){
-					break;
+					if ($labels[$1].slice(-3) === '...'){
+						$labels[$1] = $labels[$1].slice(0, -3);
+					}
+					$labels[$1] = $labels[$1].trim().split(/\s+/).slice(0,-1).join(' ') + '...';
 				}
 			}
 		}
