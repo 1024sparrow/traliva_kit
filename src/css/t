@@ -124,6 +124,10 @@
 {%% 230614_multi_hor_bar_chart.css %%}
 #USAGE_END#TralivaKit__230614MultiHorBarChart##
 
+#USAGE_BEGIN#TralivaKit__230618CascadeDiagram##
+{%% 230618_cascade_diagram.css %%}
+#USAGE_END#TralivaKit__230618CascadeDiagram##
+
 #USAGE_BEGIN#TralivaKit__20230615MyComponent##
 {%% 20230615_my_component.css %%}
 #USAGE_END#TralivaKit__20230615MyComponent##
