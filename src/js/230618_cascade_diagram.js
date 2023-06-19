@@ -59,6 +59,17 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$context.lineTo(this.$w, this.$h - $scaleHeight);
 		$context.stroke();*/
 
+		$context.strokeStyle = '#bbc6bb';
+		$context.beginPath();
+		$context.moveTo(0, this.$h - $scaleHeight - $barScaleIndent);
+		$context.lineTo(this.$w, this.$h - $scaleHeight - $barScaleIndent);
+		$context.stroke();
+
+		$context.beginPath();
+		$context.moveTo(0, $barTopIndent);
+		$context.lineTo(this.$w, $barTopIndent);
+		$context.stroke();
+
 		$labels = [this.$_state.$title];
 		for ($1 of this.$_state.$parts){
 			$labels.push($1.$title);
@@ -169,15 +180,5 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			}
 		}
 	}
-	$context.fillStyle = '#000';
-	$context.beginPath();
-	$context.moveTo(0, this.$h - $scaleHeight - $barScaleIndent);
-	$context.lineTo(this.$w, this.$h - $scaleHeight - $barScaleIndent);
-	$context.stroke();
-
-	$context.beginPath();
-	$context.moveTo(0, $barTopIndent);
-	$context.lineTo(this.$w, $barTopIndent);
-	$context.stroke();
 };
 //$230618CascadeDiagram.$widgetsFields = [];
