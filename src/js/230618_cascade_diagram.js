@@ -54,10 +54,10 @@ $230618CascadeDiagram.prototype.$_update = function(){
 	$context.fillRect(0,0,this.$w, this.$h);*/
 
 	if (this.$_state.$title){
-		$context.beginPath();
+		/*$context.beginPath();
 		$context.moveTo(0, this.$h - $scaleHeight);
 		$context.lineTo(this.$w, this.$h - $scaleHeight);
-		$context.stroke();
+		$context.stroke();*/
 
 		$labels = [this.$_state.$title];
 		for ($1 of this.$_state.$parts){
@@ -101,10 +101,10 @@ $230618CascadeDiagram.prototype.$_update = function(){
 
 		$2 = this.$h - $scaleHeight - $barScaleIndent - $barTopIndent;
 		for ($1 = 0 ; $1 <= this.$_state.$parts.length ; ++$1){
-			$context.beginPath();
+			/*$context.beginPath();
 			$context.moveTo($1 * $w,0); //
 			$context.lineTo($1 * $w,this.$h); //
-			$context.stroke();
+			$context.stroke();*/
 
 			$context.save();
 			$context.fillStyle = '#000';
