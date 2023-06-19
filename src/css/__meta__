@@ -35,7 +35,8 @@
                     "230531_waiting.css",
                     "230606_table.css",
                     "stub.css",
-                    "230614_multi_hor_bar_chart.css"
+                    "230614_multi_hor_bar_chart.css",
+                    "230618_cascade_diagram.css"
                 ]
             }
         }
