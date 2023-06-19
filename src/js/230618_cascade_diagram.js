@@ -85,7 +85,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			$context.translate($1 * $w + $w / 2, this.$h);
 			$context.rotate(-Math.PI/3);
 			$context.textAlign = "right";
-			$context.fillText($1 ? this.$_state.$parts[$1 - 1].$title : this.$_state.$title, $w, 0);
+			$context.fillText($1 ? this.$_state.$parts[$1 - 1].$title : this.$_state.$title, $w / $cosAlpha, 0);
 			$context.restore();
 		}
 	}
