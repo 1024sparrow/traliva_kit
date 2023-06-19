@@ -76,17 +76,16 @@ $230616LineChart.prototype.$_update = function(){
 	};
 	console.log('h:'+this.$e.height+'\tw:'+this.$e.width)
 		ctx.textAlign = 'center';
-
-	var maxH = 0, minH = 0;
+	var maxH = this.$_state.$data.datasets[0].data[0], minH = this.$_state.$data.datasets[0].data[0];
 	for (const [i, dataset] of this.$_state.$data.datasets.entries()){
 		const points = dataset.data;
 		const maxValue = Math.max(...points);
 		const minValue = Math.min(...points);
 		if (maxValue > maxH){
-			maxH = maxValue+this.$chartPadding*2;
+			maxH = maxValue;
 		}
 		if (minValue < minH){
-			minH = minValue-this.$chartPadding*2;
+			minH = minValue;
 		}
 	};
 
