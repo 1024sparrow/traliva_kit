@@ -29,7 +29,7 @@ $230618CascadeDiagram.prototype.$processStateChanges = function(s){
 };
 $230618CascadeDiagram.prototype.$_update = function(){
 	var
-		$1, $2,
+		$1, $2, $3,
 		$context = this.$e.getContext('2d'),
 		$w,
 		$fontSize,
@@ -63,13 +63,13 @@ $230618CascadeDiagram.prototype.$_update = function(){
 		$w = this.$w / (this.$_state.$parts.length + 1);
 
 		// подбираем шрифт для шкалы
-		/*for ($fontSize = 12 ; $fontSize >= 7 ; --$fontSize){
+		$3 = Math.sqrt($w * $w + $scaleHeight * $scaleHeight);
+		for ($fontSize = 12 ; $fontSize >= 7 ; --$fontSize){
 			$context.font = '' + $fontSize + 'px arial';
+			$2 = $3 - $fontSize * $sinAlpha / $cosAlpha;
 			$ok = true;
 			for ($1 of $labels){
-				$2 = $context.measureText($1).width * $cosAlpha + 1.5 * $fontSize * $sinAlpha;
-				console.log('230619 ', $2, $w);
-				if ($2 >= $w){
+				if ($context.measureText($1).width >= $2){
 					$ok = false;
 					break;
 				}
@@ -78,10 +78,6 @@ $230618CascadeDiagram.prototype.$_update = function(){
 				break;
 			}
 		}
-		console.log('230619 result font size: ', $fontSize);*/
-		$fontSize = 12;//
-
-		$context.font = '' + $fontSize + 'px arial';
 
 		for ($1 = 0 ; $1 <= this.$_state.$parts.length ; ++$1){
 			$context.moveTo($1 * $w,0); //
@@ -89,13 +85,11 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			$context.stroke();
 
 			$context.save();
-			$context.translate($1 * $w + $w / 2 - $fontSize * $sinAlpha, this.$h - $scaleHeight);
+			$context.translate($1 * $w + $w / 2, this.$h - $scaleHeight);
 			$context.rotate(-Math.PI/3);
 			$context.textAlign = "right";
 			$context.textBaseline = 'top';
-			//$context.fillText($1 ? this.$_state.$parts[$1 - 1].$title : this.$_state.$title, $w / $cosAlpha, 0);
-
-			$context.fillText('avyrvalg', 0,0);
+			$context.fillText($1 ? this.$_state.$parts[$1 - 1].$title : this.$_state.$title, 0, 0);
 			$context.restore();
 		}
 	}
