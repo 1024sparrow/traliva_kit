@@ -104,15 +104,12 @@ $230614MultiHorBarChart.prototype.$_update = function(){
 			$4 = $5;
 		}
 	}
-	//console.log('230616: ', $4);//
-	//$4 = '' + (this.$w - $4) + 'px'; // ширина второй колоки в виде строки
 	$4 = this.$w - $4; // ширина второй колоки в виде числа
 	for ($1 = 0 ; $1 < this.$containers.length ; ++$1){
 		$3 = this.$containers[$1];
 		$3.$eDiagram.style.width = '' + $4 + 'px';
 		$3.$eDiagram.width = $4;
 		$3.$eDiagram.height = this.$constItemHeight - 4; // 4 - магическое число. Я так и не нашёл способа избавиться от этого отступа в 4 пиксела.
-		//$3.$eDiagramTd.style.height = '' + this.$constItemHeight + 'px';
 	}
 	for (
 		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
@@ -133,12 +130,20 @@ $230614MultiHorBarChart.prototype.$_updateListItem = function($a_element, $a_des
 	var
 		$context = $a_element.getContext('2d'),
 		$w = $a_element.width,
-		$h = $a_element.height
+		$h = $a_element.height,
+		$ww = $w - 64,
+		$hh = $h - 10,
+		$h0 = 5
 	;
-	$context.fillStyle = '#afa';
-	$context.fillRect(0,5,$w - 5,$h - 10);
-	//$context.crearRect(0, 0, this.$w, this);
 	if ($a_descriptor){
+		$context.fillStyle = '#434f59';
+		$context.fillRect(0, $h0, $ww * $a_descriptor.$plan, $hh / 3);
+
+		$context.fillStyle = '#808284';
+		$context.fillRect(0, $h0 + $hh/3, $ww * $a_descriptor.$planSkor, $hh / 3);
+
+		$context.fillStyle = '#ed1c24';
+		$context.fillRect(0, $h0 + 2 * $hh/3, $ww * $a_descriptor.$fact, $hh / 3);
 	}
 	else{
 	}
