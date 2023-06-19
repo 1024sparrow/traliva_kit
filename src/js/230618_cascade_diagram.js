@@ -29,7 +29,7 @@ $230618CascadeDiagram.prototype.$processStateChanges = function(s){
 };
 $230618CascadeDiagram.prototype.$_update = function(){
 	var
-		$1, $2, $3,
+		$1, $2, $3, $title,
 		$accumulator = 0,
 		$constMinFontSize = 10,
 		$constMaxFontSize = 16,
@@ -110,18 +110,22 @@ $230618CascadeDiagram.prototype.$_update = function(){
 			$context.fillStyle = '#000';
 			$context.translate($1 * $w + $w / 2, this.$h - $scaleHeight);
 			$context.rotate(-Math.PI/6);
-			$context.textAlign = "right";
+			$context.textAlign = 'right';
 			$context.textBaseline = 'top';
 			$context.fillText($labels[$1], 0, 0);
 			$context.restore();
 
 			if ($1){
 				$3 = $2 * this.$_state.$parts[$1 - 1].$value /100.;
+				$title = '' + this.$_state.$parts[$1 - 1].$value + ' %';
 			}
 			else{
 				$3 = $2;
+				$title = '' + this.$_state.$value;
 			}
 			$context.fillStyle = $1 ? '#1d2435' : '#670000';
+			$context.textBaseline = 'bottom';
+			$context.textAlign = 'center';
 			if ($3 > $constMinBarHeight){ // ненулевой столбец (ненулевой высоты)
 				$context.fillRect(
 					$1 * $w + $barScaleIndent,
@@ -129,6 +133,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 					$w - 2 * $barScaleIndent,
 					$3
 				);
+				$context.fillText($title, $1 * $w + $w / 2, this.$h - $scaleHeight - $barScaleIndent - $3 - $accumulator - $barScaleIndent, $w);
 			}
 			else{
 				if ($accumulator <= $constMinBarHeight){ // нулевой столбец у нижней границы
@@ -138,6 +143,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 						$w - 2 * $barScaleIndent,
 						$constMinBarHeight
 					);
+					$context.fillText($title, $1 * $w + $w / 2, this.$h - $scaleHeight - $barScaleIndent - $constMinBarHeight - $barScaleIndent, $w);
 				}
 				else if ($accumulator >= ($2 - $constMinBarHeight)){ // нулевой столбец у верхней границы
 					$context.fillRect(
@@ -146,6 +152,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 						$w - 2 * $barScaleIndent,
 						$constMinBarHeight
 					);
+					$context.fillText($title, $1 * $w + $w / 2, $barTopIndent - $barScaleIndent, $w);
 				}
 				else{ // нулевой столбце не у границы
 					$context.fillRect(
@@ -154,6 +161,7 @@ $230618CascadeDiagram.prototype.$_update = function(){
 						$w - 2 * $barScaleIndent,
 						$constMinBarHeight
 					);
+					$context.fillText($title, $1 * $w + $w / 2, this.$h - $scaleHeight - $barScaleIndent - $3 - $accumulator - $barScaleIndent, $w);
 				}
 			}
 			if ($1){
