@@ -32,7 +32,7 @@ function $230614MultiHorBarChart($p_wContainer, $p_options, $p_widgets){
 		(function($self){
 			return function($event) {
 				var
-					$1 = $self.$scrollPos + $event.deltaY/10,
+					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemHeight / 120,
 					$2 = $self.$_state.$list.length * $self.$constItemHeight,
 					$3 = $2 - $self.$h
 				;
