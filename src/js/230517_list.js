@@ -14,14 +14,9 @@ registerHelp('$230517List', {
 #USAGE_END#traliva_kit_debug##
 function $230517List($p_wContainer, $p_options, $p_widgets){
 	$Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
-	// ...
-	var
-		$itemHeight = 24,
-		$1, $2
-	;
+	var $1, $2;
 	this.$constItemHeight = 24;
 	this.$_tt = document.createElement('div');
-	//this.$boris = $2;
 	this.$containers = [];
 	this.$w = 0;
 	this.$h = 0;
