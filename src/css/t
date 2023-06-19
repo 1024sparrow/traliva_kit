@@ -127,3 +127,11 @@
 #USAGE_BEGIN#TralivaKit__230618CascadeDiagram##
 {%% 230618_cascade_diagram.css %%}
 #USAGE_END#TralivaKit__230618CascadeDiagram##
+
+#USAGE_BEGIN#TralivaKit__20230615MyComponent##
+{%% 20230615_my_component.css %%}
+#USAGE_END#TralivaKit__20230615MyComponent##
+
+#USAGE_BEGIN#TralivaKit__230616LineChart##
+{%% 230616_line_chart.css %%}
+#USAGE_END#TralivaKit__230616LineChart##

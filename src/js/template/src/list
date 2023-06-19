@@ -31,3 +31,5 @@ ScreenKeyboard screen_keyboard.js
 Stub stub.js
 230614MultiHorBarChart 230614_multi_hor_bar_chart.js
 230618CascadeDiagram 230618_cascade_diagram.js
+20230615MyComponent 20230615_my_component.js
+230616LineChart 230616_line_chart.js
