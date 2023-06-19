@@ -136,14 +136,19 @@ $230614MultiHorBarChart.prototype.$_updateListItem = function($a_element, $a_des
 		$h0 = 5
 	;
 	if ($a_descriptor){
+		$context.textBaseline = 'middle';
+
 		$context.fillStyle = '#434f59';
 		$context.fillRect(0, $h0, $ww * $a_descriptor.$plan, $hh / 3);
+		$context.fillText('' + $a_descriptor.$plan, $ww * $a_descriptor.$plan + $h0, $h0 + $hh/6);
 
 		$context.fillStyle = '#808284';
 		$context.fillRect(0, $h0 + $hh/3, $ww * $a_descriptor.$planSkor, $hh / 3);
+		$context.fillText('' + $a_descriptor.$planSkor, $ww * $a_descriptor.$planSkor + $h0, $h0 + $hh/2);
 
 		$context.fillStyle = '#ed1c24';
 		$context.fillRect(0, $h0 + 2 * $hh/3, $ww * $a_descriptor.$fact, $hh / 3);
+		$context.fillText('' + $a_descriptor.$fact, $ww * $a_descriptor.$fact + $h0, $h0 + 5 * $hh/6);
 	}
 	else{
 	}
