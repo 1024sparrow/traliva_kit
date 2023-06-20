@@ -14,8 +14,6 @@ function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
 	this.$constScaleHeight = 32;
 
 	this.$e = $Traliva.$createElement('<canvas traliva="$1"></canvas>', this, '$traliva_kit__230620MultiVertBarChart');
-
-	//this.$_tt = $Traliva.$createElement('<table><tr traliva="$eFirstRow"></tr><tr taliva="$eSecondRow"></tr></table>', this, '$traliva_kit__230614MultiHorBarChart');
 	this.$w = 0;
 	this.$h = 0;
 	this.$scrollPos = 0;
@@ -32,13 +30,12 @@ function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
 		'wheel',
 		(function($self){
 			return function($event) {
-				//console.log('230620: ', $event.deltaY);
 				var
 					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemWidth / 120,
 					$2 = $self.$1.width,
-					$3 = $2 - $self.$w - 4
+					$3 = $2 - $self.$w
 				;
-				if ($1 < $2){
+				if ($self.$w){
 					$self.$scrollPos = ($1 < $3) ? $1 : $3;
 				}
 				$self.$_update();
@@ -79,8 +76,11 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 		$barHeight = $barY - $topIndent
 	;
 
-	if (this.$scrollPos > this.$_state.$list.length * this.$constItemWidth){
-		this.$scrollPos = this.$_state.$list.length * this.$constItemWidth - this.$w;
+	$1 = this.$scrollPos;
+	$2 = this.$1.width;
+	$3 = $2 - this.$w;
+	if (this.$w){
+		this.$scrollPos = ($1 < $3) ? $1 : $3;
 	}
 	if (this.$scrollPos < 0){
 		this.$scrollPos = 0;
