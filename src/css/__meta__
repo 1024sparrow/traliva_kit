@@ -39,7 +39,8 @@
                     "230618_cascade_diagram.css",
                     "20230615_my_component.css",
                     "230616_line_chart.css",
-                    "230619_h_right_bar.css"
+                    "230619_h_right_bar.css",
+                    "230620_multi_vert_bar_chart.css"
                 ]
             }
         }
