@@ -143,3 +143,7 @@
 #USAGE_BEGIN#TralivaKit__230620CascadeDiagram##
 {%% 230620_cascade_diagram.css %%}
 #USAGE_END#TralivaKit__230620CascadeDiagram##
+
+#USAGE_BEGIN#TralivaKit__230620MultiVertBarChart##
+{%% 230620_multi_vert_bar_chart.css %%}
+#USAGE_END#TralivaKit__230620MultiVertBarChart##
