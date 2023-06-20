@@ -38,7 +38,8 @@
                     "230614_multi_hor_bar_chart.js",
                     "20230615_my_component.js",
                     "230616_line_chart.js",
-                    "230619_h_right_bar.js"
+                    "230619_h_right_bar.js",
+                    "230620_cascade_diagram.js"
                 ]
             }
         }
