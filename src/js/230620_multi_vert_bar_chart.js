@@ -64,11 +64,19 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 		$1, $2, $3, $4, $5, $6, $7,
 		$context,
 		$w = 0,
+		$k,
+		$maxBarValue = 0,
 		$containers = [],
 		$containerCand,
 		$constDiadgramWidth = 96,
+		//$constDiadgramWidth = 48,
 		$constDiagramIndent = 16,
-		$scaleHeight = 16
+		$scaleHeight = 16, // от нижней границы до верхней линии текста
+		$textIndentBottom = 2, // от верхней линии текста подписи до начала столбца
+		$textIndentTop = 2, // от столбца до нижней линии текста со значением
+		$topIndent = 16, // от максимально возможной высоты столбца до верхней границы
+		$barY = this.$h - $scaleHeight - $textIndentBottom,
+		$barHeight = $barY - $topIndent
 	;
 
 	if (this.$scrollPos > this.$_state.$list.length * this.$constItemWidth){
@@ -97,14 +105,22 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 		$containerCand.$xx = $3;
 		$w = $3;
 		$containers.push($containerCand);
+
+		for ($4 of this.$_state.$options.$fields){ // boris stub
+		//for ($4 of this.$options.$fields){
+			$5 = $1[$4.$varName];
+			if ($5 > $maxBarValue){
+				$maxBarValue = $5;
+			}
+		}
 	}
 	console.log('230620: ', $w);
 	this.$1.width = $w;
 
-	$context.beginPath();
+	/*$context.beginPath();
 	$context.moveTo(0, this.$h - $scaleHeight);
 	$context.lineTo($w, this.$h - $scaleHeight);
-	$context.stroke();
+	$context.stroke();*/
 
 	for ($1 = 0 ; $1 < $containers.length ; ++$1){
 		//$context.fillText(this.$_state.$list.$title);
@@ -113,14 +129,35 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 		$context.lineTo($containers[$1].$xx, this.$h - $scaleHeight - 2);
 		$context.stroke();
 
-	$context.textBaseline = 'top';
-	$context.textAlign = 'center';
+		$context.textBaseline = 'top';
+		$context.textAlign = 'center';
+		$context.fillStyle = '#000';
 		$context.fillText(
 			this.$_state.$list[$1].$title,
 			($containers[$1].$x + $containers[$1].$xx) / 2,
 			this.$h - $scaleHeight
 			//$containers[$1].$xx
 		);
+
+		$context.textBaseline = 'bottom';
+		$2 = 0;
+		for ($4 of this.$_state.$options.$fields){ // boris stub
+		//for ($4 of this.$options.$fields){
+			$context.fillStyle = $4.$color;
+			$k = this.$_state.$list[$1][$4.$varName] / $maxBarValue;
+			$context.fillRect(
+				$containers[$1].$x + ($containers[$1].$xx - $containers[$1].$x) * $2 / this.$_state.$options.$fields.length,
+				$barY - $barHeight * $k,
+				($containers[$1].$xx - $containers[$1].$x) / this.$_state.$options.$fields.length,
+				$barHeight * $k
+			);
+			$context.fillText(
+				this.$_state.$list[$1][$4.$varName],
+				$containers[$1].$x + ($containers[$1].$xx - $containers[$1].$x) * ($2 + .5) / this.$_state.$options.$fields.length,
+				$barY - $barHeight * $k - $textIndentTop
+			);
+			++$2;
+		}
 	}
 
 
