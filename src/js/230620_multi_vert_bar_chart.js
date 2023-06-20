@@ -7,17 +7,15 @@ registerHelp('$230620MultiVertBarChart', {
 });
 #USAGE_END#traliva_kit_debug##
 function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
+	$p_options
 	$Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
 	var $1, $2;
-	this.$constItemWidth = 164;
+	this.$constItemWidth = 64;
 	this.$constScaleHeight = 32;
-	this.$_tt = document.createElement('table');
-	this.$eFirstRow = this.$_tt.insertRow();
-	this.$eSecondRow = this.$_tt.insertRow();
+
+	this.$e = $Traliva.$createElement('<canvas traliva="$1"></canvas>', this, '$traliva_kit__230620MultiVertBarChart');
 
 	//this.$_tt = $Traliva.$createElement('<table><tr traliva="$eFirstRow"></tr><tr taliva="$eSecondRow"></tr></table>', this, '$traliva_kit__230614MultiHorBarChart');
-	this.$_tt.style.margin = '0px';
-	this.$containers = [];
 	this.$w = 0;
 	this.$h = 0;
 	this.$scrollPos = 0;
@@ -30,26 +28,25 @@ function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
 			$self.$_update();
 		}
 	})(this);
-	this.$_tt.addEventListener(
+	this.$e.addEventListener(
 		'wheel',
 		(function($self){
 			return function($event) {
 				//console.log('230620: ', $event.deltaY);
 				var
-					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemWidth / 114 / 10,
-					$2 = $self.$_state.$list.length * $self.$constItemWidth,
-					$3 = $2 - $self.$w - 1
+					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemWidth / 120,
+					$2 = $self.$1.width,
+					$3 = $2 - $self.$w - 4
 				;
 				if ($1 < $2){
 					$self.$scrollPos = ($1 < $3) ? $1 : $3;
 				}
-				console.log('    230620: ', $self.$scrollPos, $self.$w);
 				$self.$_update();
 			}
 		})(this)
 	);
-	this.$_tt.className = '$traliva_kit__230620MultiVertBarChart';
-	$p_wContainer.$setContent(this.$_tt);
+	//this.$_tt.className = '$traliva_kit__230620MultiVertBarChart';
+	$p_wContainer.$setContent(this.$e);
 };
 $230620MultiVertBarChart.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
 $230620MultiVertBarChart.prototype.constructor = $230620MultiVertBarChart;
@@ -63,7 +60,16 @@ $230620MultiVertBarChart.prototype.$processStateChanges = function(s){
 	}
 };
 $230620MultiVertBarChart.prototype.$_update = function(){
-	var $1, $2, $3, $4, $5, $6, $7;
+	var
+		$1, $2, $3, $4, $5, $6, $7,
+		$context,
+		$w = 0,
+		$containers = [],
+		$containerCand,
+		$constDiadgramWidth = 96,
+		$constDiagramIndent = 16,
+		$scaleHeight = 16
+	;
 
 	if (this.$scrollPos > this.$_state.$list.length * this.$constItemWidth){
 		this.$scrollPos = this.$_state.$list.length * this.$constItemWidth - this.$w;
@@ -71,77 +77,69 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 	if (this.$scrollPos < 0){
 		this.$scrollPos = 0;
 	}
+	this.$1.height = this.$h;
 
-	$1 = this.$w / this.$constItemWidth + 1;
-	for ($2 = this.$containers.length ; $2 < $1 ; ++$2){
-		$4 = this.$eSecondRow.insertCell();
-		$4.style.textAlign = 'center';
-		$4.style.padding = '0 10px';
-		$4.style.borderTop = '1px solid #808284';
+	$context = this.$1.getContext('2d');
+	$context.font = '10px arial';
+	//$context.textBaseline = 'top';
+	//$context.textAlign = 'center';
+	$3 = 0;
+	for ($1 of this.$_state.$list){
+		$2 = $context.measureText($1.$title).width;
+		if ($containers.length){
+			$3 += $constDiagramIndent;
+		}
+		$containerCand = {
+			$titleSize: $2
+		};
+		$containerCand.$x = $3;
+		$3 += ($2 < $constDiadgramWidth) ? $constDiadgramWidth : $2;
+		$containerCand.$xx = $3;
+		$w = $3;
+		$containers.push($containerCand);
+	}
+	console.log('230620: ', $w);
+	this.$1.width = $w;
 
-		$5 = this.$eFirstRow.insertCell();
-		$6 = document.createElement('canvas');
-		$6.height = this.$h - this.$constScaleHeight;
-		$6.width = this.$constItemWidth;
-		$5.appendChild($6);
-		this.$containers.push({$eTitle: $4, $eDiagram: $6, $eDiagramTd: $5});
-	}
-	for ($2 = 0 ; $2 < this.$containers.length ; ++$2){
-		this.$containers[$2].$eDiagram.width = this.$constItemWidth;
-		this.$containers[$2].$eDiagram.height = this.$h - this.$constScaleHeight;
-	}
-	for (
-		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemWidth);
-		$1 < this.$containers.length;
-		++$1, ++$2
-	){
-		$3 = this.$containers[$1];
-		$3.$eTitle.innerHTML =
-			$2 < this.$_state.$list.length ?
-				this.$_state.$list[$2].$title :
-				''
-		;
-	}
-	for (
-		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemWidth);
-		$1 < this.$containers.length;
-		++$1, ++$2
-	){
-		$3 = this.$containers[$1];
-		this.$_updateListItem(
-			$3.$eDiagram,
-			$2 < this.$_state.$list.length ?
-				this.$_state.$list[$2] :
-				undefined
+	$context.beginPath();
+	$context.moveTo(0, this.$h - $scaleHeight);
+	$context.lineTo($w, this.$h - $scaleHeight);
+	$context.stroke();
+
+	for ($1 = 0 ; $1 < $containers.length ; ++$1){
+		//$context.fillText(this.$_state.$list.$title);
+		$context.beginPath();
+		$context.moveTo($containers[$1].$x, this.$h - $scaleHeight - 2);
+		$context.lineTo($containers[$1].$xx, this.$h - $scaleHeight - 2);
+		$context.stroke();
+
+	$context.textBaseline = 'top';
+	$context.textAlign = 'center';
+		$context.fillText(
+			this.$_state.$list[$1].$title,
+			($containers[$1].$x + $containers[$1].$xx) / 2,
+			this.$h - $scaleHeight
+			//$containers[$1].$xx
 		);
 	}
-	this.$_tt.style.marginLeft = '-' + ((this.$scrollPos + this.$w) % this.$constItemWidth) + 'px';
-};
-$230620MultiVertBarChart.prototype.$_updateListItem = function($a_element, $a_descriptor){
-	var
-		$context = $a_element.getContext('2d'),
-		$w = $a_element.width,
-		$h = $a_element.height,
-		$ww = $w - 64,
-		$hh = $h - 10,
-		$h0 = 5
-	;
-	if ($a_descriptor){
-		$context.textBaseline = 'middle';
 
-		$context.fillStyle = '#434f59';
-		$context.fillRect(0, $h0, $ww * $a_descriptor.$plan, $hh / 3);
-		$context.fillText('' + $a_descriptor.$plan, $ww * $a_descriptor.$plan + $h0, $h0 + $hh/6);
 
-		$context.fillStyle = '#808284';
-		$context.fillRect(0, $h0 + $hh/3, $ww * $a_descriptor.$planSkor, $hh / 3);
-		$context.fillText('' + $a_descriptor.$planSkor, $ww * $a_descriptor.$planSkor + $h0, $h0 + $hh/2);
 
-		$context.fillStyle = '#ed1c24';
-		$context.fillRect(0, $h0 + 2 * $hh/3, $ww * $a_descriptor.$fact, $hh / 3);
-		$context.fillText('' + $a_descriptor.$fact, $ww * $a_descriptor.$fact + $h0, $h0 + 5 * $hh/6);
-	}
-	else{
-	}
+	//this.$1.width = 2*this.$w;
+	//this.$1.height = this.$h;
+
+	/*$context = this.$1.getContext('2d');
+	$context.beginPath();
+	$context.moveTo(0,0);
+	$context.lineTo(this.$w,this.$h);
+	$context.stroke();
+
+	$context.beginPath();
+	$context.moveTo(this.$w,0);
+	$context.lineTo(0,this.$h);
+	$context.stroke();*/
+
+	this.$1.style.left = '-' + this.$scrollPos + 'px';
+
 };
 //$230620MultiVertBarChart.$widgetsFields = [];
