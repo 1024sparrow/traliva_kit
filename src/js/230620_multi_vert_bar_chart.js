@@ -9,8 +9,13 @@ registerHelp('$230620MultiVertBarChart', {
 function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
 	$Traliva.$WidgetStateSubscriber.call(this, $p_wContainer, $p_options, $p_widgets);
 	var $1, $2;
-	this.$constItemHeight = 64;
+	this.$constItemWidth = 164;
+	this.$constScaleHeight = 32;
 	this.$_tt = document.createElement('table');
+	this.$eFirstRow = this.$_tt.insertRow();
+	this.$eSecondRow = this.$_tt.insertRow();
+
+	//this.$_tt = $Traliva.$createElement('<table><tr traliva="$eFirstRow"></tr><tr taliva="$eSecondRow"></tr></table>', this, '$traliva_kit__230614MultiHorBarChart');
 	this.$_tt.style.margin = '0px';
 	this.$containers = [];
 	this.$w = 0;
@@ -30,9 +35,9 @@ function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
 		(function($self){
 			return function($event) {
 				var
-					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemHeight / 120,
-					$2 = $self.$_state.$list.length * $self.$constItemHeight,
-					$3 = $2 - $self.$h
+					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemWidth / 120,
+					$2 = ($self.$_state.$list.length + 1) * $self.$constItemWidth,
+					$3 = $2 - $self.$w
 				;
 				if ($1 < $2){
 					$self.$scrollPos = ($1 < $3) ? $1 : $3;
@@ -41,7 +46,7 @@ function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
 			}
 		})(this)
 	);
-	this.$_tt.className = '$traliva_kit__230614MultiHorBarChart';
+	this.$_tt.className = '$traliva_kit__230620MultiVertBarChart';
 	$p_wContainer.$setContent(this.$_tt);
 };
 $230620MultiVertBarChart.prototype = Object.create($Traliva.$WidgetStateSubscriber.prototype);
@@ -58,26 +63,26 @@ $230620MultiVertBarChart.prototype.$processStateChanges = function(s){
 $230620MultiVertBarChart.prototype.$_update = function(){
 	var $1, $2, $3, $4, $5, $6, $7;
 
-	if (this.$scrollPos > this.$_state.$list.length * this.$constItemHeight){
-		this.$scrollPos = this.$_state.$list.length * this.$constItemHeight - this.$h;
+	if (this.$scrollPos > this.$_state.$list.length * this.$constItemWidth){
+		this.$scrollPos = this.$_state.$list.length * this.$constItemWidth - this.$w;
 	}
 	if (this.$scrollPos < 0){
 		this.$scrollPos = 0;
 	}
 
-	$1 = this.$h / this.$constItemHeight + 1;
+	$1 = this.$h / this.$constItemWidth + 1;
 	for ($2 = this.$containers.length ; $2 < $1 ; ++$2){
-		$3 = this.$_tt.insertRow();
-		$4 = $3.insertCell();
-		$4.style.textAlign = 'right';
+		$4 = this.$eSecondRow.insertCell();
+		$4.style.textAlign = 'center';
 		$4.style.padding = '0 10px';
-		$5 = $3.insertCell();
+		$4.style.borderTop = '1px solid #808284';
+
+		$5 = this.$eFirstRow.insertCell();
 		$6 = document.createElement('canvas');
-		$6.height = this.$constItemHeight;
-		$6.style.width = '100%';
-		$4.style.borderRight = '1px solid #808284';
+		$6.height = this.$h - this.$constScaleHeight;
+		$6.style.width = '' + this.$constItemWidth + 'px';
 		$5.appendChild($6);
-		this.$containers.push({$eRow: $3, $eTitle: $4, $eDiagram: $6, $eDiagramTd: $5});
+		this.$containers.push({$eTitle: $4, $eDiagram: $6, $eDiagramTd: $5});
 	}
 
 
@@ -87,7 +92,7 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 	}
 	$4 = 0; // ширина первой колонки в виде числа
 	for (
-		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
+		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemWidth);
 		$1 < this.$containers.length;
 		++$1, ++$2
 	){
@@ -107,10 +112,10 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 		$3 = this.$containers[$1];
 		$3.$eDiagram.style.width = '' + $4 + 'px';
 		$3.$eDiagram.width = $4;
-		$3.$eDiagram.height = this.$constItemHeight - 4; // 4 - магическое число. Я так и не нашёл способа избавиться от этого отступа в 4 пиксела.
+		$3.$eDiagram.height = this.$h - this.$constScaleHeight; // 4 - магическое число. Я так и не нашёл способа избавиться от этого отступа в 4 пиксела.
 	}
 	for (
-		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
+		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemWidth);
 		$1 < this.$containers.length;
 		++$1, ++$2
 	){
@@ -122,7 +127,7 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 				undefined
 		);
 	}
-	this.$_tt.style.marginTop = '-' + this.$scrollPos%(this.$constItemHeight) + 'px';
+	this.$_tt.style.marginLeft = '-' + (this.$scrollPos % this.$constItemWidth) + 'px';
 };
 $230620MultiVertBarChart.prototype.$_updateListItem = function($a_element, $a_descriptor){
 	var
