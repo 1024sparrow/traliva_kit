@@ -34,14 +34,16 @@ function $230620MultiVertBarChart($p_wContainer, $p_options, $p_widgets){
 		'wheel',
 		(function($self){
 			return function($event) {
+				//console.log('230620: ', $event.deltaY);
 				var
-					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemWidth / 120,
-					$2 = ($self.$_state.$list.length + 1) * $self.$constItemWidth,
-					$3 = $2 - $self.$w
+					$1 = $self.$scrollPos + $event.deltaY * $self.$constItemWidth / 114 / 10,
+					$2 = $self.$_state.$list.length * $self.$constItemWidth,
+					$3 = $2 - $self.$w - 1
 				;
 				if ($1 < $2){
 					$self.$scrollPos = ($1 < $3) ? $1 : $3;
 				}
+				console.log('    230620: ', $self.$scrollPos, $self.$w);
 				$self.$_update();
 			}
 		})(this)
@@ -70,7 +72,7 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 		this.$scrollPos = 0;
 	}
 
-	$1 = this.$h / this.$constItemWidth + 1;
+	$1 = this.$w / this.$constItemWidth + 1;
 	for ($2 = this.$containers.length ; $2 < $1 ; ++$2){
 		$4 = this.$eSecondRow.insertCell();
 		$4.style.textAlign = 'center';
@@ -80,17 +82,14 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 		$5 = this.$eFirstRow.insertCell();
 		$6 = document.createElement('canvas');
 		$6.height = this.$h - this.$constScaleHeight;
-		$6.style.width = '' + this.$constItemWidth + 'px';
+		$6.width = this.$constItemWidth;
 		$5.appendChild($6);
 		this.$containers.push({$eTitle: $4, $eDiagram: $6, $eDiagramTd: $5});
 	}
-
-
-
 	for ($2 = 0 ; $2 < this.$containers.length ; ++$2){
-		this.$containers[$2].$eDiagram.style.width = '0px';
+		this.$containers[$2].$eDiagram.width = this.$constItemWidth;
+		this.$containers[$2].$eDiagram.height = this.$h - this.$constScaleHeight;
 	}
-	$4 = 0; // ширина первой колонки в виде числа
 	for (
 		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemWidth);
 		$1 < this.$containers.length;
@@ -102,17 +101,6 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 				this.$_state.$list[$2].$title :
 				''
 		;
-		$5 = $3.$eTitle.offsetWidth;
-		if ($5 > $4){
-			$4 = $5;
-		}
-	}
-	$4 = this.$w - $4; // ширина второй колоки в виде числа
-	for ($1 = 0 ; $1 < this.$containers.length ; ++$1){
-		$3 = this.$containers[$1];
-		$3.$eDiagram.style.width = '' + $4 + 'px';
-		$3.$eDiagram.width = $4;
-		$3.$eDiagram.height = this.$h - this.$constScaleHeight; // 4 - магическое число. Я так и не нашёл способа избавиться от этого отступа в 4 пиксела.
 	}
 	for (
 		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemWidth);
@@ -127,7 +115,7 @@ $230620MultiVertBarChart.prototype.$_update = function(){
 				undefined
 		);
 	}
-	this.$_tt.style.marginLeft = '-' + (this.$scrollPos % this.$constItemWidth) + 'px';
+	this.$_tt.style.marginLeft = '-' + ((this.$scrollPos + this.$w) % this.$constItemWidth) + 'px';
 };
 $230620MultiVertBarChart.prototype.$_updateListItem = function($a_element, $a_descriptor){
 	var
