@@ -1,0 +1,11 @@
+.$traliva_kit__230620MultiVertBarChart {
+	margin: 0;
+	border-spacing: 0;
+	border-collapse: collapse;
+	overflow: auto;
+}
+.$traliva_kit__230620MultiVertBarChart canvas {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+}
