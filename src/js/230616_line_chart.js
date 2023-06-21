@@ -26,7 +26,6 @@ function $230616LineChart($p_wContainer, $p_options, $p_widgets){
 
 	this.$e.height=200;
 	this.$e.width+=200;
-	this.$chartHeight = 200; // Высота графика
 	this.$chartPadding = 20; // Отступы графика от краев canvas
 };
 
@@ -102,7 +101,7 @@ $230616LineChart.prototype.$_update = function(){
 
 		for (const [i, value] of points.entries()){
 			const pointX = this.$chartPadding + (this.$e.width - this.$chartPadding * 2) * (i / (points.length - 1));
-			const pointY = this.$chartPadding + (this.$chartHeight - this.$chartPadding * 2) * (1 - (value - minH) / (maxH-minH));
+			const pointY = this.$chartPadding + (this.$e.height - this.$chartPadding * 3) * (1 - (value - minH) / (maxH-minH));
 			// Точка
 			ctx.moveTo(pointX, pointY);
 			ctx.arc(pointX, pointY, 3, 0, Math.PI * 2);
@@ -117,7 +116,7 @@ $230616LineChart.prototype.$_update = function(){
 		for (const [i, value] of points.entries()){
 			const pointX = this.$chartPadding + (this.$e.width - 2 * this.$chartPadding) * (i / (points.length - 1));
 
-			const pointY = this.$chartPadding + (this.$chartHeight - this.$chartPadding * 2) * (1 - (value - minH) / (maxH-minH));
+			const pointY = this.$chartPadding + (this.$e.height - this.$chartPadding * 3) * (1 - (value - minH) / (maxH-minH));
 			if (i === 0) {
 				ctx.moveTo(pointX, pointY);
 			} else {
@@ -128,7 +127,7 @@ $230616LineChart.prototype.$_update = function(){
 
 		for (const [i, value] of points.entries()){
 			const pointX = this.$chartPadding + (this.$e.width - this.$chartPadding * 2) * (i / (points.length - 1));
-			const pointY = this.$chartPadding + (this.$chartHeight - this.$chartPadding * 2) * (1 - (value - minH) / (maxH-minH));
+			const pointY = this.$chartPadding + (this.$e.height - this.$chartPadding * 3) * (1 - (value - minH) / (maxH-minH));
 
 			// Вывод значение точки над ней
 			ctx.fillText(value, pointX, pointY - 10);

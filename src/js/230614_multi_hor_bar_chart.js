@@ -19,6 +19,8 @@ function $230614MultiHorBarChart($p_wContainer, $p_options, $p_widgets){
 	this.$h = 0;
 	this.$scrollPos = 0;
 	this.$options = $p_options;
+	this.$maxW =0;
+	this.$minW =0;
 
 	$p_wContainer.$_onResized = (function($self){
 		return function($w, $h){
@@ -58,7 +60,7 @@ $230614MultiHorBarChart.prototype.$processStateChanges = function(s){
 	}
 };
 $230614MultiHorBarChart.prototype.$_update = function(){
-	var $1, $2, $3, $4, $5, $6, $7;
+	var $1, $2, $3, $4, $5, $6, $7;//, maxW = this.$_state.$list[0].$plan, minW = this.$_state.$list[0].$plan;
 
 	if (this.$scrollPos > this.$_state.$list.length * this.$constItemHeight){
 		this.$scrollPos = this.$_state.$list.length * this.$constItemHeight - this.$h;
@@ -83,10 +85,30 @@ $230614MultiHorBarChart.prototype.$_update = function(){
 	}
 
 
-
 	for ($2 = 0 ; $2 < this.$containers.length ; ++$2){
 		this.$containers[$2].$eDiagram.style.width = '0px';
+/*		if (this.$_state.$list[$2] > this.$maxW){
+			this.$maxW = this.$_state.$list[$2].$plan;
+		}
+		if (this.$_state.$list[$2] < this.$minW){
+			this.$minW = this.$_state.$list[$2].$plan;
+		}
+		if (this.$_state.$list[$2].$planScor > maxW){
+			maxW = this.$_state.$list[$2].$plan;
+		}
+		if (this.$_state.$list[$2].$planScor < minW){
+			minW = this.$_state.$list[$2].$plan;
+		}
+		if (this.$_state.$list[$2].$fact > maxW){
+			maxW = this.$_state.$list[$2].$plan;
+		}
+		if (this.$_state.$list[$2].$fact < minW){
+			minW = this.$_state.$list[$2].$plan;
+		}*/
 	}
+
+//		console.log('!!!!x\t'+this.$maxW);
+//		console.log('!!!!m\t'+this.$minW);
 	$4 = 0; // ширина первой колонки в виде числа
 	for (
 		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
@@ -116,10 +138,53 @@ $230614MultiHorBarChart.prototype.$_update = function(){
 		$1 < this.$containers.length;
 		++$1, ++$2
 	){
+		if($1 < this.$_state.$list.length){
+			console.log(this.$_state.$list[$1].$plan);
+				this.$maxW = this.$_state.$list[$1].$plan;
+				this.$minW = this.$_state.$list[$1].$plan;
+				break;
+		}
+	}
+	for (
+		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
+		$1 < this.$containers.length;
+		++$1, ++$2
+	){
+		console.log('iterator\t'+$1);
+		if($1 < this.$_state.$list.length){
+			console.log(this.$_state.$list[$1].$plan);
+			if (this.$_state.$list[$2].$plan > this.$maxW){
+				this.$maxW = this.$_state.$list[$1].$plan;
+			}
+			if (this.$_state.$list[$2].$plan < this.$minW){
+				this.$minW = this.$_state.$list[$1].$plan;
+			}
+			if (this.$_state.$list[$2].$planSkor > this.$maxW){
+				this.$maxW = this.$_state.$list[$1].$planSkor;
+			}
+			if (this.$_state.$list[$2].$planSkor < this.$minW){
+				this.$minW = this.$_state.$list[$1].$planSkor;
+			}
+			if (this.$_state.$list[$2].$fact > this.$maxW){
+				this.$maxW = this.$_state.$list[$1].$fact;
+			}
+			if (this.$_state.$list[$2].$fact < this.$minW){
+				this.$minW = this.$_state.$list[$1].$fact;
+			}
+		}
+	}
+		console.log('???x\t'+this.$maxW);
+		console.log('???m\t'+this.$minW);
+	for (
+		$1 = 0, $2 = parseInt(this.$scrollPos / this.$constItemHeight);
+		$1 < this.$containers.length;
+		++$1, ++$2
+	){
 		$3 = this.$containers[$1];
 		this.$_updateListItem(
 			$3.$eDiagram,
 			$2 < this.$_state.$list.length ?
+//				(this.$_state.$list[$2]-this.$minW)/(this.$maxW-this.$minW) :
 				this.$_state.$list[$2] :
 				undefined
 		);
@@ -139,16 +204,18 @@ $230614MultiHorBarChart.prototype.$_updateListItem = function($a_element, $a_des
 		$context.textBaseline = 'middle';
 
 		$context.fillStyle = '#434f59';
-		$context.fillRect(0, $h0, $ww * $a_descriptor.$plan, $hh / 3);
-		$context.fillText('' + $a_descriptor.$plan, $ww * $a_descriptor.$plan + $h0, $h0 + $hh/6);
-
+		$context.fillRect(0, $h0, $ww * ($a_descriptor.$plan-this.$minW)/(this.$maxW-this.$minW), $hh / 3);
+		$context.fillText('' + $a_descriptor.$plan, $ww * ($a_descriptor.$plan-this.$minW)/(this.$maxW-this.$minW) + $h0, $h0 + $hh/6);
+		console.log('!!!!1\t'+ ($a_descriptor.$plan-this.$minW)/(this.$maxW-this.$minW));
 		$context.fillStyle = '#808284';
-		$context.fillRect(0, $h0 + $hh/3, $ww * $a_descriptor.$planSkor, $hh / 3);
-		$context.fillText('' + $a_descriptor.$planSkor, $ww * $a_descriptor.$planSkor + $h0, $h0 + $hh/2);
+		$context.fillRect(0, $h0 + $hh/3, $ww * ($a_descriptor.$planSkor-this.$minW)/(this.$maxW-this.$minW), $hh / 3);
+		$context.fillText('' + $a_descriptor.$planSkor, $ww *($a_descriptor.$planSkor-this.$minW)/(this.$maxW-this.$minW) + $h0, $h0 + $hh/2);
 
+		console.log('!!!!2\t'+ ($a_descriptor.$planSkor-this.$minW)/(this.$maxW-this.$minW));
 		$context.fillStyle = '#ed1c24';
-		$context.fillRect(0, $h0 + 2 * $hh/3, $ww * $a_descriptor.$fact, $hh / 3);
-		$context.fillText('' + $a_descriptor.$fact, $ww * $a_descriptor.$fact + $h0, $h0 + 5 * $hh/6);
+		$context.fillRect(0, $h0 + 2 * $hh/3, $ww * ($a_descriptor.$fact-this.$minW)/(this.$maxW-this.$minW), $hh / 3);
+		$context.fillText('' + $a_descriptor.$fact, $ww * ($a_descriptor.$fact-this.$minW)/(this.$maxW-this.$minW) + $h0, $h0 + 5 * $hh/6);
+		console.log('!!!!3\t'+ ($a_descriptor.$fact-this.$minW)/(this.$maxW-this.$minW));
 	}
 	else{
 	}
