@@ -123,39 +123,33 @@ $230606Table_TableViewWidget.prototype.$_updateSizes = function(){
 	//здесь должны убрать предыдущие элементы "col" из "table"-ов
 	removeColItemsFromTable(this._eHHTable);
 	removeColItemsFromTable(this._eBodyTable);
+
+	var tmp, i, maxWidth, row;
 	
 	if (this.hasOwnProperty('_eBodyTable') && this.hasOwnProperty('_eHHTable')
 		&& this._tableData && this._tableData.hasOwnProperty('h')){
-		for (var i = 0 ; i < this._tableData.h.length ; i++){
-			var maxWidth = 0;
+		for (i = 0 ; i < this._tableData.h.length ; i++){
+			maxWidth = 0;
 			if (this._eBodyTable.rows.length){
-				// boris here: здесь не по первой строке одной надо, а циклом по всем строкам
-				var row = this._eBodyTable.rows[0];
-				if (row && row.cells.length > i)
-					maxWidth = row.cells[i].offsetWidth;
-
-				this._eBodyTable.rows[0].cells[i].children[0].style.width = '' + maxWidth + 'px';//
+				for (row of this._eBodyTable.rows){
+					if (row && row.cells.length > i)
+						tmp = row.cells[i].offsetWidth;
+					if (tmp > maxWidth)
+						maxWidth = tmp;
+				}
 			}
 			if (this._hhElements[i]){
-				var tmp = this._hhElements[i].offsetWidth;
+				tmp = this._hhElements[i].offsetWidth;
 				if (tmp > maxWidth)
 					maxWidth = tmp;
 
 				this._hhElements[i].children[0].style.width = '' + maxWidth + 'px';//
 			}
-			/*var eHHCol = document.createElement('col');
-			var eBodyCol = document.createElement('col');
-			eHHCol.style.width = maxWidth + 'px';
-			eBodyCol.style.width = maxWidth + 'px';
-			this._eHHTable.appendChild(eHHCol);
-			this._eBodyTable.appendChild(eBodyCol);*/
-
-			//this._eHHTable.rows[this._eHHTable.rows.length - 1].cells[2].children[0].style.width = '200px';
-			//this._eHHTable.rows[0].cells[2].children[0].style.width = '200px';
+			for (row of this._eBodyTable.rows){
+				row.cells[i].children[0].style.width = '' + maxWidth + 'px';// */
+			}
 		}
 	}
-	else
-		console.log(1);
 	
 	var totalWidth = 0;
 	var totalHeight = 0;
@@ -212,7 +206,7 @@ $230606Table_TableViewWidget.prototype.$_reset = function(table_data){
 		
 		this._eHHTable = document.createElement('table');
 		this._eHHTable.style.borderCollapse = 'collapse';	
-		this._eHHTable.style.background = '#ccc';
+		this._eHHTable.style.background = '#ddd';
 		this._eHHTable.style.color = '#1d2435';
 		this._eHH.style.width = tableWidthMaxLimit + 'px';
 		this._eHH.style.minWidth = tableWidthMaxLimit + 'px';
@@ -266,7 +260,8 @@ $230606Table_TableViewWidget.prototype.$_reset = function(table_data){
 						cell.style.margin = '0';
 						cell.style.border = '1px solid #313438';
 						var contentDiv = document.createElement('div');
-						contentDiv.setAttribute('style', 'font-weight:bold; text-align:center;');
+						contentDiv.style.fontWeight = 'bold';
+						contentDiv.style.textAlign = 'center';
 						contentDiv.innerHTML = currentText;
 						cell.appendChild(contentDiv);
 					}
@@ -293,7 +288,7 @@ $230606Table_TableViewWidget.prototype.$_resetBody = function(table_data){
 		return;
 	this._eBodyTable = document.createElement('table');
 	this._eBodyTable.id = "_eBodyTable";
-	this._eBodyTable.style.background = '#fff';
+	//this._eBodyTable.style.background = '#fff';
 	this._eBodyTable.style.borderCollapse = 'collapse';
 
 	var tableWidthMaxLimit = table_data.h.length * $230606Table_TableViewWidget__maxColumnWidth;
@@ -317,7 +312,7 @@ $230606Table_TableViewWidget.prototype.$_resetBody = function(table_data){
 				if (cellData.hasOwnProperty('t')){
 					//eCell.innerHTML = cellData.t;
 					var contentDiv = document.createElement('div');
-					contentDiv.setAttribute('style', 'font-weight:bold; text-align:center;');
+					contentDiv.style.textAlign = 'center';
 					contentDiv.innerHTML = cellData.t;
 					eCell.appendChild(contentDiv);
 				}
