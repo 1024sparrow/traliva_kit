@@ -143,10 +143,10 @@ $230606Table_TableViewWidget.prototype.$_updateSizes = function(){
 				if (tmp > maxWidth)
 					maxWidth = tmp;
 
-				this._hhElements[i].children[0].style.width = '' + maxWidth + 'px';//
+				this._hhElements[i].children[0].style.width = '' + maxWidth + 'px';
 			}
 			for (row of this._eBodyTable.rows){
-				row.cells[i].children[0].style.width = '' + maxWidth + 'px';// */
+				row.cells[i].children[0].style.width = '' + maxWidth + 'px';
 			}
 		}
 	}
