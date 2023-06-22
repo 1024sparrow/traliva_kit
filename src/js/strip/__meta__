@@ -3,7 +3,7 @@
         {
             "target": "strip.js",
             "source":{
-                "template": "t",
+                "template": "t.js",
                 "list":[
                     "process_state_changes.js",
                     "__update_sizes.js"
