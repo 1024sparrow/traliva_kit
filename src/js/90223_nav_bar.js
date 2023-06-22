@@ -57,9 +57,10 @@ function $90223NavBar($p_wContainer, $p_options, $p_widgets){
 			};})(this, $0.$id));
 		}
 		$p_wContainer.$_onResized = (function($1, $2){return function($w, $h){
-			var $0 = $2.getBoundingClientRect().width;
-			$0 = $0 < $w ? ($w - $0)/2 : 0;
-			$1.style.paddingLeft = '' + $0 + 'px';
+			//var $0 = $2.getBoundingClientRect().width;
+			//$0 = $0 < $w ? ($w - $0)/2 : 0;
+			//$1.style.paddingLeft = '' + $0 + 'px';
+			$2.style.margin = 'auto';
 		};})($p_wContainer.$_div, $eTable);
 		$p_wContainer.$setContent($eTable);
 	}
