@@ -1,8 +1,10 @@
 'use strict';
 var $TralivaKit;
+#USAGE_BEGIN#traliva_kit_debug##
 if ($TralivaKit)
     console.log('epic fail: $TralivaKit is not empty');
 else{
+#USAGE_END#traliva_kit_debug##
     $TralivaKit = {__d:{help:{}}};
 (function($p_namespace){
 
@@ -92,4 +94,6 @@ $p_namespace.list = function(){
 #USAGE_END#traliva_kit_debug##
 
 })($TralivaKit);
+#USAGE_BEGIN#traliva_kit_debug##
 }
+#USAGE_END#traliva_kit_debug##
