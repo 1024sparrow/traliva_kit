@@ -18,7 +18,7 @@ do
         filename=$i
         #echo "filename: $filename"
         #echo "==================="
-        cand="${cand}\n#USAGE_BEGIN#TralivaKit__${classname}##\n{%% ${filename} %%}\n\$p_namespace.\$${classname} = \$${classname}\n#USAGE_END#TralivaKit__${classname}##"
+        cand="${cand}\n#USAGE_BEGIN#TralivaKit__${classname}##\n{%% ${filename} %%}\n\$p_namespace.\$${classname} = \$${classname};\n#USAGE_END#TralivaKit__${classname}##"
     fi
     a=$[ ! a ]
 done

@@ -9,7 +9,7 @@ registerHelp('$230522Group', {
 });
 #USAGE_END#traliva_kit_debug##
 function $230522Group($p_wContainer, $p_options, $p_widgets){
-	if (this.constructor !== $230522Group){ // это не конструктор, а тупо функция
+	if (!this){ // это не конструктор, а тупо функция
 		// сокращённая семантика для сокращения лейаутов.
 		// Должны вернуть фрагмент описателя лейаута.
 		// p_wContainer - это не $Traliva.$Widget, а часть описания лейаута (объект или строка).

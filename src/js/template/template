@@ -8,7 +8,7 @@ else{
     $TralivaKit = {__d:{help:{}}};
 (function($p_namespace){
 
-{%% list %%}
+//{%% list %%}
 #USAGE_BEGIN#traliva_kit_debug##
 /*
 Формат объекта справки:
