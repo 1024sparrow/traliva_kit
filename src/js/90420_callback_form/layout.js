@@ -6,33 +6,6 @@
             $orient: #e#$TralivaKit__Strip__orient:v##,
             $bg: '#fff',
             $items:[
-                /*{
-                    $_widget:{
-                        $type: $TralivaKit.$Strip,
-                        $orient: #e#$TralivaKit__Strip__orient:h##,
-                        $items:[
-                            //'num_title',
-                            {$_widget:{
-                                $type: $TralivaKit.$Button,
-                                $title: 'asdf'
-                            }},
-                            'num_lineedit'
-                        ]
-                    }
-                },*/
-                /*{
-                    $_widget:{
-                        $id: '$wValidTimeNote',
-                        $type: $TralivaKit.$StaticHtml,
-                        $html:`
-<div style="margin:10px" class="$validTimeNote">
-<h2>По какому номеру вам позвонить?</h2>
-<p>Наш специалист свяжется с вами в ближайшее время с 8:00 до 20:00</p>
-</div>
-                        `
-                    },
-                    $size: '256px'
-                },*/
                 {
                     $_widget:{
                         $id: '$wValidTimeNote',
@@ -69,8 +42,6 @@
                 }
             ]
         }},
-        //{$_widget:{
-        //}}
     ]
 
 }
